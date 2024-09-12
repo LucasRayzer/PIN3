@@ -35,11 +35,19 @@ export const RegisterBody = styled.div.attrs({
     border-color: #000000;
   `;
   
-  export const RegisterTitle = styled.h1.attrs({
+  export const RegisterTitleHeader = styled.h1.attrs({
     className: "register-title-header",
   })`
     padding-left: 40px;
     color: white;
+    font-size: 26px;
+    font-weight: bold;
+    text-transform: uppercase;
+  `;
+  export const RegisterTitle = styled.h1.attrs({
+    className: "register-title",
+  })`
+    color: #000000;
     font-size: 26px;
     font-weight: bold;
     text-transform: uppercase;
