@@ -23,6 +23,7 @@ export default function HomePage() {
             <HomeContainer>
                 
             </HomeContainer>
+            
         </HomeBody>
     );
 }
