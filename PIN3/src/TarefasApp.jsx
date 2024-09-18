@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-rou
 
 import axios from 'axios';
 import RegisterPage from './pages/adminPages/RegisterPage/RegisterPage.ui';
+import HomePage from './pages/adminPages/HomePage/HomePage.ui';
 
 export default function TarefasApp() {
   const [count, setCount] = useState(0)
@@ -13,7 +14,8 @@ export default function TarefasApp() {
     <BrowserRouter>
     <Routes>
     
-    <Route path="/registro" element={<RegisterPage />} />
+    <Route path="/registroAdm" element={<RegisterPage />} />
+    <Route path="/homeAdm" element={<HomePage/>} />
    
     </Routes>
     </BrowserRouter>
