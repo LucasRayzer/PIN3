@@ -83,7 +83,7 @@ export const RegisterBody = styled.div.attrs({
     margin-top: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #003366;
+    background-color: #132979;
     color: white;
     cursor: pointer;
     &:hover {
@@ -105,6 +105,7 @@ export const RegisterBody = styled.div.attrs({
     className: "register-logo-image",
   })`
     display: flex;
+    width:150px;
   `;
   
   export const RegisterLink = styled.a.attrs({

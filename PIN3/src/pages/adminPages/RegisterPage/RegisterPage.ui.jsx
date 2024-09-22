@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { LogoContainer, LogoImage, RegisterBody, RegisterButton, RegisterContainer, RegisterForm, RegisterHeader, RegisterInput, RegisterSelect, RegisterTitle, RegisterTitleHeader } from './RegisterPage.styles';
-
+import SearchLogo from '../../../assets/images/SearchHubLogo.png'; 
 export default function RegisterPage() {
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState('');
@@ -46,7 +46,7 @@ export default function RegisterPage() {
 
       <RegisterContainer>
         <LogoContainer>
-          <LogoImage src='src/assets/images/Avatar/LogoGH.png' alt='Logo' />
+          <LogoImage src={SearchLogo} alt='Logo' />
         </LogoContainer>
         <RegisterForm>
           <RegisterTitle>Cadastro</RegisterTitle>
