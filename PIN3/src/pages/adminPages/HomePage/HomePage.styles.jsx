@@ -26,7 +26,7 @@ export const StatusSection = styled.div.attrs({
   gap: 10px;  
   top: 50px;
   right: 20px;
-  background-color: #003366;
+  background-color: #132979;
   padding: 10px;
   border-radius: 10px;
   width: 200px;
@@ -44,7 +44,7 @@ export const StatusItem = styled.div.attrs({
 export const HomeContainer = styled.div.attrs({
   className: "home-container",
 })`
-padding:20px;
+  padding:20px;
   padding-left: 100px;
   padding-right: 100px;
   display: flex;
@@ -64,6 +64,9 @@ export const ReportsSection = styled.div.attrs({
 })`
  display: flex;
  flex-direction: row;
+ position:relative;
+ padding-top:10px;
+ gap: 10px;
 `;
 
 export const ScrollContainer = styled.div.attrs({
@@ -75,7 +78,8 @@ export const ScrollContainer = styled.div.attrs({
   padding-bottom: 10px;
   width: 100%;
   white-space: nowrap;
-  
+  border-top: 2px solid #132979;
+  padding-top:10px;
   &::-webkit-scrollbar {
     height: 10px;
     background-color:#132979;
@@ -153,7 +157,6 @@ export const ReportCard = styled.div.attrs({
   
 `;
 
-
 export const ProjectImage = styled.img.attrs({
   className: "project-image",
 })`
@@ -182,15 +185,14 @@ export const ReportName = styled.h2.attrs({
   padding-top:20px;
   
 `;
-export const Line = styled.div.attrs({
-  className: "line",
-})`
- background-color:#132979;
- width: 100%;
- height: 2px;
- border-radius:1px;
- 
-`;
+// export const Line = styled.div.attrs({
+//   className: "line",
+// })`
+//  background-color:#132979;
+//  width: 100%;
+//  height: 2px;
+//  border-radius:1px;
+// `;
 export const ProjectContainer = styled.div.attrs({
   className: "project-container",
 })`
@@ -203,7 +205,7 @@ export const ReportContainer = styled.div.attrs({
 })`
  display:flex;
  flex-direction:column;
- gap:10px;
+ 
 `;
 export const Title = styled.h1.attrs({
   className: "title",
@@ -229,6 +231,7 @@ export const NewReportContainer = styled.div.attrs({
  align-items:center;
  justify-content:center;
  width:100px;
+ position:relative;
  
 `;
 export const NewReportTitle = styled.h3.attrs({
@@ -236,5 +239,5 @@ export const NewReportTitle = styled.h3.attrs({
 })`
   display: flex;
   font-size: 18px;
-  padding-left:10px;
+  text-align:center;
 `;

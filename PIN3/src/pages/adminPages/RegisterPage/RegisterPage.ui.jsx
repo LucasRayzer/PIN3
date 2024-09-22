@@ -58,6 +58,7 @@ export default function RegisterPage() {
           <RegisterSelect value={tipoUsuario} onChange={(e) => setTipoUsuario(e.target.value)}>
             <option value="Aluno">Aluno</option>
             <option value="Coordenador">Coordenador</option>
+            <option value="Admin">Administrador</option>
           </RegisterSelect>
 
           <RegisterButton onClick={handleRegister}>Cadastrar</RegisterButton>

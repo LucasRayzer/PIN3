@@ -7,7 +7,6 @@ import {
     StatusSectionConfig,
     ProjectImage,
     ProjectName,
-    Line,
     ProjectContainer,
     Title,
     ReportContainer,
@@ -46,6 +45,18 @@ export default function HomePage() {
 
     const reports = [
         { name: "Relatório 1" },
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+
     ];
 
     return (
@@ -73,7 +84,7 @@ export default function HomePage() {
                 {/* Projects Section */}
                 <ProjectContainer>
                     <Title>Meus Projetos</Title>
-                    <Line></Line>
+                    
                 <ProjectsSection> 
                     <ScrollContainer>      
                         {projects.map((project, index) => (
@@ -87,8 +98,8 @@ export default function HomePage() {
                 </ProjectContainer>
 
                 <ReportContainer>
-                    <Title>Meus Relatórios</Title>
-                    <Line></Line>
+                    <Title style={{paddingBottom:'10px'}}>Meus Relatórios</Title>
+                    
                 <ReportsSection>
                     
                     <ScrollContainer>
