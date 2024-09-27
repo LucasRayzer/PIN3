@@ -98,7 +98,7 @@ export default function HomePage() {
                 </ProjectContainer>
 
                 <ReportContainer>
-                    <Title style={{paddingBottom:'10px'}}>Meus Relatórios</Title>
+                    <Title>Meus Relatórios</Title>
                     
                 <ReportsSection>
                     
@@ -112,7 +112,7 @@ export default function HomePage() {
                         ))}
                     </ScrollContainer>
                     <NewReportContainer>
-                                <NewReportImage onClick={() => navigate('/newReport')}
+                                <NewReportImage onClick={() => navigate('/novoRelatorio')}
                                         src={NewReportIcon} alt='New-Report' />
                                         <NewReportTitle>Novo Relatório</NewReportTitle>
                         </NewReportContainer>

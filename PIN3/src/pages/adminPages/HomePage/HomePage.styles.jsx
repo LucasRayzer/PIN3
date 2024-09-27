@@ -7,7 +7,6 @@ export const HomeBody = styled.div.attrs({
   flex-direction: column;
   width: 100%;
   height: 100vh;
-  background: url('src/assets/images/backgroundHome.png') no-repeat center center;
   background-size: cover;
   background-color: #f0f2f5;
 `;
