@@ -1,0 +1,127 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import NavHeader from '../../../components/HeaderMenu/NavHeader.ui';
+import {
+    HomeBodyAdm, HomeContainerAdm, StatusSectionAdm, StatusItemAdm, ProjectsSectionAdm, ReportsSectionAdm,
+    ScrollContainerAdm, ProjectCardAdm, ReportCardAdm,
+    StatusSectionConfigAdm,
+    ProjectImageAdm,
+    ProjectNameAdm,
+    ProjectContainerAdm,
+    TitleAdm,
+    ReportContainerAdm,
+    ReportNameAdm,
+    ReportImageAdm,
+    NewReportImageAdm,
+    NewReportContainerAdm,
+    NewReportTitleAdm
+} from './HomePageAdm.styles';
+import ProjectIcon from '../../../assets/images/ProjectIcon.png'; 
+import ReportIcon from '../../../assets/images/RelatorioIcon.png'; 
+import NewReportIcon from '../../../assets/images/NewReport.png'; 
+
+
+
+export default function HomePage() {
+    const navigate = useNavigate();
+
+    const projects= [
+        { name: "Projeto 1", status: "concluido" },
+        { name: "Projeto 2", status: "atrasado" },
+        { name: "Projeto 3", status: "em andamento" },
+        { name: "Projeto 4", status: "em análise" },
+        { name: "Projeto 1", status: "concluido" },
+        { name: "Projeto 2", status: "atrasado" },
+        { name: "Projeto 3", status: "em andamento" },
+        { name: "Projeto 4", status: "em análise" },
+        { name: "Projeto 1", status: "concluido" },
+        { name: "Projeto 2", status: "atrasado" },
+        { name: "Projeto 3", status: "em andamento" },
+        { name: "Projeto 4", status: "em análise" },
+        { name: "Projeto 1", status: "concluido" },
+        { name: "Projeto 2", status: "atrasado" },
+        { name: "Projeto 3", status: "em andamento" },
+        { name: "Projeto 4", status: "em análise" },
+    ];
+
+    const reports=[
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+        { name: "Relatório 1" },
+
+    ];
+
+    return (
+        <HomeBodyAdm>
+            <NavHeader/>
+
+            <HomeContainerAdm>
+                <StatusSectionConfigAdm>
+                    <StatusSectionAdm>
+                        <StatusItemAdm color="red">
+                            <span>🔴 Projeto atrasado</span>
+                        </StatusItemAdm>
+                        <StatusItemAdm color="yellow">
+                            <span>🟡 Projeto em andamento</span>
+                        </StatusItemAdm>
+                        <StatusItemAdm color="green">
+                            <span>🟢 Projeto concluído</span>
+                        </StatusItemAdm>
+                        <StatusItemAdm color="orange">
+                            <span>🟠 Projeto em análise</span>
+                        </StatusItemAdm>
+                    </StatusSectionAdm>
+                </StatusSectionConfigAdm>
+ 
+ 
+                <ProjectContainerAdm>
+                    <TitleAdm>Meus Projetos</TitleAdm>
+                    
+                <ProjectsSectionAdm>
+                    <ScrollContainerAdm>      
+                        {projects.map((project, index) => (
+                            <ProjectCardAdm key={index} status={project.status}>
+                                   <ProjectImageAdm src={ProjectIcon} alt='Project-Icon'/>
+                                   <ProjectNameAdm>{project.name}</ProjectNameAdm>
+                            </ProjectCardAdm> 
+                        ))}
+                    </ScrollContainerAdm>
+                </ProjectsSectionAdm>
+                </ProjectContainerAdm>
+
+                <ReportContainerAdm>
+                    <TitleAdm>Meus Relatórios</TitleAdm>
+                    
+                <ReportsSectionAdm>
+                    
+                    <ScrollContainerAdm>
+                        {reports.map((report, index) => (
+                            <ReportCardAdm key={index}>
+                                <ReportImageAdm src={ReportIcon} alt='Project-Icon'/>
+                                 <ReportNameAdm>{report.name}</ReportNameAdm>
+                                
+                            </ReportCardAdm>
+                        ))}
+                    </ScrollContainerAdm>
+                    <NewReportContainerAdm>
+                                <NewReportImageAdm onClick={() => navigate('/novoRelatorio')}
+                                        src={NewReportIcon} alt='New-Report' />
+                                        <NewReportTitleAdm>Novo Relatório</NewReportTitleAdm>
+                        </NewReportContainerAdm>
+                </ReportsSectionAdm>
+                </ReportContainerAdm>
+                
+            </HomeContainerAdm>
+            
+        </HomeBodyAdm>
+    );
+}

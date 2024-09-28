@@ -37,7 +37,7 @@ export const RelatorioTitle = styled.h1.attrs({
 export const Title = styled.h1.attrs({
   className: 'title',
 })`
-  color: #000000;
+  color: #132979;
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-export const HomeBody = styled.div.attrs({
-  className: "home-body",
+export const HomeBodyCoord = styled.div.attrs({
+  className: "home-body-coord",
 })`
   display: flex;
   flex-direction: column;
@@ -10,14 +10,14 @@ export const HomeBody = styled.div.attrs({
   background-size: cover;
   background-color: #f0f2f5;
 `;
-export const StatusSectionConfig = styled.div.attrs({
+export const StatusSectionConfigCoord = styled.div.attrs({
   className: "status-section-config",
 })`
   display: flex;
   justify-content: end;
 `;
 
-export const StatusSection = styled.div.attrs({
+export const StatusSectionCoord = styled.div.attrs({
   className: "status-section",
 })`
   display: flex;
@@ -31,7 +31,7 @@ export const StatusSection = styled.div.attrs({
   width: 200px;
 `;
 
-export const StatusItem = styled.div.attrs({
+export const StatusItemCoord = styled.div.attrs({
   className: "status-item",
 })`
   display: flex;
@@ -40,7 +40,7 @@ export const StatusItem = styled.div.attrs({
   color: white;
 `;
 
-export const HomeContainer = styled.div.attrs({
+export const HomeContainerCoord = styled.div.attrs({
   className: "home-container",
 })`
   padding:20px;
@@ -51,24 +51,25 @@ export const HomeContainer = styled.div.attrs({
   gap: 20px;
 `;
 
-export const ProjectsSection = styled.div.attrs({
+export const ProjectsSectionCoord = styled.div.attrs({
   className: "projects-section",
 })`
   display: flex;
-  flex-direction: column;
-`;
-
-export const ReportsSection = styled.div.attrs({
-  className: "reports-section",
-})`
- display: flex;
- flex-direction: row;
- position:relative;
+  flex-direction: row;
+  position:relative;
  padding-top:10px;
  gap: 10px;
 `;
 
-export const ScrollContainer = styled.div.attrs({
+export const ReportsSectionCoord = styled.div.attrs({
+  className: "reports-section",
+})`
+ display: flex;
+ flex-direction: column;
+ 
+`;
+
+export const ScrollContainerCoord = styled.div.attrs({
   className: "scroll-container",
 })`
   display: flex;
@@ -93,8 +94,8 @@ export const ScrollContainer = styled.div.attrs({
   }
 `;
 
-export const ProjectCard = styled.div.attrs({
-  className: "project-card",
+export const ProjectCardCoord = styled.div.attrs({
+  className: 'project-card',
 })`
   background-color: #132979;
   color: white;
@@ -104,34 +105,34 @@ export const ProjectCard = styled.div.attrs({
   position: relative;
   width: 180px;
   height: 190px;
-  min-width: 180px; 
-  min-height: 190px; 
-  flex-shrink: 0; 
+  min-width: 180px;
+  min-height: 190px;
+  flex-shrink: 0;
   display: flex;
-  gap:5px;
+  gap: 5px;
   justify-content: center;
   align-items: center;
   text-align: center;
-  flex-direction:column;
+  flex-direction: column;
   font-size: 14px;
   cursor: pointer;
-  
+
   &::before {
-    content: '';
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: ${({ status }) => 
-      status === 'concluido' ? 'green' : 
-      status === 'atrasado' ? 'red' : 
-      status === 'em andamento' ? 'yellow' : 'orange'};
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
+      content: '';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: ${({ status }) =>
+          status === 'concluido' ? 'green' :
+          status === 'atrasado' ? 'red' :
+          status === 'em andamento' ? 'yellow' :
+          'orange'};
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
   }
 `;
-
-export const ReportCard = styled.div.attrs({
+export const ReportCardCoord = styled.div.attrs({
   className: "report-card",
 })`
   background-color: #132979;
@@ -156,65 +157,58 @@ export const ReportCard = styled.div.attrs({
   
 `;
 
-export const ProjectImage = styled.img.attrs({
+export const ProjectImageCoord = styled.img.attrs({
   className: "project-image",
 })`
   display: flex;
   height:80px;
   padding-top:60px;
 `;
-export const ProjectName = styled.h2.attrs({
+export const ProjectNameCoord = styled.h2.attrs({
   className: "project-name",
 })`
   display: flex;
   padding-top:20px;
   
 `;
-export const ReportImage = styled.img.attrs({
+export const ReportImageCoord = styled.img.attrs({
   className: "relatorio-image",
 })`
   display: flex;
   height:80px;
   padding-top:60px;
 `;
-export const ReportName = styled.h2.attrs({
+export const ReportNameCoord = styled.h2.attrs({
   className: "relatorio-name",
 })`
   display: flex;
   padding-top:20px;
   
 `;
-// export const Line = styled.div.attrs({
-//   className: "line",
-// })`
-//  background-color:#132979;
-//  width: 100%;
-//  height: 2px;
-//  border-radius:1px;
-// `;
-export const ProjectContainer = styled.div.attrs({
+
+export const ProjectContainerCoord = styled.div.attrs({
   className: "project-container",
 })`
  display:flex;
  flex-direction:column;
  gap:10px;
 `;
-export const ReportContainer = styled.div.attrs({
+export const ReportContainerCoord = styled.div.attrs({
   className: "relatorio-container",
 })`
  display:flex;
  flex-direction:column;
  
 `;
-export const Title = styled.h1.attrs({
+export const TitleCoord = styled.h1.attrs({
   className: "title",
 })`
-  color: #000000;
+  color: #132979;
   font-size: 26px;
   font-weight: bold;
   margin:0;
 `;
-export const NewReportImage= styled.img.attrs({
+export const NewProjectImageCoord = styled.img.attrs({
   className: "new-report-image",
 })`
   display: flex;
@@ -222,7 +216,7 @@ export const NewReportImage= styled.img.attrs({
   width:80px;
   cursor: pointer;
 `;
-export const NewReportContainer = styled.div.attrs({
+export const NewProjectContainerCoord = styled.div.attrs({
   className: "novo-relatorio-container",
 })`
  display:flex;
@@ -233,7 +227,7 @@ export const NewReportContainer = styled.div.attrs({
  position:relative;
  
 `;
-export const NewReportTitle = styled.h3.attrs({
+export const NewProjectTitleCoord = styled.h3.attrs({
   className: "novo-relatorio-title",
 })`
   display: flex;

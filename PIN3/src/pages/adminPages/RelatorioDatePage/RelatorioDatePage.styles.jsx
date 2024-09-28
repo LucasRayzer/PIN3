@@ -32,7 +32,7 @@ export const RelatorioTitle = styled.h1.attrs({
 })`
   font-size: 24px;
   font-weight: bold;
-  color: #000000;
+  color: #132979;
   margin-bottom: 10px;
   border-bottom: solid 2px #132979;
 `;

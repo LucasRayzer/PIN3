@@ -124,7 +124,7 @@ export const RegisterBody = styled.div.attrs({
     margin: 10px 0;
     padding: 10px;
     width: 320px;
-    border: 1px solid #0f0c0c96;
+    border: 1px solid #132979;
     border-radius: 5px;
     background-color: white;
     cursor: pointer;
