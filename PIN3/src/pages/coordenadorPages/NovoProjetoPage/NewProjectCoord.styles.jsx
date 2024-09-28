@@ -17,6 +17,7 @@ export const ContainerCoord = styled.div.attrs({
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  padding-top:50px;
 `;
 
 export const SectionTitleCoord = styled.h2.attrs({
