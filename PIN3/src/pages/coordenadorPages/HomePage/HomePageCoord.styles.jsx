@@ -57,8 +57,7 @@ export const ProjectsSectionCoord = styled.div.attrs({
   display: flex;
   flex-direction: row;
   position:relative;
- padding-top:10px;
- gap: 10px;
+  
 `;
 
 export const ReportsSectionCoord = styled.div.attrs({
@@ -191,14 +190,14 @@ export const ProjectContainerCoord = styled.div.attrs({
 })`
  display:flex;
  flex-direction:column;
- gap:10px;
+  gap:10px;
 `;
 export const ReportContainerCoord = styled.div.attrs({
   className: "relatorio-container",
 })`
  display:flex;
  flex-direction:column;
- 
+ gap:10px;
 `;
 export const TitleCoord = styled.h1.attrs({
   className: "title",

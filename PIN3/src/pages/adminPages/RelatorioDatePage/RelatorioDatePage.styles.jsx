@@ -80,7 +80,7 @@ export const GerarRelatorioButton = styled.button.attrs({
 export const Title = styled.h1.attrs({
   className: "title",
 })`
-  color: #000000;
+  color: #132979;
   font-size: 24px;
   font-weight: bold;
   border-bottom: solid 2px #132979;
@@ -95,7 +95,7 @@ export const TitleBlock = styled.div.attrs({
 export const TitleDate = styled.label.attrs({
   className: "title-date",
 })`
-  color: #000000;
+  color: #132979;
   font-size: 18px;
   font-weight: bold;
 `;

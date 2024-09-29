@@ -10,7 +10,12 @@ import {
     ParticipantListCoord,
     ParticipantItemCoord,
     SaveButtonCoord,
-    NewProjectBodyCoord
+    NewProjectBodyCoord,
+    ContainerNomeNovoProjeto,
+    ContainerDescricaoNovoProjeto,
+    ContainerParticipantesNovoProjeto,
+    MiddleBodyCoord,
+
 } from './NewProjectCoord.styles';
 
 export default function NewProjectPage() {
@@ -36,67 +41,75 @@ export default function NewProjectPage() {
 
     return (
         <NewProjectBodyCoord>
-        <NavHeader />
-        <ContainerCoord>
-
+            <NavHeader />
             <SectionTitleCoord>Adição de Novo Projeto</SectionTitleCoord>
+            <MiddleBodyCoord>
+                <ContainerCoord>
 
-            <InputContainerCoord>
-                <div>
-                    <label>Nome do Novo Projeto*</label>
-                    <InputFieldCoord 
-                        type="text" 
-                        placeholder="Insira o nome do projeto..." 
-                        maxLength={25}
-                        value={projectName}
-                        onChange={(e) => setProjectName(e.target.value)} 
-                    />
-                    <span>{projectName.length}/25</span>
-                </div>
 
-                <div>
-                    <label>Descrição do projeto</label>
-                    <TextAreaFieldCoord 
-                        placeholder="Descrições do novo Projeto..."
-                        maxLength={100}
-                        value={projectDescription}
-                        onChange={(e) => setProjectDescription(e.target.value)}
-                    />
-                    <span>{projectDescription.length}/100</span>
-                </div>
 
-                <div>
-                    <label>Número de Participantes *</label>
-                    <SelectBoxCoord 
-                        value={participantNumber}
-                        onChange={(e) => setParticipantNumber(e.target.value)}
-                    >
-                        <option value={0}>Caixa de Seleção de número</option>
-                        {[1, 2, 3, 4].map(num => (
-                            <option key={num} value={num}>{num}</option>
+                    <InputContainerCoord>
+                        <ContainerNomeNovoProjeto>
+                            <label>Nome do Novo Projeto*</label>
+                            <InputFieldCoord
+                                type="text"
+                                placeholder="Insira o nome do projeto..."
+                                maxLength={25}
+                                value={projectName}
+                                onChange={(e) => setProjectName(e.target.value)}
+                            />
+                            <span>{projectName.length}/25</span>
+                        </ContainerNomeNovoProjeto>
+
+                        <ContainerDescricaoNovoProjeto>
+                            <label>Descrição do projeto</label>
+                            <TextAreaFieldCoord
+                                placeholder="Descrições do novo Projeto..."
+                                maxLength={100}
+                                value={projectDescription}
+                                onChange={(e) => setProjectDescription(e.target.value)}
+
+                            />
+                            <span>{projectDescription.length}/100</span>
+                        </ContainerDescricaoNovoProjeto>
+
+
+                    </InputContainerCoord>
+                </ContainerCoord>
+                <ContainerCoord>
+                    <ContainerParticipantesNovoProjeto>
+                        <label>Número de Participantes *</label>
+                        <SelectBoxCoord
+                            value={participantNumber}
+                            onChange={(e) => setParticipantNumber(e.target.value)}
+                        >
+                            <option value={0}>Caixa de Seleção de número</option>
+                            {[1, 2, 3, 4].map(num => (
+                                <option key={num} value={num}>{num}</option>
+                            ))}
+                        </SelectBoxCoord>
+                    </ContainerParticipantesNovoProjeto>
+
+                    <label>Selecione os Participantes *</label>
+                    <ParticipantListCoord>
+
+                        {participants.map(participant => (
+                            <ParticipantItemCoord key={participant.id}>
+                                <img src="path/to/icon.png" alt="Participante" />
+                                <span>{participant.name} <small>{participant.role}</small></span>
+                                <input
+                                    type="checkbox"
+                                    checked={selectedParticipants.includes(participant.id)}
+                                    onChange={() => handleParticipantSelection(participant.id)}
+                                />
+                            </ParticipantItemCoord>
                         ))}
-                    </SelectBoxCoord>
-                </div>
-            </InputContainerCoord>
-
-            <ParticipantListCoord>
-                <label>Selecione os Participantes *</label>
-                {participants.map(participant => (
-                    <ParticipantItemCoord key={participant.id}>
-                        <input
-                            type="checkbox"
-                            checked={selectedParticipants.includes(participant.id)}
-                            onChange={() => handleParticipantSelection(participant.id)}
-                        />
-                        <span>{participant.name} ({participant.role})</span>
-                    </ParticipantItemCoord>
-                ))}
-            </ParticipantListCoord>
-
-            <SaveButtonCoord onClick={() => alert('Projeto salvo!')}>
-                Salvar
-            </SaveButtonCoord>
-        </ContainerCoord>
+                    </ParticipantListCoord>
+                    <SaveButtonCoord onClick={() => alert('Projeto salvo!')}>
+                        Salvar
+                    </SaveButtonCoord>
+                </ContainerCoord>
+            </MiddleBodyCoord>
         </NewProjectBodyCoord>
     );
 }
