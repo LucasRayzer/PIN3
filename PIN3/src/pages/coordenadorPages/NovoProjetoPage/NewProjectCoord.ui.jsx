@@ -52,32 +52,29 @@ export default function NewProjectPage() {
             <SectionTitleCoord>Adição de Novo Projeto</SectionTitleCoord>
             <MiddleBodyCoord>
                 <ContainerCoord>
-
-
-
                     <InputContainerCoord>
                         <ContainerNomeNovoProjeto>
                             <label>Nome do Novo Projeto*</label>
                             <InputFieldCoord
                                 type="text"
                                 placeholder="Insira o nome do projeto..."
-                                maxLength={25}
+                                maxLength={50}
                                 value={projectName}
                                 onChange={(e) => setProjectName(e.target.value)}
                             />
-                            <span>{projectName.length}/25</span>
+                            <span>{projectName.length}/50</span>
                         </ContainerNomeNovoProjeto>
 
                         <ContainerDescricaoNovoProjeto>
                             <label>Descrição do projeto</label>
                             <TextAreaFieldCoord
                                 placeholder="Descrições do novo Projeto..."
-                                maxLength={100}
+                                maxLength={250}
                                 value={projectDescription}
                                 onChange={(e) => setProjectDescription(e.target.value)}
 
                             />
-                            <span>{projectDescription.length}/100</span>
+                            <span>{projectDescription.length}/250</span>
                         </ContainerDescricaoNovoProjeto>
 
 
