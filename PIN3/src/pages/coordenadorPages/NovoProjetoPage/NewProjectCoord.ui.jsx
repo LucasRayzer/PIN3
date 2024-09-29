@@ -22,13 +22,15 @@ import {
 } from './NewProjectCoord.styles';
 import SaveIcon from '../../../assets/images/SaveIcon.png'; 
 import userFoto from '../../../assets/images/user_Default_Avatar.png';
+import { useNavigate } from 'react-router-dom';
 
 export default function NewProjectPage() {
+    const navigate = useNavigate();
     const [projectName, setProjectName] = useState('');
     const [projectDescription, setProjectDescription] = useState('');
     const [selectedParticipants, setSelectedParticipants] = useState([]);
     const [participantNumber, setParticipantNumber] = useState(0);
-
+    
     const participants = [
         { id: 1, name: "Participante 01", role: "Aluno" },
         { id: 2, name: "Participante 02", role: "Aluno" },
@@ -116,7 +118,7 @@ export default function NewProjectPage() {
             <SaveBlockCoord>
                     <SaveContainerCoord>
                                 <SaveImageCoord onClick={() => navigate('/homeCoord')}
-                                        src={SaveIcon} alt='save' />
+                                        src={SaveIcon} alt='save-a' />
                                         <SaveTitleCoord>Salvar</SaveTitleCoord>
                         </SaveContainerCoord>
                     </SaveBlockCoord>
