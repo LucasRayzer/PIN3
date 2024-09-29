@@ -9,14 +9,19 @@ import {
     SelectBoxCoord,
     ParticipantListCoord,
     ParticipantItemCoord,
-    SaveButtonCoord,
     NewProjectBodyCoord,
     ContainerNomeNovoProjeto,
     ContainerDescricaoNovoProjeto,
     ContainerParticipantesNovoProjeto,
     MiddleBodyCoord,
+    SaveContainerCoord,
+    SaveImageCoord,
+    SaveTitleCoord,
+    SaveBlockCoord,
 
 } from './NewProjectCoord.styles';
+import SaveIcon from '../../../assets/images/SaveIcon.png'; 
+import userFoto from '../../../assets/images/user_Default_Avatar.png';
 
 export default function NewProjectPage() {
     const [projectName, setProjectName] = useState('');
@@ -95,7 +100,7 @@ export default function NewProjectPage() {
 
                         {participants.map(participant => (
                             <ParticipantItemCoord key={participant.id}>
-                                <img src="path/to/icon.png" alt="Participante" />
+                                <img src={userFoto} alt="Participante" />
                                 <span>{participant.name} <small>{participant.role}</small></span>
                                 <input
                                     type="checkbox"
@@ -105,11 +110,16 @@ export default function NewProjectPage() {
                             </ParticipantItemCoord>
                         ))}
                     </ParticipantListCoord>
-                    <SaveButtonCoord onClick={() => alert('Projeto salvo!')}>
-                        Salvar
-                    </SaveButtonCoord>
+                    
                 </ContainerCoord>
             </MiddleBodyCoord>
+            <SaveBlockCoord>
+                    <SaveContainerCoord>
+                                <SaveImageCoord onClick={() => navigate('/homeCoord')}
+                                        src={SaveIcon} alt='save' />
+                                        <SaveTitleCoord>Salvar</SaveTitleCoord>
+                        </SaveContainerCoord>
+                    </SaveBlockCoord>
         </NewProjectBodyCoord>
     );
 }

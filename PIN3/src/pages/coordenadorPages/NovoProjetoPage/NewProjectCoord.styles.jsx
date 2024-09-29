@@ -201,3 +201,39 @@ export const SaveButtonCoord = styled.button.attrs({
     background-color: #0038d3;
   }
 `;
+export const SaveImageCoord= styled.img.attrs({
+  className: "save-novo-projeto-image",
+})`
+  display: flex;
+  height:80px;
+  width:80px;
+  cursor: pointer;
+`;
+export const SaveContainerCoord = styled.div.attrs({
+  className: "save-novo-projeto-container",
+})`
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:end;
+ width:100px;
+ margin-top:150px;
+ 
+`;
+export const SaveTitleCoord = styled.h3.attrs({
+  className: "save-novo-projeto-title",
+})`
+  display: flex;
+  font-size: 18px;
+  text-align:center;
+  color:#132979;
+`;
+export const SaveBlockCoord = styled.h3.attrs({
+  className: "save-novo-projeto-title",
+})`
+  display: flex;
+  align-items:end;
+  justify-content:end;
+  margin-right:20px;
+`;
+
