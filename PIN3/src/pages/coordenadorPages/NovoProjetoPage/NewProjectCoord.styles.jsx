@@ -31,35 +31,40 @@ export const MiddleBodyCoord = styled.div.attrs({
   background-size: cover;
   background-color: #f0f2f5;
 `;
-export const SectionTitleCoord = styled.h1.attrs({
+export const TitleCoord = styled.h1.attrs({
   className: "section-title-coord",
 })`
-  
-  align-items:start;
   color: #132979;
   border-bottom: 2px solid #132979;
-  width: max-content;
-  justify-content:start;
-  padding-top:50px;
-  margin-left:120px;
+  font-size:26px; 
 `;
-
+export const TitleName = styled.h1.attrs({
+  className: "section-title-coord",
+})`
+  color: #132979;
+  border-bottom: 2px solid #132979;
+  font-size:18px;
+  width:max-content;
+`;
+export const DivTitleCoord = styled.div.attrs({
+  className: "section-title-coord",
+})`
+    display: inline-block;
+    flex-direction: column;
+    align-items: start;
+    padding-top: 40px;
+    width:max-content;
+    margin-left:2vh;
+`;
 export const InputContainerCoord = styled.div.attrs({
   className: "input-container-coord",
 })`
   display: flex;
   flex-direction: column;
-  width: 80%;
-  margin-top: 20px;
-
-
-  label {
-    font-size: 16px;
-    color: #132979;
-  }
+  width: 100%;
 
   span {
-    font-size: 0.8rem;
+    font-size: 12px;
     color: #000000;
   }
 `;
@@ -92,6 +97,7 @@ export const InputFieldCoord = styled.input.attrs({
   className: "input-field-coord",
 })`
   width: 100%;
+  height:20px;
   padding: 10px;
   font-size: 1rem;
   border: 1px solid #ccc;
@@ -103,6 +109,7 @@ export const TextAreaFieldCoord = styled.textarea.attrs({
   className: "textarea-field-coord",
 })`
   width: 100%;
+  height:110px;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
@@ -130,33 +137,33 @@ export const ParticipantListCoord = styled.div.attrs({
   display:flex;
   flex-direction:column;
   width: 97%; 
-  background-color: #fff; /* Cor de fundo */
-  border-radius: 12px; /* Fundo arredondado */
-  max-height: 200px; /* Altura máxima da lista */
-  overflow-y: auto; /* Barra de rolagem vertical */
-  padding: 10px; /* Espaçamento interno */
-  border: 1px solid #132979; /* Bordas em azul */
+  background-color: #fff; 
+  border-radius: 12px;
+  max-height: 200px; 
+  overflow-y: auto; 
+  padding: 10px; 
+  border: 1px solid #132979;
   
   label {
     font-size: 1rem;
     color: #132979;
   }
 
-  /* Estilo da barra de rolagem */
-  scrollbar-width: thin; /* Para Firefox */
-  scrollbar-color: #132979 #e0e0e0; /* Para Firefox */
+  
+  scrollbar-width: thin; 
+  scrollbar-color: #132979 #e0e0e0;
 
   &::-webkit-scrollbar {
-    width: 8px; /* Largura da barra de rolagem */
+    width: 8px; 
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #132979; /* Cor da barra de rolagem */
-    border-radius: 12px; /* Bordas arredondadas da barra de rolagem */
+    background-color: #132979; 
+    border-radius: 12px; 
   }
 
   &::-webkit-scrollbar-track {
-    background-color: #e0e0e0; /* Cor de fundo da barra de rolagem */
+    background-color: #e0e0e0; 
   }
 `;
 
@@ -167,8 +174,8 @@ export const ParticipantItemCoord = styled.div.attrs({
   align-items: center;
   margin-bottom: 10px;
   padding: 10px;
-  border-bottom: 1px solid #132979; /* Separação entre itens */
-  
+  border-bottom: 1px solid #132979; 
+
   span {
     font-size: 16px;
     color: #132979;
@@ -178,11 +185,11 @@ export const ParticipantItemCoord = styled.div.attrs({
   }
 
   input {
-    margin-left: auto; /* Alinha o checkbox à direita */
+    margin-left: auto; 
   }
 
   img {
-    width: 40px; /* Tamanho do ícone */
+    width: 40px; 
     height: 40px;
   }
 `;

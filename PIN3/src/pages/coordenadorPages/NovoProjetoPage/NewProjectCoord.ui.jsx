@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import NavHeader from '../../../components/HeaderMenu/NavHeader.ui';
 import {
     ContainerCoord,
-    SectionTitleCoord,
     InputContainerCoord,
     InputFieldCoord,
     TextAreaFieldCoord,
@@ -18,6 +17,9 @@ import {
     SaveImageCoord,
     SaveTitleCoord,
     SaveBlockCoord,
+    DivTitleCoord,
+    TitleCoord,
+    TitleName,
 
 } from './NewProjectCoord.styles';
 import SaveIcon from '../../../assets/images/SaveIcon.png'; 
@@ -49,12 +51,15 @@ export default function NewProjectPage() {
     return (
         <NewProjectBodyCoord>
             <NavHeader />
-            <SectionTitleCoord>Adição de Novo Projeto</SectionTitleCoord>
+            <DivTitleCoord>
+                    <TitleCoord>Adição de Novo Projeto</TitleCoord>
+                    </DivTitleCoord>
             <MiddleBodyCoord>
                 <ContainerCoord>
+                    
                     <InputContainerCoord>
                         <ContainerNomeNovoProjeto>
-                            <label>Nome do Novo Projeto*</label>
+                            <TitleName>Nome do Novo Projeto*</TitleName>
                             <InputFieldCoord
                                 type="text"
                                 placeholder="Insira o nome do projeto..."
@@ -66,8 +71,9 @@ export default function NewProjectPage() {
                         </ContainerNomeNovoProjeto>
 
                         <ContainerDescricaoNovoProjeto>
-                            <label>Descrição do projeto</label>
+                        <TitleName>Descrição do Projeto</TitleName>
                             <TextAreaFieldCoord
+                                type="text"
                                 placeholder="Descrições do novo Projeto..."
                                 maxLength={250}
                                 value={projectDescription}
@@ -82,7 +88,7 @@ export default function NewProjectPage() {
                 </ContainerCoord>
                 <ContainerCoord>
                     <ContainerParticipantesNovoProjeto>
-                        <label>Número de Participantes *</label>
+                        <TitleName>Número de Participantes*</TitleName>
                         <SelectBoxCoord
                             value={participantNumber}
                             onChange={(e) => setParticipantNumber(e.target.value)}
@@ -93,8 +99,8 @@ export default function NewProjectPage() {
                             ))}
                         </SelectBoxCoord>
                     </ContainerParticipantesNovoProjeto>
-
-                    <label>Selecione os Participantes *</label>
+                            <ContainerParticipantesNovoProjeto>
+                    <TitleName>Selecione os Participantes*</TitleName>
                     <ParticipantListCoord>
 
                         {participants.map(participant => (
@@ -109,7 +115,7 @@ export default function NewProjectPage() {
                             </ParticipantItemCoord>
                         ))}
                     </ParticipantListCoord>
-                    
+                    </ContainerParticipantesNovoProjeto>
                 </ContainerCoord>
             </MiddleBodyCoord>
             <SaveBlockCoord>
