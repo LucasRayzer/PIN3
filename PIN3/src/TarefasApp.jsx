@@ -10,6 +10,7 @@ import RelatorioDatePage from './pages/adminPages/RelatorioDatePage/RelatorioDat
 import RelatorioList from './pages/adminPages/RelatorioPage/RelatorioListPage.ui'
 import NewProjectCoord from './pages/coordenadorPages/NovoProjetoPage/NewProjectCoord.ui';
 import SettingsPage from './pages/settingPage/SettingPage.ui'
+import DetailsPage from './pages/coordenadorPages/DetailsProjectPage/DetailsProjectCoord.ui'
 export default function TarefasApp() {
   const [count, setCount] = useState(0)
 
@@ -25,6 +26,7 @@ export default function TarefasApp() {
     <Route path="/novoProjeto" element={<NewProjectCoord/>} />
     <Route path="/relatoriosAdmin" element={<RelatorioList/>} />
     <Route path="/settings" element={<SettingsPage/>} />
+    <Route path="/detalhesProjeto" element={<DetailsPage/>} />
 
     </Routes>
     </BrowserRouter>
