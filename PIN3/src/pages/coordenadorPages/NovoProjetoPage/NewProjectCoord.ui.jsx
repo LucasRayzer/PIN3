@@ -22,7 +22,7 @@ import {
     TitleName,
 
 } from './NewProjectCoord.styles';
-import SaveIcon from '../../../assets/images/SaveIcon.png'; 
+import SaveIcon from '../../../assets/images/SaveIcon.png';
 import userFoto from '../../../assets/images/user_Default_Avatar.png';
 import { useNavigate } from 'react-router-dom';
 
@@ -32,7 +32,7 @@ export default function NewProjectPage() {
     const [projectDescription, setProjectDescription] = useState('');
     const [selectedParticipants, setSelectedParticipants] = useState([]);
     const [participantNumber, setParticipantNumber] = useState(0);
-    
+
     const participants = [
         { id: 1, name: "Participante 01", role: "Aluno" },
         { id: 2, name: "Participante 02", role: "Aluno" },
@@ -52,11 +52,11 @@ export default function NewProjectPage() {
         <NewProjectBodyCoord>
             <NavHeader />
             <DivTitleCoord>
-                    <TitleCoord>Adição de Novo Projeto</TitleCoord>
-                    </DivTitleCoord>
+                <TitleCoord>Adição de Novo Projeto</TitleCoord>
+            </DivTitleCoord>
             <MiddleBodyCoord>
                 <ContainerCoord>
-                    
+
                     <InputContainerCoord>
                         <ContainerNomeNovoProjeto>
                             <TitleName>Nome do Novo Projeto*</TitleName>
@@ -71,7 +71,7 @@ export default function NewProjectPage() {
                         </ContainerNomeNovoProjeto>
 
                         <ContainerDescricaoNovoProjeto>
-                        <TitleName>Descrição do Projeto</TitleName>
+                            <TitleName>Descrição do Projeto</TitleName>
                             <TextAreaFieldCoord
                                 type="text"
                                 placeholder="Descrições do novo Projeto..."
@@ -99,32 +99,32 @@ export default function NewProjectPage() {
                             ))}
                         </SelectBoxCoord>
                     </ContainerParticipantesNovoProjeto>
-                            <ContainerParticipantesNovoProjeto>
-                    <TitleName>Selecione os Participantes*</TitleName>
-                    <ParticipantListCoord>
+                    <ContainerParticipantesNovoProjeto>
+                        <TitleName>Selecione os Participantes*</TitleName>
+                        <ParticipantListCoord>
 
-                        {participants.map(participant => (
-                            <ParticipantItemCoord key={participant.id}>
-                                <img src={userFoto} alt="Participante" />
-                                <span>{participant.name} <small>{participant.role}</small></span>
-                                <input
-                                    type="checkbox"
-                                    checked={selectedParticipants.includes(participant.id)}
-                                    onChange={() => handleParticipantSelection(participant.id)}
-                                />
-                            </ParticipantItemCoord>
-                        ))}
-                    </ParticipantListCoord>
+                            {participants.map(participant => (
+                                <ParticipantItemCoord key={participant.id}>
+                                    <img src={userFoto} alt="Participante" />
+                                    <span>{participant.name} <small>{participant.role}</small></span>
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedParticipants.includes(participant.id)}
+                                        onChange={() => handleParticipantSelection(participant.id)}
+                                    />
+                                </ParticipantItemCoord>
+                            ))}
+                        </ParticipantListCoord>
                     </ContainerParticipantesNovoProjeto>
                 </ContainerCoord>
             </MiddleBodyCoord>
             <SaveBlockCoord>
-                    <SaveContainerCoord>
-                                <SaveImageCoord onClick={() => navigate('/homeCoord')}
-                                        src={SaveIcon} alt='save-a' />
-                                        <SaveTitleCoord>Salvar</SaveTitleCoord>
-                        </SaveContainerCoord>
-                    </SaveBlockCoord>
+                <SaveContainerCoord>
+                    <SaveImageCoord onClick={() => navigate('/homeCoord')}
+                        src={SaveIcon} alt='save-a' />
+                    <SaveTitleCoord>Salvar</SaveTitleCoord>
+                </SaveContainerCoord>
+            </SaveBlockCoord>
         </NewProjectBodyCoord>
     );
 }

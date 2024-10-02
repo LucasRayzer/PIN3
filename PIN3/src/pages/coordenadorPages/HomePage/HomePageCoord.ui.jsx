@@ -16,9 +16,9 @@ import {
     NewProjectContainerCoord,
     NewProjectTitleCoord
 } from './HomePageCoord.styles';
-import ProjectIcon from '../../../assets/images/ProjectIcon.png'; 
-import ReportIcon from '../../../assets/images/RelatorioIcon.png'; 
-import NewReportIcon from '../../../assets/images/NewReport.png'; 
+import ProjectIcon from '../../../assets/images/ProjectIcon.png';
+import ReportIcon from '../../../assets/images/RelatorioIcon.png';
+import NewReportIcon from '../../../assets/images/NewReport.png';
 
 export default function HomePage() {
     const navigate = useNavigate();
@@ -37,7 +37,7 @@ export default function HomePage() {
     const reports = [
         { name: "Relatório 1" },
         { name: "Relatório 2" },
-        
+
     ];
 
     return (
@@ -68,7 +68,11 @@ export default function HomePage() {
                     <ProjectsSectionCoord>
                         <ScrollContainerCoord>
                             {projects.map((project, index) => (
-                                <ProjectCardCoord key={index} status={project.status}>
+                                <ProjectCardCoord
+                                    key={index}
+                                    status={project.status}
+                                    onClick={() => navigate(`/detalhesProjeto/${project.name}`)}
+                                >
                                     <ProjectImageCoord src={ProjectIcon} alt='Project-Icon' />
                                     <ProjectNameCoord>{project.name}</ProjectNameCoord>
                                 </ProjectCardCoord>

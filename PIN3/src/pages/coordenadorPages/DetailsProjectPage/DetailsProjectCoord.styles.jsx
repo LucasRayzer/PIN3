@@ -26,31 +26,27 @@ export const ProgressBarCoord = styled.div.attrs({
   className: "progress-bar-coord",
 })`
   display: flex;
-  height: 25px;
+  align-items: center;
+  height: 20px;
   width: 60%;
-  max-width:1100px;
+  max-width: 1000px;
   background-color: #e0e0e0;
-  border-radius: 12px;
+  border-radius: 25px;
+  position: relative;
   overflow: hidden;
-  
-  div {
-    height: 100%;
-  }
 
   .completed {
-    background-color: green;
+    background-color: #132979; /* Cor azul escuro */
+    height: 100%;
+    transition: width 0.5s ease-in-out;
   }
 
-  .in-progress {
-    background-color: yellow;
-  }
-
-  .pending {
-    background-color: red;
-  }
-
-  .stopped {
-    background-color: orange;
+  span {
+    position: absolute;
+    right: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #132979; /* Cor do texto */
   }
 `;
 
