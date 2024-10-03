@@ -16,7 +16,7 @@ export const ContainerCoord = styled.div.attrs({
 })`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   padding: 20px;
   width:100%;
   
@@ -185,4 +185,48 @@ export const SaveBlockCoord = styled.h3.attrs({
   align-items:end;
   justify-content:end;
   margin-right:20px;
+`;
+export const FileListContainer = styled.div.attrs({
+  className: "file-list-container",
+})`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+`;
+
+export const FileLink = styled.a.attrs({
+  className: "file-link",
+})`
+  color: #132979;
+  text-decoration: none;
+  font-weight: bold;
+
+  &:hover {
+    text-decoration: underline;
+    color: #0038d3;
+  }
+`;
+export const FileItem = styled.div.attrs({
+  className: "file-item",
+})`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const RemoveButton = styled.button.attrs({
+  className: "remove-button",
+})`
+  background-color: #ff5c5c;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #ff1f1f;
+  }
 `;

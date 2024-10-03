@@ -4,7 +4,6 @@ import {
     ContainerCoord,
     InputContainerCoord,
     TextAreaFieldCoord,
-
     ContainerNomeNovoProjeto,
     ContainerDescricaoNovoProjeto,
     MiddleBodyCoord,
@@ -19,7 +18,11 @@ import {
     ReplaceFileButtonCoord,
     DetailsBodyCoord,
     UploadblockCoord,
-    SelectArquivo
+    SelectArquivo,
+    FileListContainer,
+    FileLink,
+    FileItem,  // Novo estilo para cada item de arquivo
+    RemoveButton  // Novo estilo para o botão de exclusão
 } from './DetailsTaskCoord.styles';
 import SaveIcon from '../../../assets/images/SaveIcon.png';
 import { useNavigate } from 'react-router-dom';
@@ -29,19 +32,23 @@ export default function DetailsTaskCoord() {
     const [taskDescription, setTaskDescription] = useState('');
     const [uploadedFile, setUploadedFile] = useState(null);
     const [selectedStatus, setSelectedStatus] = useState('concluido');
+    const [dueDate, setDueDate] = useState('2024-10-10');  // Estado para a data de entrega
+    const [taskFiles, setTaskFiles] = useState([
+        { id: 1, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
+        { id: 2, name: "Arquivo2.docx", url: "/files/Arquivo2.docx" }
+    ]);  // Exemplo de arquivos existentes
 
-    const task = [
-        { name: "Tarefa 1", status: "concluido", dueDate: "2024-10-10" },
-        { name: "Tarefa 2", status: "pendente", dueDate: "2024-10-11" },
-        { name: "Tarefa 3", status: "atrasado", dueDate: "2024-10-12" },
-        { name: "Tarefa 4", status: "em andamento", dueDate: "2024-10-15" },
-    ];
     const handleFileUpload = (e) => {
         setUploadedFile(e.target.files[0]);
     };
 
     const handleFileReplace = () => {
         setUploadedFile(null);
+    };
+
+    // Função para remover arquivos da lista
+    const handleRemoveFile = (fileId) => {
+        setTaskFiles(taskFiles.filter(file => file.id !== fileId));
     };
 
     return (
@@ -52,11 +59,9 @@ export default function DetailsTaskCoord() {
             </DivTitleCoord>
             <MiddleBodyCoord>
                 <ContainerCoord>
-
                     <InputContainerCoord>
                         <ContainerNomeNovoProjeto>
-                            <TitleName>Nome da Tarefa Selecionada*</TitleName>
-
+                            <TitleName>Nome da Tarefa Selecionada</TitleName>
                         </ContainerNomeNovoProjeto>
 
                         <ContainerDescricaoNovoProjeto>
@@ -85,14 +90,15 @@ export default function DetailsTaskCoord() {
                             )}
                         </UploadFieldCoord>
                     </InputContainerCoord>
-                </ContainerCoord>
-                <ContainerCoord>
-                    <TitleCoord>Data de Entrega</TitleCoord>
-                    {/* Adicione aqui o código */}
-                    {/* Exibe a data de entrega da tarefa */}
-                    <p>{task[0].dueDate}</p> {/* Exemplo exibindo a data de entrega da primeira tarefa */}
+                    {/* Seção de edição da data de entrega */}
+                    <TitleName>Data de Entrega</TitleName>
+                    <input
+                        type="date"
+                        value={dueDate}
+                        onChange={(e) => setDueDate(e.target.value)}
+                    />
 
-                    {/* Exibe a seleção de status */}
+                    {/* Seleção de status */}
                     <TitleName>Status da Tarefa</TitleName>
                     <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)}>
                         <option value="concluido">Concluído</option>
@@ -100,13 +106,32 @@ export default function DetailsTaskCoord() {
                         <option value="em andamento">Em Andamento</option>
                         <option value="atrasado">Atrasado</option>
                     </select>
+                    
+                    <TitleName>Arquivos Existentes</TitleName>
+                    <FileListContainer>
+                        {taskFiles.map((file) => (
+                            <FileItem key={file.id}>
+                                <FileLink href={file.url} download>
+                                    {file.name}
+                                </FileLink>
+                                <RemoveButton onClick={() => handleRemoveFile(file.id)}>
+                                    Remover
+                                </RemoveButton>
+                            </FileItem>
+                        ))}
+                    </FileListContainer>
                 </ContainerCoord>
 
+                <ContainerCoord>
+                    
+                    {/* Lista de arquivos existentes com opção de remoção */}
+                   
+                </ContainerCoord>
             </MiddleBodyCoord>
+
             <SaveBlockCoord>
                 <SaveContainerCoord>
-                    <SaveImageCoord onClick={() => navigate('/homeCoord')}
-                        src={SaveIcon} alt='save-a' />
+                    <SaveImageCoord onClick={() => navigate('/homeCoord')} src={SaveIcon} alt='save-a' />
                     <SaveTitleCoord>Salvar</SaveTitleCoord>
                 </SaveContainerCoord>
             </SaveBlockCoord>
