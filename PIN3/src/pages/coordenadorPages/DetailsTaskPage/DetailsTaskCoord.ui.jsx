@@ -22,7 +22,10 @@ import {
     FileListContainer,
     FileLink,
     FileItem,  // Novo estilo para cada item de arquivo
-    RemoveButton  // Novo estilo para o botão de exclusão
+    RemoveButton,  // Novo estilo para o botão de exclusão
+    DateFileCoord,
+    DateInput,
+    ArquivoInput
 } from './DetailsTaskCoord.styles';
 import SaveIcon from '../../../assets/images/SaveIcon.png';
 import { useNavigate } from 'react-router-dom';
@@ -33,10 +36,16 @@ export default function DetailsTaskCoord() {
     const [uploadedFile, setUploadedFile] = useState(null);
     const [selectedStatus, setSelectedStatus] = useState('concluido');
     const [dueDate, setDueDate] = useState('2024-10-10');  // Estado para a data de entrega
+    
     const [taskFiles, setTaskFiles] = useState([
         { id: 1, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
+        { id: 1, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
+        { id: 2, name: "Arquivo2.docx", url: "/files/Arquivo2.docx" },
+        { id: 1, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
+        { id: 2, name: "Arquivo2.docx", url: "/files/Arquivo2.docx" },
+        { id: 1, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
         { id: 2, name: "Arquivo2.docx", url: "/files/Arquivo2.docx" }
-    ]);  // Exemplo de arquivos existentes
+    ]);  
 
     const handleFileUpload = (e) => {
         setUploadedFile(e.target.files[0]);
@@ -79,7 +88,7 @@ export default function DetailsTaskCoord() {
                         <UploadFieldCoord>
                             <TitleName>Arquivo da Tarefa</TitleName>
                             {!uploadedFile ? (
-                                <input type="file" onChange={handleFileUpload} />
+                                <ArquivoInput type="file" onChange={handleFileUpload} />
                             ) : (
                                 <UploadblockCoord>
                                     <SelectArquivo>Arquivo: {uploadedFile.name}</SelectArquivo>
@@ -92,11 +101,13 @@ export default function DetailsTaskCoord() {
                     </InputContainerCoord>
                     {/* Seção de edição da data de entrega */}
                     <TitleName>Data de Entrega</TitleName>
-                    <input
+                    <DateFileCoord>
+                    <DateInput
                         type="date"
                         value={dueDate}
                         onChange={(e) => setDueDate(e.target.value)}
                     />
+                    </DateFileCoord>
 
                     {/* Seleção de status */}
                     <TitleName>Status da Tarefa</TitleName>
@@ -125,16 +136,16 @@ export default function DetailsTaskCoord() {
                 <ContainerCoord>
                     
                     {/* Lista de arquivos existentes com opção de remoção */}
-                   
-                </ContainerCoord>
-            </MiddleBodyCoord>
-
-            <SaveBlockCoord>
+                    <SaveBlockCoord>
                 <SaveContainerCoord>
                     <SaveImageCoord onClick={() => navigate('/homeCoord')} src={SaveIcon} alt='save-a' />
                     <SaveTitleCoord>Salvar</SaveTitleCoord>
                 </SaveContainerCoord>
             </SaveBlockCoord>
+                </ContainerCoord>
+            </MiddleBodyCoord>
+
+           
         </DetailsBodyCoord>
     );
 }

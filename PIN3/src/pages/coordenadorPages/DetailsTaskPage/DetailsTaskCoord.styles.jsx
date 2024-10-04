@@ -73,7 +73,7 @@ export const ContainerNomeNovoProjeto = styled.div.attrs({
   className: "nome-projeto",
 })`
   display: flex;
-  margin-bottom: 20px;
+  margin:0px;
   flex-direction: column;
   width: 100%;
 `;
@@ -81,7 +81,7 @@ export const ContainerDescricaoNovoProjeto = styled.div.attrs({
   className: "descricao-projeto",
 })`
   display: flex;
-  margin-bottom: 20px;
+  
   flex-direction: column;
   width: 100%;
 `;
@@ -116,20 +116,21 @@ export const UploadFieldCoord = styled.div.attrs({
 })`
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  
 `;
 export const UploadblockCoord = styled.div.attrs({
   className: "upload-block-coord",
 })`
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  
+  
 `;
-export const SelectArquivo = styled.p.attrs({
+export const SelectArquivo = styled.div.attrs({
   className: "upload-block-coord",
 })`
   display: flex;
-  
+ 
 `;
 
 export const ReplaceFileButtonCoord = styled.button.attrs({
@@ -192,7 +193,27 @@ export const FileListContainer = styled.div.attrs({
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 10px;
+  width:100%;
+
+  max-height: 170px; 
+  overflow-y: auto;   
+  padding-right: 5px; 
+
+  
+
+ &::-webkit-scrollbar {
+    height: 8px;
+    background-color:#132979;
+    border-radius: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: white;
+    height: 8px; 
+    border: 2px solid #132979; 
+    border-radius: 10px;
+  }
+
 `;
 
 export const FileLink = styled.a.attrs({
@@ -218,15 +239,38 @@ export const FileItem = styled.div.attrs({
 export const RemoveButton = styled.button.attrs({
   className: "remove-button",
 })`
-  background-color: #ff5c5c;
+  background-color: #c00202;
   color: white;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
   font-weight: bold;
   border-radius: 5px;
-
+  margin-left:20px;
   &:hover {
     background-color: #ff1f1f;
   }
+`;
+export const DateFileCoord = styled.div.attrs({
+  className: "date-field-coord",
+})`
+  display: flex;
+  flex-direction: column;
+  height: 30px;
+`;
+export const DateInput = styled.input.attrs({
+  className: "date-input",
+  type: "date",
+})`
+  font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+`;
+export const ArquivoInput = styled.input.attrs({
+  className: "date-input",
+})`
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color:#ccc;
 `;
