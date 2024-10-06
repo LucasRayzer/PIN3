@@ -12,6 +12,8 @@ import NewProjectCoord from './pages/coordenadorPages/NovoProjetoPage/NewProject
 import SettingsPage from './pages/settingPage/SettingPage.ui'
 import DetailsPage from './pages/coordenadorPages/DetailsProjectPage/DetailsProjectCoord.ui'
 import DetailsTaskPage from './pages/coordenadorPages/DetailsTaskPage/DetailsTaskCoord.ui'
+import NewTaskPage from './pages/coordenadorPages/NewTaskPage/NewTaskCoord.ui'
+
 
 export default function TarefasApp() {
   const [count, setCount] = useState(0)
@@ -30,6 +32,7 @@ export default function TarefasApp() {
     <Route path="/settings" element={<SettingsPage/>} />
     <Route path="/detalhesProjeto" element={<DetailsPage/>} />
     <Route path="/detalhesTarefa" element={<DetailsTaskPage/>} />
+    <Route path="/novaTarefa" element={<NewTaskPage/>} />
 
     </Routes>
     </BrowserRouter>
