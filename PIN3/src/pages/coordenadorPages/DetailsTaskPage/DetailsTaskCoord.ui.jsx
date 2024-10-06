@@ -21,11 +21,16 @@ import {
     SelectArquivo,
     FileListContainer,
     FileLink,
-    FileItem,  // Novo estilo para cada item de arquivo
-    RemoveButton,  // Novo estilo para o botão de exclusão
+    FileItem,
+    RemoveButton,
     DateFileCoord,
     DateInput,
-    ArquivoInput
+    ArquivoInput,
+    ParticipantListCoord,
+    ParticipantItemCoord,
+    ChangeResponsibleButton,
+    ResponsibleContainer,
+    ResponsibleName,
 } from './DetailsTaskCoord.styles';
 import SaveIcon from '../../../assets/images/SaveIcon.png';
 import { useNavigate } from 'react-router-dom';
@@ -36,16 +41,26 @@ export default function DetailsTaskCoord() {
     const [uploadedFile, setUploadedFile] = useState(null);
     const [selectedStatus, setSelectedStatus] = useState('concluido');
     const [dueDate, setDueDate] = useState('2024-10-10');  // Estado para a data de entrega
-    
+
     const [taskFiles, setTaskFiles] = useState([
         { id: 1, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
-        { id: 1, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
-        { id: 2, name: "Arquivo2.docx", url: "/files/Arquivo2.docx" },
-        { id: 1, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
-        { id: 2, name: "Arquivo2.docx", url: "/files/Arquivo2.docx" },
-        { id: 1, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
-        { id: 2, name: "Arquivo2.docx", url: "/files/Arquivo2.docx" }
-    ]);  
+        { id: 2, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
+        { id: 3, name: "Arquivo2.docx", url: "/files/Arquivo2.docx" },
+        { id: 4, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
+        { id: 5, name: "Arquivo2.docx", url: "/files/Arquivo2.docx" },
+        { id: 6, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
+        { id: 7, name: "Arquivo2.docx", url: "/files/Arquivo2.docx" }
+    ]);
+    const [responsible, setResponsible] = useState("Nome do Responsável Atual");
+    const [participants, setParticipants] = useState([
+        { id: 1, name: "Aluno 1", role: "Estudante" },
+        { id: 2, name: "Aluno 2", role: "Estudante" },
+        { id: 3, name: "Aluno 3", role: "Estudante" },
+        { id: 4, name: "Aluno 2", role: "Estudante" },
+        { id: 5, name: "Aluno 3", role: "Estudante" },
+    ]);
+    const [selectedParticipantId, setSelectedParticipantId] = useState(null);
+
 
     const handleFileUpload = (e) => {
         setUploadedFile(e.target.files[0]);
@@ -58,6 +73,13 @@ export default function DetailsTaskCoord() {
     // Função para remover arquivos da lista
     const handleRemoveFile = (fileId) => {
         setTaskFiles(taskFiles.filter(file => file.id !== fileId));
+    };
+    // Função para alterar o responsável
+    const handleResponsibleChange = () => {
+        if (selectedParticipantId !== null) {
+            const newResponsible = participants.find(participant => participant.id === selectedParticipantId)?.name;
+            setResponsible(newResponsible);
+        }
     };
 
     return (
@@ -102,11 +124,11 @@ export default function DetailsTaskCoord() {
                     {/* Seção de edição da data de entrega */}
                     <TitleName>Data de Entrega</TitleName>
                     <DateFileCoord>
-                    <DateInput
-                        type="date"
-                        value={dueDate}
-                        onChange={(e) => setDueDate(e.target.value)}
-                    />
+                        <DateInput
+                            type="date"
+                            value={dueDate}
+                            onChange={(e) => setDueDate(e.target.value)}
+                        />
                     </DateFileCoord>
 
                     {/* Seleção de status */}
@@ -117,7 +139,7 @@ export default function DetailsTaskCoord() {
                         <option value="em andamento">Em Andamento</option>
                         <option value="atrasado">Atrasado</option>
                     </select>
-                    
+
                     <TitleName>Arquivos Existentes</TitleName>
                     <FileListContainer>
                         {taskFiles.map((file) => (
@@ -134,18 +156,38 @@ export default function DetailsTaskCoord() {
                 </ContainerCoord>
 
                 <ContainerCoord>
-                    
-                    {/* Lista de arquivos existentes com opção de remoção */}
+                    {/* Aqui deve ser incluído os novos itensque te pedi */}
+                    <TitleName>Responsável pela Tarefa</TitleName>
+                    <ResponsibleContainer>
+                        <ResponsibleName>{responsible}</ResponsibleName>
+                    </ResponsibleContainer>
+
+                    <ParticipantListCoord>
+                        {participants.map((participant) => (
+                            <ParticipantItemCoord key={participant.id}>
+                                <span>{participant.name} <small>{participant.role}</small></span>
+                                <input
+                                    type="radio"
+                                    checked={selectedParticipantId === participant.id}
+                                    onChange={() => setSelectedParticipantId(participant.id)}
+                                />
+                            </ParticipantItemCoord>
+                        ))}
+                    </ParticipantListCoord>
+
+                    <ChangeResponsibleButton onClick={handleResponsibleChange}>
+                        Alterar Responsável
+                    </ChangeResponsibleButton>
                     <SaveBlockCoord>
-                <SaveContainerCoord>
-                    <SaveImageCoord onClick={() => navigate('/homeCoord')} src={SaveIcon} alt='save-a' />
-                    <SaveTitleCoord>Salvar</SaveTitleCoord>
-                </SaveContainerCoord>
-            </SaveBlockCoord>
+                        <SaveContainerCoord>
+                            <SaveImageCoord onClick={() => navigate('/homeCoord')} src={SaveIcon} alt='save-a' />
+                            <SaveTitleCoord>Salvar</SaveTitleCoord>
+                        </SaveContainerCoord>
+                    </SaveBlockCoord>
                 </ContainerCoord>
             </MiddleBodyCoord>
 
-           
+
         </DetailsBodyCoord>
     );
 }

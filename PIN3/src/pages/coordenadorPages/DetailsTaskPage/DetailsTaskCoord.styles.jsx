@@ -16,7 +16,7 @@ export const ContainerCoord = styled.div.attrs({
 })`
   display: flex;
   flex-direction: column;
-  align-items: start;
+  
   padding: 20px;
   width:100%;
   
@@ -93,7 +93,7 @@ export const InputFieldCoord = styled.input.attrs({
   height:20px;
   padding: 10px;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  border:  1px solid #132979;;
   border-radius: 5px;
   margin-top: 5px;
 `;
@@ -105,7 +105,7 @@ export const TextAreaFieldCoord = styled.textarea.attrs({
   height:110px;
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid #132979;
   border-radius: 5px;
   margin-top: 5px;
   resize: none;
@@ -166,7 +166,7 @@ export const SaveContainerCoord = styled.div.attrs({
  align-items:center;
  justify-content:end;
  width:100px;
- margin-top:150px;
+ margin-top:10px;
  
 `;
 
@@ -185,7 +185,7 @@ export const SaveBlockCoord = styled.h3.attrs({
   display: flex;
   align-items:end;
   justify-content:end;
-  margin-right:20px;
+  
 `;
 export const FileListContainer = styled.div.attrs({
   className: "file-list-container",
@@ -273,4 +273,105 @@ export const ArquivoInput = styled.input.attrs({
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color:#ccc;
+`;
+export const ParticipantListCoord = styled.div.attrs({
+  className: "participant-list-coord",
+})`
+  display:flex;
+  flex-direction:column;
+  width: 100%; 
+  background-color: #fff; 
+  border-radius: 12px;
+  max-height: 200px; 
+  overflow-y: auto; 
+  padding: 5px; 
+  border: 1px solid #132979;
+  
+  label {
+    font-size: 1rem;
+    color: #132979;
+  }
+
+  
+  scrollbar-width: thin; 
+  scrollbar-color: #132979 #e0e0e0;
+
+  &::-webkit-scrollbar {
+    width: 8px; 
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #132979; 
+    border-radius: 12px; 
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #e0e0e0; 
+  }
+`;
+
+export const ParticipantItemCoord = styled.div.attrs({
+  className: "participant-item-coord",
+})`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-bottom: 1px solid #132979; 
+
+  span {
+    font-size: 16px;
+    color: #132979;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  input {
+    margin-left: auto; 
+  }
+
+  img {
+    width: 40px; 
+    height: 40px;
+  }
+`;
+
+export const ChangeResponsibleButton = styled.button.attrs({
+  className: "change-responsible-button",
+})`
+  background-color: #132979;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+  margin-top: 10px;
+
+  &:hover {
+    background-color: #0d2168;
+  }
+`;
+export const ResponsibleContainer = styled.div.attrs({
+  className: "responsible-container",
+})`
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  height:40px;
+  background-color: #ffffff;
+  border: 1px solid #132979;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  width: 100%;
+  
+`;
+
+export const ResponsibleName = styled.span.attrs({
+  className: "responsible-name",
+})`
+  font-size: 18px;
+  color: #132979;
+  font-weight: bold;
 `;
