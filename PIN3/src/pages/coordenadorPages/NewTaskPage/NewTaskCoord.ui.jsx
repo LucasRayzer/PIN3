@@ -13,10 +13,10 @@ import {
     ContainerDescricaoNewTask,
     ContainerParticipantesNewTask,
     MiddleBodyTask,
-    SaveContainerTask,
-    SaveImageTask,
-    SaveTitleTask,
-    SaveBlockTask,
+    SaveContainerTaskCoord,
+    SaveImageTaskCoord,
+    SaveTitleTaskCoord,
+    SaveBlockTaskCoord,
     DivTitleTask,
     TitleTask,
     TitleName,
@@ -26,6 +26,9 @@ import {
     FileLink,
     RemoveButton,
     FileListContainer,
+    ResponsibleName,
+    ResponsibleContainer,
+    ChangeResponsibleButton,
 } from './NewTaskCoord.styles';
 import SaveIcon from '../../../assets/images/SaveIcon.png';
 import userFoto from '../../../assets/images/user_Default_Avatar.png';
@@ -40,12 +43,15 @@ export default function NewTaskPage() {
     const [participantNumber, setParticipantNumber] = useState(0);
     const [responsible, setResponsible] = useState('');
     const [uploadedFile, setUploadedFile] = useState(null);
-    const participants = [
-        { id: 1, name: "Participante 01", role: "Aluno" },
-        { id: 2, name: "Participante 02", role: "Aluno" },
-        { id: 3, name: "Participante 03", role: "Aluno" },
-        { id: 4, name: "Participante 04", role: "Aluno" }
-    ];
+    const [participants, setParticipants] = useState([
+        { id: 1, name: "Aluno 1", role: "Estudante" },
+        { id: 2, name: "Aluno 2", role: "Estudante" },
+        { id: 3, name: "Aluno 3", role: "Estudante" },
+        { id: 4, name: "Aluno 2", role: "Estudante" },
+        { id: 5, name: "Aluno 3", role: "Estudante" },
+    ]);
+    const [selectedParticipantId, setSelectedParticipantId] = useState(null);
+
 
     const [taskFiles, setTaskFiles] = useState([
         { id: 1, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
@@ -62,14 +68,13 @@ export default function NewTaskPage() {
         setTaskFiles(taskFiles.filter(file => file.id !== fileId));
     };
 
-    const handleParticipantSelection = (id) => {
-        if (selectedParticipants.includes(id)) {
-            setSelectedParticipants(selectedParticipants.filter(p => p !== id));
-        } else {
-            setSelectedParticipants([...selectedParticipants, id]);
-        }
-    };
-
+   // Função para alterar o responsável
+   const handleResponsibleChange = () => {
+    if (selectedParticipantId !== null) {
+        const newResponsible = participants.find(participant => participant.id === selectedParticipantId)?.name;
+        setResponsible(newResponsible);
+    }
+};
     return (
         <NewTaskBody>
             <NavHeader />
@@ -131,47 +136,39 @@ export default function NewTaskPage() {
                 </ContainerTask>
 
                 <ContainerTask>
-                  
-
                     <ContainerParticipantesNewTask>
-                        <TitleName>Selecione os Participantes*</TitleName>
-                        <ParticipantListTask>
-                            {participants.map(participant => (
-                                <ParticipantItemTask key={participant.id}>
-                                    <img src={userFoto} alt="Participante" />
-                                    <span>{participant.name} <small>{participant.role}</small></span>
-                                    <input
-                                        type="checkbox"
-                                        checked={selectedParticipants.includes(participant.id)}
-                                        onChange={() => handleParticipantSelection(participant.id)}
-                                    />
-                                </ParticipantItemTask>
-                            ))}
-                        </ParticipantListTask>
-                    </ContainerParticipantesNewTask>
+                    <TitleName>Responsável pela Tarefa</TitleName>
+                    <ResponsibleContainer>
+                        <ResponsibleName>{responsible}</ResponsibleName>
+                    </ResponsibleContainer>
 
-                    <ContainerParticipantesNewTask>
-                        <TitleName>Atribuir Responsável*</TitleName>
-                        <SelectBoxTask
-                            value={responsible}
-                            onChange={(e) => setResponsible(e.target.value)}
-                        >
-                            <option value="">Selecione o responsável</option>
-                            {participants.map(participant => (
-                                <option key={participant.id} value={participant.id}>
-                                    {participant.name}
-                                </option>
-                            ))}
-                        </SelectBoxTask>
+                    <ParticipantListTask>
+                        {participants.map((participant) => (
+                            <ParticipantItemTask key={participant.id}>
+                                <img src={userFoto} alt="Participante" />
+                                <span>{participant.name} <small>{participant.role}</small></span>
+                                <input
+                                    type="radio"
+                                    checked={selectedParticipantId === participant.id}
+                                    onChange={() => setSelectedParticipantId(participant.id)}
+                                />
+                            </ParticipantItemTask>
+                        ))}
+                    </ParticipantListTask>
+
+                    <ChangeResponsibleButton onClick={handleResponsibleChange}>
+                        Alterar Responsável
+                    </ChangeResponsibleButton>
                     </ContainerParticipantesNewTask>
+                    <SaveBlockTaskCoord>
+                        <SaveContainerTaskCoord>
+                            <SaveImageTaskCoord onClick={() => navigate('/homeCoord')} src={SaveIcon} alt='save-a' />
+                            <SaveTitleTaskCoord>Salvar</SaveTitleTaskCoord>
+                        </SaveContainerTaskCoord>
+                    </SaveBlockTaskCoord>
                 </ContainerTask>
             </MiddleBodyTask>
-            <SaveBlockTask>
-                <SaveContainerTask>
-                    <SaveImageTask onClick={() => navigate('/homeCoord')} src={SaveIcon} alt='save-a' />
-                    <SaveTitleTask>Salvar</SaveTitleTask>
-                </SaveContainerTask>
-            </SaveBlockTask>
+        
         </NewTaskBody>
     );
 }

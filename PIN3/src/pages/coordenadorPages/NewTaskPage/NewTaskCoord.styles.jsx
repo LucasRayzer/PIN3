@@ -255,36 +255,44 @@ export const MiddleBodyTask = styled.div.attrs({
     background-color: #f0f2f5;
 `;
 
-export const SaveBlockTask = styled.div.attrs({
-    className: "save-block-task",
-})`
+export const SaveImageTaskCoord = styled.img.attrs({
+    className: "save-novo-projeto-image",
+  })`
     display: flex;
-    justify-content: end;
-    margin: 40px;
-`;
-
-export const SaveContainerTask = styled.div.attrs({
-    className: "save-container-task",
-})`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    height:80px;
+    width:80px;
     cursor: pointer;
-`;
-
-export const SaveImageTask = styled.img.attrs({
-    className: "save-image-task",
-})`
-    width: 40px;
-`;
-
-export const SaveTitleTask = styled.p.attrs({
-    className: "save-title-task",
-})`
-    font-size: 12px;
-    font-weight: bold;
-    color: #132979;
-`;
+  `;
+  
+  export const SaveContainerTaskCoord = styled.div.attrs({
+    className: "save-novo-projeto-container",
+  })`
+   display:flex;
+   flex-direction:column;
+   align-items:center;
+   justify-content:end;
+   width:100px;
+   margin-top:10px;
+   
+  `;
+  
+  export const SaveTitleTaskCoord = styled.h3.attrs({
+    className: "save-novo-projeto-title",
+  })`
+    display: flex;
+    font-size: 18px;
+    text-align:center;
+    color:#132979;
+  `;
+  
+  export const SaveBlockTaskCoord = styled.h3.attrs({
+    className: "save-novo-projeto-title",
+  })`
+    display: flex;
+    align-items:end;
+    justify-content:end;
+    
+  `;
 
 export const DivTitleTask = styled.div.attrs({
     className: "div-title-task",
@@ -314,3 +322,41 @@ export const TitleName = styled.h1.attrs({
     width: max-content;
     
 `;
+export const ResponsibleContainer = styled.div.attrs({
+    className: "responsible-container",
+  })`
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    height:40px;
+    background-color: #ffffff;
+    border: 1px solid #132979;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    width: 100%;
+    
+  `;
+  
+  export const ResponsibleName = styled.span.attrs({
+    className: "responsible-name",
+  })`
+    font-size: 18px;
+    color: #132979;
+    font-weight: bold;
+  `;
+  export const ChangeResponsibleButton = styled.button.attrs({
+    className: "change-responsible-button",
+  })`
+    background-color: #132979;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 10px;
+  
+    &:hover {
+      background-color: #0d2168;
+    }
+  `;
