@@ -16,7 +16,7 @@ export const ContainerTask = styled.div.attrs({
 })`
     display: flex;
     flex-direction: column;
-    align-items: center;
+    
     padding: 20px;
     width: 100%;
 `;
@@ -99,7 +99,7 @@ export const FileListContainer = styled.div.attrs({
   gap: 10px;
   width:100%;
 
-  max-height: 170px; 
+  max-height: 100px; 
   overflow-y: auto;   
   padding-right: 5px; 
 
@@ -288,7 +288,7 @@ export const SaveImageTaskCoord = styled.img.attrs({
   export const SaveBlockTaskCoord = styled.h3.attrs({
     className: "save-novo-projeto-title",
   })`
-    display: flex;
+    display:flex;
     align-items:end;
     justify-content:end;
     
@@ -359,4 +359,49 @@ export const ResponsibleContainer = styled.div.attrs({
     &:hover {
       background-color: #0d2168;
     }
+  `;
+  export const UploadFieldCoord = styled.div.attrs({
+    className: "upload-field-coord",
+  })`
+    display: flex;
+    flex-direction: column;
+    
+  `;
+  export const UploadblockCoord = styled.div.attrs({
+    className: "upload-block-coord",
+  })`
+    display: flex;
+    flex-direction: column;
+    
+    
+  `;
+  export const SelectArquivo = styled.div.attrs({
+    className: "upload-block-coord",
+  })`
+    display: flex;
+   
+  `;
+  
+  export const ReplaceFileButtonCoord = styled.button.attrs({
+    className: "replace-file-button-coord",
+  })`
+    background-color: #132979;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  
+    &:hover {
+      background-color: #0038d3;
+    }
+  `;
+  export const ArquivoInput = styled.input.attrs({
+    className: "date-input",
+  })`
+    font-size: 14px;
+    
+    border-radius: 5px;
+    
   `;

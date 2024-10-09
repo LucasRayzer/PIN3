@@ -270,9 +270,7 @@ export const ArquivoInput = styled.input.attrs({
   className: "date-input",
 })`
   font-size: 14px;
-  border: 1px solid #ccc;
   border-radius: 5px;
-  background-color:#ccc;
 `;
 export const ParticipantListCoord = styled.div.attrs({
   className: "participant-list-coord",

@@ -29,6 +29,11 @@ import {
     ResponsibleName,
     ResponsibleContainer,
     ChangeResponsibleButton,
+    UploadFieldCoord,
+    UploadblockCoord,
+    SelectArquivo,
+    ReplaceFileButtonCoord,
+    ArquivoInput,
 } from './NewTaskCoord.styles';
 import SaveIcon from '../../../assets/images/SaveIcon.png';
 import userFoto from '../../../assets/images/user_Default_Avatar.png';
@@ -62,7 +67,13 @@ export default function NewTaskPage() {
         { id: 6, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
         { id: 7, name: "Arquivo2.docx", url: "/files/Arquivo2.docx" }
     ]);
+    const handleFileUpload = (e) => {
+        setUploadedFile(e.target.files[0]);
+    };
 
+    const handleFileReplace = () => {
+        setUploadedFile(null);
+    };
     // Função para remover arquivos da lista
     const handleRemoveFile = (fileId) => {
         setTaskFiles(taskFiles.filter(file => file.id !== fileId));
@@ -115,6 +126,19 @@ export default function NewTaskPage() {
                                 onChange={(e) => setTaskDate(e.target.value)}
                             />
                         </ContainerDataNewTask>
+                        <UploadFieldCoord>
+                            <TitleName>Arquivo da Tarefa</TitleName>
+                            {!uploadedFile ? (
+                                <ArquivoInput type="file" onChange={handleFileUpload} />
+                            ) : (
+                                <UploadblockCoord>
+                                    <SelectArquivo>Arquivo: {uploadedFile.name}</SelectArquivo>
+                                    <ReplaceFileButtonCoord onClick={handleFileReplace}>
+                                        Substituir arquivo
+                                    </ReplaceFileButtonCoord>
+                                </UploadblockCoord>
+                            )}
+                        </UploadFieldCoord>
                         <ContainerArquivoNewTask>
                         <TitleName>Arquivos Existentes</TitleName>
                     <FileListContainer>
