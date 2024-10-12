@@ -55,7 +55,7 @@ export default function HomePage() {
                 <ProjectCardAluno
                   key={index}
                   status={project.status}
-                  onClick={() => navigate(`/detalhesProjeto/${project.name}`)}
+                  onClick={() => navigate(`/detalhesProjetoAluno/${project.name}`)}
                 >
                   <ProjectImageAluno src={ProjectIcon} alt='Project-Icon' />
                   <ProjectNameAluno>{project.name}</ProjectNameAluno>

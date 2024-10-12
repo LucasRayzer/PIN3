@@ -401,7 +401,5 @@ export const ResponsibleContainer = styled.div.attrs({
     className: "date-input",
   })`
     font-size: 14px;
-    
-    border-radius: 5px;
-    
+    border-radius: 5px;  
   `;

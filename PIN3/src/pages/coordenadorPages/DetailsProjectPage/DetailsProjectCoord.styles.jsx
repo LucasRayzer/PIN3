@@ -36,7 +36,7 @@ export const ProgressBarCoord = styled.div.attrs({
   overflow: hidden;
 
   .completed {
-    background-color: #132979; /* Cor azul escuro */
+    background-color: #132979; 
     height: 100%;
     transition: width 0.5s ease-in-out;
   }
@@ -46,7 +46,7 @@ export const ProgressBarCoord = styled.div.attrs({
     right: 10px;
     font-size: 14px;
     font-weight: bold;
-    color: #132979; /* Cor do texto */
+    color: #132979; 
   }
 `;
 

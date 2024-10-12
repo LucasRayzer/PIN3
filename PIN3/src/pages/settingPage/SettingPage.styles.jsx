@@ -11,9 +11,6 @@ export const ConfiguracaoBody = styled.div.attrs({
   background-color: #f0f2f5;
 `;
 
-
-
-
 export const ButtonsContainer = styled.div.attrs({
   className: 'buttons-container',
 })`
