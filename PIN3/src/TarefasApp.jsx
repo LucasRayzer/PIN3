@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-rou
 
 import axios from 'axios';
 import RegisterPage from './pages/adminPages/RegisterPage/RegisterPage.ui';
+import LoginPage from './pages/loginPage/LoginPage.ui';
 import HomePageAdm from './pages/adminPages/HomePage/HomePageAdm.ui';
 import HomePageCoord from './pages/coordenadorPages/HomePage/HomePageCoord.ui';
 import HomePageAluno from './pages/alunoPages/HomePage/HomePageAl.ui';
@@ -27,6 +28,7 @@ export default function TarefasApp() {
     <Routes>
     
     <Route path="/registroAdm" element={<RegisterPage />} />
+    <Route path="/login" element={<LoginPage />} />
     <Route path="/homeAdm" element={<HomePageAdm/>} />
     <Route path="/homeCoord" element={<HomePageCoord/>} />
     <Route path="/homeAluno" element={<HomePageAluno/>} />
