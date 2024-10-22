@@ -56,7 +56,7 @@ export default function DetailsProjectCoord() {
         <DetailsBodyCoord>
             <NavHeader />
             <TitleBarSectionCoord>
-                <TitleProjectCoord>Projeto:Nome do projeto aberto Extenso sadasdsasas</TitleProjectCoord>
+                <TitleProjectCoord>Projeto:Nome do projeto aberto Extenso </TitleProjectCoord>
                 <ProgressBarCoord>
                     <div className="completed" style={{ width: `${completedPercentage}%` }} />
                     <span>{`${Math.round(completedPercentage)}%`}</span>
