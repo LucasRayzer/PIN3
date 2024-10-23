@@ -1,4 +1,8 @@
 package PIN3.src.repository;
 
-public interface AlunoRepository {
+
+import PIN3.src.model.Aluno;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AlunoRepository  extends JpaRepository<Aluno, Integer> {
 }

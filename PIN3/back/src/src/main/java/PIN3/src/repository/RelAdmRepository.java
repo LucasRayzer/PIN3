@@ -1,4 +1,7 @@
 package PIN3.src.repository;
 
-public interface RelAdmRepository {
+import PIN3.src.model.RelatorioAdmin;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface RelAdmRepository extends JpaRepository<RelatorioAdmin, Integer> {
 }

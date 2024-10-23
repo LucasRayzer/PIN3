@@ -1,4 +1,8 @@
 package PIN3.src.repository;
 
-public class RelCoordRepository {
+
+import PIN3.src.model.RelatorioCoordenador;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface RelCoordRepository extends JpaRepository<RelatorioCoordenador, Integer> {
 }
