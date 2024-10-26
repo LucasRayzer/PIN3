@@ -1,19 +1,21 @@
 package PIN3.src.model;
 
+import jakarta.persistence.*;
+
 import java.util.Date;
 import java.util.List;
-
+@Entity
 public class Tarefa {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int tarefa_id;
+    @ManyToOne
+    @JoinColumn(name = "projeto_id")
+    private Projeto projeto;
+    @OneToMany(mappedBy = "tarefa_id")
     private List<Documento> documentos;
     private String descricao;
     private Date dataEntrega;
-
-    public Tarefa(List<Documento> documentos, String descricao, Date dataEntrega) {
-        this.documentos = documentos;
-        this.descricao = descricao;
-        this.dataEntrega = dataEntrega;
-    }
 
     public List<Documento> getDocumentos() {
         return documentos;

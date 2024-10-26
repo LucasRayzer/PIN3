@@ -1,25 +1,17 @@
 package PIN3.src.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Usuario {
-    private String usuario;
+
     private String senha;
     private String nome;
     private int tipoUsuario;
 
-    public Usuario(String usuario, String senha, String nome, int tipoUsuario) {
-        this.usuario = usuario;
-        this.senha = senha;
-        this.nome = nome;
-        this.tipoUsuario = tipoUsuario;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
 
     public String getSenha() {
         return senha;
