@@ -10,9 +10,9 @@ public class Tarefa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int tarefa_id;
     @ManyToOne
-    @JoinColumn(name = "projeto_id")
+    @JoinColumn(name = "projetoId")
     private Projeto projeto;
-    @OneToMany(mappedBy = "tarefa_id")
+    @OneToMany(mappedBy = "tarefa")
     private List<Documento> documentos;
     private String descricao;
     private Date dataEntrega;
@@ -39,5 +39,21 @@ public class Tarefa {
 
     public void setDataEntrega(Date dataEntrega) {
         this.dataEntrega = dataEntrega;
+    }
+
+    public int getTarefa_id() {
+        return tarefa_id;
+    }
+
+    public void setTarefa_id(int tarefa_id) {
+        this.tarefa_id = tarefa_id;
+    }
+
+    public Projeto getProjeto() {
+        return projeto;
+    }
+
+    public void setProjeto(Projeto projeto) {
+        this.projeto = projeto;
     }
 }

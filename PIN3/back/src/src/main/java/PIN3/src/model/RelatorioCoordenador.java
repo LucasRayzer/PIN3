@@ -10,7 +10,7 @@ public class RelatorioCoordenador implements Relatorio{
     private Integer relatorioId;
 
     @ManyToOne
-    @JoinColumn(name = "projeto_id") // Nome da coluna de chave estrangeira na tabela RelatorioImpl
+    @JoinColumn(name = "projetoId")
     private Projeto projeto;
 
     @Override
@@ -25,5 +25,13 @@ public class RelatorioCoordenador implements Relatorio{
     @Override
     public void gerarRelatorio() {
 
+    }
+
+    public Integer getRelatorioId() {
+        return relatorioId;
+    }
+
+    public void setRelatorioId(Integer relatorioId) {
+        this.relatorioId = relatorioId;
     }
 }

@@ -9,20 +9,20 @@ public class Projeto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer projeto_id;
+    private Integer projetoId;
     @ManyToOne
-    @JoinColumn(name = "coord_id")
+    @JoinColumn(name = "user_id")
     private Coordenador coordenador;
 
-    @OneToMany(mappedBy = "projeto_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "projeto", cascade = CascadeType.ALL)
     private List<ProjetoAluno> participantes;
 
-    @OneToMany(mappedBy = "projeto_id")
+    @OneToMany(mappedBy = "projeto")
     private List<Tarefa> tarefas;
 
-    @OneToMany(mappedBy = "projeto_id")
+    @OneToMany(mappedBy = "projeto")
     private List<RelatorioAdmin> relatoriosAdmin;
-    @OneToMany(mappedBy = "projeto_id")
+    @OneToMany(mappedBy = "projeto")
     private List<RelatorioCoordenador> relatoriosCoord;
 
     private String nomeProjeto;
@@ -69,12 +69,12 @@ public class Projeto {
         this.descricaoProjeto = descricaoProjeto;
     }
 
-    public Integer getProjeto_id() {
-        return projeto_id;
+    public Integer getProjetoId() {
+        return projetoId;
     }
 
-    public void setProjeto_id(Integer projeto_id) {
-        this.projeto_id = projeto_id;
+    public void setProjetoId(Integer projetoId) {
+        this.projetoId = projetoId;
     }
 
     public List<RelatorioAdmin> getRelatoriosAdmin() {

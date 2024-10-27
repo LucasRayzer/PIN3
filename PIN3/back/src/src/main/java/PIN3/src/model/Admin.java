@@ -7,11 +7,8 @@ import java.util.List;
 @Entity
 public class Admin extends Usuario{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer admin_id;
 
-    @OneToMany(mappedBy = "admin_id")
+    @OneToMany(mappedBy = "user_id")
     private List<Coordenador> listCoord;
 
 
@@ -23,11 +20,4 @@ public class Admin extends Usuario{
         this.listCoord = listCoord;
     }
 
-    public Integer getAdmin_id() {
-        return admin_id;
-    }
-
-    public void setAdmin_id(Integer admin_id) {
-        this.admin_id = admin_id;
-    }
 }

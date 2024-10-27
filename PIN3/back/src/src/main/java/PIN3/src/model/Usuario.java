@@ -11,7 +11,9 @@ public class Usuario {
     private String senha;
     private String nome;
     private int tipoUsuario;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer user_id;
 
     public String getSenha() {
         return senha;
@@ -35,5 +37,13 @@ public class Usuario {
 
     public void setTipoUsuario(int tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
+    }
+
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 }

@@ -14,7 +14,7 @@ public class RelatorioAdmin implements Relatorio{
     private Integer relatorioId;
 
     @ManyToOne
-    @JoinColumn(name = "projeto_id")
+    @JoinColumn(name = "projeto_Id")
     private Projeto projeto;
 
 
@@ -45,5 +45,13 @@ public class RelatorioAdmin implements Relatorio{
 
     public void setDataFim(Date dataFim) {
         this.dataFim = dataFim;
+    }
+
+    public Integer getRelatorioId() {
+        return relatorioId;
+    }
+
+    public void setRelatorioId(Integer relatorioId) {
+        this.relatorioId = relatorioId;
     }
 }

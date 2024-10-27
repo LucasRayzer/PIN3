@@ -2,39 +2,26 @@ package PIN3.src.model;
 
 import jakarta.persistence.*;
 
-@Entity
-public class ProjetoAluno {
+import java.io.Serializable;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer projetAluno_id;
+@Entity
+@Table(name="projeto_aluno")
+public class ProjetoAluno implements Serializable {
+
+    @EmbeddedId
+    private ProjetoAlunoId projetoAluno_id;
+
 
     @ManyToOne
+    @MapsId("projetoId")
     @JoinColumn(name = "projeto_id")
     private Projeto projeto;
 
     @ManyToOne
-    @JoinColumn(name = "aluno_id")
+    @MapsId("alunoId")
+    @JoinColumn(name = "user_id")
     private Aluno aluno;
 
-
-    // Construtor padrão
-    public ProjetoAluno() {}
-
-    // Construtor com parâmetros
-    public ProjetoAluno(Projeto projeto, Aluno aluno) {
-        this.projeto = projeto;
-        this.aluno = aluno;
-
-    }
-
-    public Integer getProjetAluno_id() {
-        return projetAluno_id;
-    }
-
-    public void setProjetAluno_id(Integer projetAluno_id) {
-        this.projetAluno_id = projetAluno_id;
-    }
 
     public Projeto getProjeto() {
         return projeto;
@@ -50,5 +37,13 @@ public class ProjetoAluno {
 
     public void setAluno(Aluno aluno) {
         this.aluno = aluno;
+    }
+
+    public ProjetoAlunoId getProjetoAluno_id() {
+        return projetoAluno_id;
+    }
+
+    public void setProjetoAluno_id(ProjetoAlunoId projetoAluno_id) {
+        this.projetoAluno_id = projetoAluno_id;
     }
 }
