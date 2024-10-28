@@ -12,8 +12,13 @@ public class Tarefa {
     @ManyToOne
     @JoinColumn(name = "projetoId")
     private Projeto projeto;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Aluno aluno;
     @OneToMany(mappedBy = "tarefa")
     private List<Documento> documentos;
+
+    private String nomeTarefa;
     private String descricao;
     private Date dataEntrega;
 
@@ -23,6 +28,14 @@ public class Tarefa {
 
     public void setDocumentos(List<Documento> documentos) {
         this.documentos = documentos;
+    }
+
+    public String getNomeTarefa() {
+        return nomeTarefa;
+    }
+
+    public void setNomeTarefa(String nomeTarefa) {
+        this.nomeTarefa = nomeTarefa;
     }
 
     public String getDescricao() {
@@ -55,5 +68,13 @@ public class Tarefa {
 
     public void setProjeto(Projeto projeto) {
         this.projeto = projeto;
+    }
+
+    public Aluno getAluno() {
+        return aluno;
+    }
+
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
     }
 }

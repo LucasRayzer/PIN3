@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-
+/*DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;*/
 @RestController
 @RequestMapping("/admin")
 public class ControllerAdmin {
