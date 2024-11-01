@@ -21,6 +21,7 @@ public class Tarefa {
     private String nomeTarefa;
     private String descricao;
     private Date dataEntrega;
+    private Integer statusTarefa;
 
     public List<Documento> getDocumentos() {
         return documentos;
@@ -76,5 +77,13 @@ public class Tarefa {
 
     public void setAluno(Aluno aluno) {
         this.aluno = aluno;
+    }
+
+    public Integer getStatusTarefa() {
+        return statusTarefa;
+    }
+
+    public void setStatusTarefa(Integer statusTarefa) {
+        this.statusTarefa = statusTarefa;
     }
 }

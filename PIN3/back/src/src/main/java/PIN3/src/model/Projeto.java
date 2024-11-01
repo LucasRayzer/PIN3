@@ -27,7 +27,15 @@ public class Projeto {
 
     private String nomeProjeto;
     private String descricaoProjeto;
+    private Integer statusProjeto;
 
+    public Integer getStatusProjeto() {
+        return statusProjeto;
+    }
+
+    public void setStatusProjeto(Integer statusProjeto) {
+        this.statusProjeto = statusProjeto;
+    }
 
     public Coordenador getCoordenador() {
         return coordenador;
