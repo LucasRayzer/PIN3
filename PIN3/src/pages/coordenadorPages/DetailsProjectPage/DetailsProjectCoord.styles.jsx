@@ -48,7 +48,7 @@ export const ProgressBarCoord = styled.div.attrs({
   span {
     position: absolute;
     right: 10px;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: bold;
     color: #ffffff;
     -webkit-text-stroke-width: 0.5px;
