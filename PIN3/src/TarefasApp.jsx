@@ -17,6 +17,7 @@ import DetailsPageAluno from './pages/alunoPages/DetailsProjectPage/DetailsProje
 import DetailsTaskPage from './pages/coordenadorPages/DetailsTaskPage/DetailsTaskCoord.ui'
 import DetailsTaskPageAluno from './pages/alunoPages/DetailsTaskPage/DetailsTaskPageAl.ui'
 import NewTaskPage from './pages/coordenadorPages/NewTaskPage/NewTaskCoord.ui'
+import ViewAdminRel from './pages/adminPages/ExibeRelatorio/RelatorioPageView.ui'
 
 
 export default function TarefasApp() {
@@ -35,6 +36,7 @@ export default function TarefasApp() {
     <Route path="/novoRelatorio" element={<RelatorioDatePage/>} />
     <Route path="/novoProjeto" element={<NewProjectCoord/>} />
     <Route path="/relatoriosAdmin" element={<RelatorioList/>} />
+    <Route path="/adminViewRelatorio" element={<ViewAdminRel/>} />
     <Route path="/settings" element={<SettingsPage/>} />
     <Route path="/detalhesProjeto" element={<DetailsPage/>} />
     <Route path="/detalhesTarefa" element={<DetailsTaskPage/>} />

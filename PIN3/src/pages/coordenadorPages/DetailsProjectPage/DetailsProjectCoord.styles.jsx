@@ -30,23 +30,27 @@ export const ProgressBarCoord = styled.div.attrs({
   height: 20px;
   width: 60%;
   max-width: 1000px;
-  background-color: #e0e0e0;
-  border-radius: 25px;
   position: relative;
   overflow: hidden;
+  background-color: #132979; 
+  border-radius: 10px;
+  border: 2px solid #132979;
 
+  
   .completed {
-    background-color: #132979; 
+    background-color: white; 
     height: 100%;
-    transition: width 0.5s ease-in-out;
+    border-radius: 10px;
+    transition: width 0.3s ease;
   }
+
 
   span {
     position: absolute;
     right: 10px;
     font-size: 14px;
     font-weight: bold;
-    color: #132979; 
+    color: #ffffff;
   }
 `;
 
@@ -263,4 +267,11 @@ export const DetailsNameCoord = styled.h2.attrs({
 })`
   display: flex;
   padding-top:20px;
+`;
+export const Span = styled.span.attrs({
+  className: "details-name",
+})`
+  font-size: 14px;
+    font-weight: bold;
+    color: #132979;
 `;
