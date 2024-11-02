@@ -42,15 +42,18 @@ export const ProgressBarAdmin = styled.div.attrs({
     height: 100%;
     border-radius: 10px;
     transition: width 0.3s ease;
+    
   }
 
 
   span {
     position: absolute;
     right: 10px;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: bold;
     color: #ffffff;
+    -webkit-text-stroke-width: 0.5px;
+    -webkit-text-stroke-color: #132979;
   }
 `;
 
