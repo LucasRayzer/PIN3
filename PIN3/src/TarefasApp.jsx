@@ -18,6 +18,7 @@ import DetailsTaskPage from './pages/coordenadorPages/DetailsTaskPage/DetailsTas
 import DetailsTaskPageAluno from './pages/alunoPages/DetailsTaskPage/DetailsTaskPageAl.ui'
 import NewTaskPage from './pages/coordenadorPages/NewTaskPage/NewTaskCoord.ui'
 import ViewAdminRel from './pages/adminPages/ExibeRelatorio/RelatorioPageView.ui'
+import ViewCoordRel from './pages/coordenadorPages/ExibeRelatorio/RelatorioPageView.ui'
 
 
 export default function TarefasApp() {
@@ -27,7 +28,7 @@ export default function TarefasApp() {
   
     <BrowserRouter>
     <Routes>
-    
+    <Route path="/" element={<LoginPage />} />
     <Route path="/registroAdm" element={<RegisterPage />} />
     <Route path="/login" element={<LoginPage />} />
     <Route path="/homeAdm" element={<HomePageAdm/>} />
@@ -37,6 +38,7 @@ export default function TarefasApp() {
     <Route path="/novoProjeto" element={<NewProjectCoord/>} />
     <Route path="/relatoriosAdmin" element={<RelatorioList/>} />
     <Route path="/adminViewRelatorio" element={<ViewAdminRel/>} />
+    <Route path="/coordViewRelatorio" element={<ViewCoordRel/>} />
     <Route path="/settings" element={<SettingsPage/>} />
     <Route path="/detalhesProjeto" element={<DetailsPage/>} />
     <Route path="/detalhesTarefa" element={<DetailsTaskPage/>} />

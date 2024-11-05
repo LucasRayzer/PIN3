@@ -3,6 +3,7 @@ package PIN3.src.model;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
 import java.util.List;
 @Entity
 public class Projeto {
@@ -27,10 +28,28 @@ public class Projeto {
 
     private String nomeProjeto;
     private String descricaoProjeto;
+    private Date dataInicio;
+    private Date dataFim;
     private Integer statusProjeto;
 
     public Integer getStatusProjeto() {
         return statusProjeto;
+    }
+
+    public Date getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(Date dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public Date getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(Date dataFim) {
+        this.dataFim = dataFim;
     }
 
     public void setStatusProjeto(Integer statusProjeto) {

@@ -2,8 +2,11 @@ package PIN3.src.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 @Entity
 public class Tarefa {
     @Id
@@ -21,6 +24,8 @@ public class Tarefa {
     private String nomeTarefa;
     private String descricao;
     private Date dataEntrega;
+    private Date dataInicio;
+    private Date dataFim;
     private Integer statusTarefa;
 
     public List<Documento> getDocumentos() {
@@ -51,9 +56,28 @@ public class Tarefa {
         return dataEntrega;
     }
 
+    public Date getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio( ) {
+        LocalDate dataAtual = LocalDate.now();
+
+        this.dataInicio = java.sql.Date.valueOf(dataAtual);
+    }
+
+    public Date getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(Date dataFim) {
+        this.dataFim = dataFim;
+    }
+
     public void setDataEntrega(Date dataEntrega) {
         this.dataEntrega = dataEntrega;
     }
+
 
     public int getTarefa_id() {
         return tarefa_id;
@@ -85,5 +109,15 @@ public class Tarefa {
 
     public void setStatusTarefa(Integer statusTarefa) {
         this.statusTarefa = statusTarefa;
+    }
+
+    public Long getPrazoEmDias() {
+
+        if (getDataFim() != null && getDataInicio() != null) {
+            long diferencaEmMilissegundos = getDataFim().getTime() - getDataInicio().getTime();
+
+            return TimeUnit.DAYS.convert(diferencaEmMilissegundos, TimeUnit.MILLISECONDS);
+        }
+        return null;
     }
 }
