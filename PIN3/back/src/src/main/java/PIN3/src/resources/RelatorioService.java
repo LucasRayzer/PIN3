@@ -16,30 +16,30 @@ public class RelatorioService {
         int countTarefaConcluida = 0;
         int totalTarefas = projeto.getTarefas().size();
 
-        // Número total de tarefas concluídas
+        //número total de tarefas concluídas
         for (Tarefa t : projeto.getTarefas()) {
             if (t.getStatusTarefa() == 1) {
                 countTarefaConcluida++;
             }
         }
 
-        // Calcule a taxa de conclusão de tarefas
+        //calcule a taxa de conclusão de tarefas
         double taxaConclusao = totalTarefas > 0 ? (countTarefaConcluida / (double) totalTarefas) * 100 : 0;
 
-        // Status atual do projeto
+        //status atual do projeto
         int statusProjeto = projeto.getStatusProjeto();
 
-        // Prazo restante ou atraso
+        //prazo restante ou atraso
         LocalDate dataFim = projeto.getDataFim().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         long diasRestantes = ChronoUnit.DAYS.between(LocalDate.now(), dataFim);
 
-        // Progresso estimado do projeto em porcentagem
+        //progresso estimado do projeto
         double progressoProjeto = totalTarefas > 0 ? (countTarefaConcluida / (double) totalTarefas) * 100 : 0;
 
-        // Nome do Coordenador
+        //nome do Coordenador
         String nomeCoordenador = projeto.getCoordenador() != null ? projeto.getCoordenador().getNome() : "Coordenador não atribuído";
 
-        // Lista de nomes dos participantes
+        //nomes dos participantes
         List<String> nomesParticipantes = new ArrayList<>();
         for (ProjetoAluno projetoAluno : projeto.getParticipantes()) {
             if (projetoAluno.getAluno() != null) {
@@ -47,7 +47,7 @@ public class RelatorioService {
             }
         }
 
-        // Exemplo de impressão das métricas
+
         System.out.println("Relatório do Projeto: " + projeto.getNomeProjeto());
         System.out.println("Coordenador: " + nomeCoordenador);
         System.out.println("Participantes: " + nomesParticipantes);
@@ -66,13 +66,13 @@ public class RelatorioService {
             if (t.getStatusTarefa() == 1) {
                 countTarefaConcluida++;
 
-                // Calcular o tempo de conclusão da tarefa
+                //tempo de conclusão da tarefa
                 LocalDate dataInicioTarefa = t.getDataInicio().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 LocalDate dataEntregaTarefa = t.getDataEntrega().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 long diasConclusao = ChronoUnit.DAYS.between(dataInicioTarefa, dataEntregaTarefa);
                 tempoTotalConclusao += diasConclusao;
 
-                // Verificar se a tarefa foi concluída dentro do prazo
+                //tarefa foi concluída dentro do prazo
                 LocalDate prazoTarefa = dataInicioTarefa.plusDays(t.getPrazoEmDias());
 
                 if (!dataEntregaTarefa.isAfter(prazoTarefa)) {
@@ -81,13 +81,13 @@ public class RelatorioService {
             }
         }
 
-        // Tempo médio de conclusão (Velocidade)
+        // Tempo médio de conclusão
         double tempoMedioConclusao = countTarefaConcluida > 0 ? (double) tempoTotalConclusao / countTarefaConcluida : 0;
 
-        // Percentual de tarefas concluídas dentro do prazo
+        //Percentual de tarefas concluídas dentro do prazo
         double percentualDentroPrazo = totalTarefas > 0 ? (tarefasDentroPrazo / (double) totalTarefas) * 100 : 0;
 
-        // Exemplo de exibição das métricas de desempenho
+
         System.out.println("Desempenho da Equipe:");
         System.out.println("Tempo Médio de Conclusão das Tarefas: " + tempoMedioConclusao + " dias");
         System.out.println("Percentual de Tarefas Concluídas dentro do Prazo: " + percentualDentroPrazo + "%");

@@ -54,7 +54,7 @@ public class ControllerRelAdm {
 
         List<Projeto> projetos = projetoRepository.findByDataInicioBetween(dataInicio, dataFim);
         projetos.forEach(projeto -> {
-            // Chame o método que gera o relatório para cada projeto
+
             relatorioService.gerarRelatorioProjeto(projeto);
         });
         return ResponseEntity.ok("Relatórios gerados com sucesso!");
