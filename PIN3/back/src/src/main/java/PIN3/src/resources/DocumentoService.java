@@ -18,7 +18,7 @@ public class DocumentoService {
     @Autowired
     private TarefaRepository tarefaRepository;
 
-    // Salva um arquivo PDF no banco de dados
+    //salva um arquivo PDF no banco de dados
     public Documento salvarDocumento(MultipartFile arquivo, long tamanho, int id) throws IOException {
         Documento documento = new Documento();
         documento.setTamanho(tamanho);
@@ -28,7 +28,7 @@ public class DocumentoService {
         return documentoRepository.save(documento);
     }
 
-    // Recupera um documento pelo ID
+    //recupera um documento pelo ID
     public Documento obterDocumento(Integer id) {
         return documentoRepository.findById(id).orElse(null);
     }
