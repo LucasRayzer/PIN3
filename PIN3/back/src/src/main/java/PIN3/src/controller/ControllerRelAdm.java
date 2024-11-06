@@ -30,7 +30,6 @@ public class ControllerRelAdm {
     @Autowired
     private RelatorioService relatorioService;
 
-
     @PostMapping("/novoRelAdmin")
     public ResponseEntity<RelatorioAdmin> createRelAdmin(@Valid @RequestBody RelatorioAdmin relatorioAdmin){
         RelatorioAdmin savedRelAdmin = relAdmRepository.save(relatorioAdmin);
@@ -57,6 +56,7 @@ public class ControllerRelAdm {
 
             relatorioService.gerarRelatorioProjeto(projeto);
         });
+
         return ResponseEntity.ok("Relatórios gerados com sucesso!");
     }
 
