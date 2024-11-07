@@ -41,15 +41,15 @@ public class ControllerRelAdm {
     }
     @GetMapping("/projetos")
     public List<Projeto> getProjetosPorPeriodo(
-            @RequestParam("dataInicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
-            @RequestParam("dataFim") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim) {
+            @RequestParam("dataInicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dataInicio,
+            @RequestParam("dataFim") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dataFim) {
 
         return projetoRepository.findByDataInicioBetween(dataInicio, dataFim);
     }
     @GetMapping("/relatorios")
     public ResponseEntity<?> gerarRelatoriosPorPeriodo(
-            @RequestParam("dataInicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
-            @RequestParam("dataFim") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim) {
+            @RequestParam("dataInicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dataInicio,
+            @RequestParam("dataFim") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dataFim) {
 
         List<Projeto> projetos = projetoRepository.findByDataInicioBetween(dataInicio, dataFim);
         projetos.forEach(projeto -> {

@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/tarefa")
@@ -58,6 +59,30 @@ public class ControllerTarefa {
             return ResponseEntity.ok(documentos);
         } else
             throw new Exception("Não foi possível encontrar a tarefa");
+    }
+    @PutMapping("/{id}/update")
+    public ResponseEntity<Tarefa> updateTarefa(@PathVariable int id, @Valid @RequestBody Tarefa tarefaAtualizada) {
+        Optional<Tarefa> tarefaExistenteOpt = tarefaRepository.findById(id);
+
+        if (tarefaExistenteOpt.isPresent()) {
+            Tarefa tarefaExistente = tarefaExistenteOpt.get();
+
+            // Atualizando os campos da tarefa existente com os valores da nova tarefa
+            tarefaExistente.setNomeTarefa(tarefaAtualizada.getNomeTarefa());
+            tarefaExistente.setDescricao(tarefaAtualizada.getDescricao());
+            tarefaExistente.setDataEntrega(tarefaAtualizada.getStatusTarefa());
+            tarefaExistente.setDataFim(tarefaAtualizada.getDataFim());
+            tarefaExistente.setStatusTarefa(tarefaAtualizada.getStatusTarefa());
+            tarefaExistente.setAluno(tarefaAtualizada.getAluno());
+            tarefaExistente.setDocumentos(tarefaAtualizada.getDocumentos());
+
+            // Salvando a tarefa atualizada no banco de dados
+            tarefaRepository.save(tarefaExistente);
+
+            return ResponseEntity.ok(tarefaExistente);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

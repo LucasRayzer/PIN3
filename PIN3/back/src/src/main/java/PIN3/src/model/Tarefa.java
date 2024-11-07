@@ -74,8 +74,13 @@ public class Tarefa {
         this.dataFim = dataFim;
     }
 
-    public void setDataEntrega(Date dataEntrega) {
-        this.dataEntrega = dataEntrega;
+    public void setDataEntrega(Integer statusTarefa) {
+        this.statusTarefa = statusTarefa;
+
+        // Definindo a data de entrega automaticamente se o status for alterado para "concluído"
+        if (statusTarefa != null && statusTarefa == 1) { // Supondo que 1 representa "concluído"
+            this.dataEntrega = new Date();
+        }
     }
 
 
