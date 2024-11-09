@@ -34,20 +34,32 @@ const fetchParticipants = async (projetoId) => {
         return [];
     }
 };
+const fetchProjetoData = async (projetoId) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/projeto/1`);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao buscar dados da API', error);
+      return [];
+    }
+  };
 
 export default function DetailsProjectAluno() {
     const navigate = useNavigate();
     const { alunoId, projetoId } = useParams();
     const [tasks, setTasks] = useState([]);
     const [participants, setParticipants] = useState([]);
+    const [projeto, setProjeto] = useState([]);
 
     useEffect(() => {
         const loadTasksAndParticipants = async () => {
             const tasksData = await fetchTasks(alunoId);
             setTasks(tasksData);
-
+            
             const participantsData = await fetchParticipants(projetoId);
             setParticipants(participantsData);
+            const projetoData = await fetchProjetoData(projetoId);
+            setProjeto(projetoData);
         };
         loadTasksAndParticipants();
     }, [alunoId, projetoId]);
@@ -59,7 +71,7 @@ export default function DetailsProjectAluno() {
         <DetailsBodyAluno>
             <NavHeader />
             <TitleBarSectionAluno>
-                <TitleProjectAluno>Projeto: Nome do projeto aberto Extenso sadasdsasas</TitleProjectAluno>
+                <TitleProjectAluno>{projeto.nomeProjeto}</TitleProjectAluno>
                 <ProgressBarAluno>
                     <div className="completed" style={{ width: `${completedPercentage}%` }} />
                     <span>{`${Math.round(completedPercentage)}%`}</span>

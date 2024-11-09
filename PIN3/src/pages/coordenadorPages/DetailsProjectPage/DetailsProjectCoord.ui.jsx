@@ -1,5 +1,5 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import NavHeader from '../../../components/HeaderMenu/NavHeader.ui';
 import {
     DetailsBodyCoord, DetailsContainerCoord, ProgressBarCoord, TasksSectionCoord, ParticipantsSectionCoord,
@@ -14,41 +14,58 @@ import {
     TitleProjectCoord
 } from './DetailsProjectCoord.styles';
 import DetailsIcon from '../../../assets/images/TarefaIcon.png';
+import axios from 'axios';
 
+
+
+const fetchTasks = async (coordId) => {
+    try {
+        const response = await axios.get(`http://localhost:8080/tarefa/allTarefasProjeto/3`);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar tarefas", error);
+        return [];
+    }
+};
+
+const fetchParticipants = async (projetoId) => {
+    try {
+        const response = await axios.get(`http://localhost:8080/projeto/participantes/1`);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar participantes", error);
+        return [];
+    }
+};
+const fetchProjetoData = async (projetoid) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/projeto/1`);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao buscar dados da API', error);
+      return [];
+    }
+  };
 export default function DetailsProjectCoord() {
     const navigate = useNavigate();
+    const { coordId, projetoId } = useParams();
+    const [tasks, setTasks] = useState([]);
+    const [participants, setParticipants] = useState([]);
+    const [projeto, setProjeto] = useState([]);
 
-    const tasks = [
-        { name: "Tarefa 1", status: "concluido" },
-        { name: "Tarefa 2", status: "concluido" },
-        { name: "Tarefa 3", status: "atrasado" },
-        { name: "Tarefa 4", status: "concluido" },
-        { name: "Tarefa 5", status: "concluido" },
-        { name: "Tarefa 1", status: "concluido" },
-        { name: "Tarefa 2", status: "pendente" },
-        { name: "Tarefa 3", status: "concluido" },
-        { name: "Tarefa 4", status: "concluido" },
-        { name: "Tarefa 5", status: "em andamento" },
-        { name: "Tarefa 1", status: "concluido" },
-        { name: "Tarefa 2", status: "pendente" },
-        { name: "Tarefa 3", status: "atrasado" },
-        { name: "Tarefa 4", status: "concluido" },
-        { name: "Tarefa 5", status: "em andamento" },
-        { name: "Tarefa 1", status: "concluido" },
-        { name: "Tarefa 2", status: "pendente" },
-        { name: "Tarefa 3", status: "atrasado" },
-        { name: "Tarefa 4", status: "concluido" },
-        { name: "Tarefa 5", status: "em andamento" },
-    ];
+    useEffect(() => {
+        const loadTasksAndParticipants = async () => {
+            const tasksData = await fetchTasks(coordId);
+            setTasks(tasksData);
+            
+            const participantsData = await fetchParticipants(projetoId);
+            setParticipants(participantsData);
 
-    const participants = [
-        { name: "Participante 01", role: "Coordenador" },
-        { name: "Participante 02", role: "Aluno" },
-        { name: "Participante 03", role: "Aluno" },
-        { name: "Participante 04", role: "Aluno" },
-    ];
-
-
+            const projetoData = await fetchProjetoData(projetoId);
+            setProjeto(projetoData);
+        };
+        loadTasksAndParticipants();
+    }, [coordId, projetoId]);
     const totalTasks = tasks.length;
     const completedTasks = tasks.filter(task => task.status === "concluido").length;
     const completedPercentage = (completedTasks / totalTasks) * 100;
@@ -56,7 +73,7 @@ export default function DetailsProjectCoord() {
         <DetailsBodyCoord>
             <NavHeader />
             <TitleBarSectionCoord>
-                <TitleProjectCoord>Projeto:Nome do projeto aberto Extenso </TitleProjectCoord>
+                <TitleProjectCoord>{projeto.nomeProjeto}</TitleProjectCoord>
                 <ProgressBarCoord>
                     <div className="completed" style={{ width: `${completedPercentage}%` }} />
                     <span>{`${Math.round(completedPercentage)}%`}</span>
@@ -73,12 +90,14 @@ export default function DetailsProjectCoord() {
                     </BlockContentHeadCoord>
 
                     <ScrollContainerCoordTarefa>
-                        {tasks.map((task, index) => (
-                            <TaskCardCoord key={index} status={task.status}
-                                onClick={() => navigate(`/detalhesTarefa/${task.name}`)}
+                        {tasks.map((task) => (
+                            <TaskCardCoord   
+                            key={task.tarefa_id}
+                            status={task.statusTarefa === 1 ? "concluido" : "pendente"}
+                            onClick={() => navigate(`/detalhesTarefa/${task.tarefa_id}`)}
                             >
                                 <DetailsImageCoord src={DetailsIcon} alt='Detail-Icon' />
-                                <DetailsNameCoord>{task.name}</DetailsNameCoord>
+                                <DetailsNameCoord>{task.nomeTarefa}</DetailsNameCoord>
                             </TaskCardCoord>
                         ))}
                     </ScrollContainerCoordTarefa>
@@ -88,10 +107,10 @@ export default function DetailsProjectCoord() {
                 <ParticipantsSectionCoord>
                     <TitleCoord>Participantes</TitleCoord>
                     <ScrollContainerCoordPart>
-                        {participants.map((participant, index) => (
-                            <ParticipantCardCoord key={index}>
-                                <span>{participant.name}</span>
-                                <span>{participant.role}</span>
+                        {participants.map((participant) => (
+                            <ParticipantCardCoord key={participant.user_id}>
+                            <span>{participant.nome}</span>
+                            <span>{participant.tipoUsuario === 3 ? "Aluno" : "Coordenador"}</span>
                             </ParticipantCardCoord>
                         ))}
                     </ScrollContainerCoordPart>

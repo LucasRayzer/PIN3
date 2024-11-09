@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavHeader from '../../../components/HeaderMenu/NavHeader.ui';
 import {
@@ -19,20 +19,28 @@ import {
 import ProjectIcon from '../../../assets/images/ProjectIcon.png';
 import ReportIcon from '../../../assets/images/RelatorioIcon.png';
 import NewReportIcon from '../../../assets/images/NewReport.png';
+import axios from 'axios';
+
+
 
 export default function HomePage() {
     const navigate = useNavigate();
+    const [projects, setProjects] = useState([]);
 
-    const projects = [
-        { name: "Projeto 1", status: "concluido" },
-        { name: "Projeto 2", status: "atrasado" },
-        { name: "Projeto 3", status: "em andamento" },
-        { name: "Projeto 4", status: "em análise" },
-        { name: "Projeto 1", status: "concluido" },
-        { name: "Projeto 2", status: "atrasado" },
-        { name: "Projeto 3", status: "em andamento" },
-        { name: "Projeto 4", status: "em análise" },
-    ];
+    // Função para buscar dados do projeto
+    const fetchProjectData = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/coordenador/projeto/2');
+            setProjects(response.data); // Atualiza o estado com a lista de projetos
+        } catch (error) {
+            console.error('Erro ao buscar dados do projeto:', error);
+        }
+    };
+
+    // Chama fetchProjectData ao carregar o componente
+    useEffect(() => {
+        fetchProjectData();
+    }, []);
 
     const reports = [
         { name: "Relatório 1" },
@@ -66,15 +74,15 @@ export default function HomePage() {
                     <TitleCoord>Meus Projetos</TitleCoord>
 
                     <ProjectsSectionCoord>
-                        <ScrollContainerCoord>
+                    <ScrollContainerCoord>
                             {projects.map((project, index) => (
                                 <ProjectCardCoord
                                     key={index}
-                                    status={project.status}
-                                    onClick={() => navigate(`/detalhesProjeto/${project.name}`)}
+                                    status={project.statusProjeto}
+                                    onClick={() => navigate(`/detalhesProjeto/${project.projetoId}`)}
                                 >
                                     <ProjectImageCoord src={ProjectIcon} alt='Project-Icon' />
-                                    <ProjectNameCoord>{project.name}</ProjectNameCoord>
+                                    <ProjectNameCoord>{project.nomeProjeto}</ProjectNameCoord>
                                 </ProjectCardCoord>
                             ))}
                         </ScrollContainerCoord>

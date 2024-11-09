@@ -40,7 +40,7 @@ export default function TarefasApp() {
     <Route path="/adminViewRelatorio" element={<ViewAdminRel/>} />
     <Route path="/coordViewRelatorio" element={<ViewCoordRel/>} />
     <Route path="/settings" element={<SettingsPage/>} />
-    <Route path="/detalhesProjeto" element={<DetailsPage/>} />
+    <Route path="/detalhesProjeto/:id" element={<DetailsPage/>} />
     <Route path="/detalhesTarefa" element={<DetailsTaskPage/>} />
     <Route path="/detalhesTarefaAluno" element={<DetailsTaskPageAluno/>} />
     <Route path="/detalhesProjetoAluno/:id" element={<DetailsPageAluno/>} />
