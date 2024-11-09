@@ -2,17 +2,18 @@ package PIN3.src.controller;
 
 import PIN3.src.model.Aluno;
 import PIN3.src.model.Coordenador;
+import PIN3.src.model.Projeto;
+import PIN3.src.model.ProjetoAluno;
 import PIN3.src.repository.AlunoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/aluno")
@@ -29,6 +30,23 @@ public class ControllerAluno {
                 .toUri();
         return ResponseEntity.created(location).build();
     }
-
+    @GetMapping("/projeto/{id}")
+    public List<Projeto> getProjetoAlunoById(@PathVariable int id)throws Exception{
+        if(alunoRepository.existsById(id)) {
+            Aluno aluno = alunoRepository.findById(id).get();
+            List<ProjetoAluno> projetoDoAluno = aluno.getProjetosAluno();
+            List<Projeto> temp = new ArrayList<>();
+            projetoDoAluno.forEach(projetoAluno -> {
+                if (projetoAluno.getAluno()==aluno){
+                    Projeto projeto = projetoAluno.getProjeto();
+                    projeto.setParticipantes(null);
+                    projeto.setCoordenador(null);
+                    temp.add(projeto);
+                }
+            });
+            return temp;
+        } else
+            throw new Exception("Não foi possível encontrar o proojeto");
+    }
 
 }

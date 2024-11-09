@@ -1,6 +1,8 @@
 package PIN3.src.controller;
 
+import PIN3.src.model.Aluno;
 import PIN3.src.model.Projeto;
+import PIN3.src.model.ProjetoAluno;
 import PIN3.src.repository.ProjetoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
@@ -32,6 +36,8 @@ public class ControllerProjeto {
         if(projetoRepository.existsById(id)) {
             Projeto temp =projetoRepository.findById(id).get();
             temp.getStatusProjeto();
+            temp.setCoordenador(null);
+            temp.setParticipantes(null);
             return temp;
         } else
             throw new Exception("Não foi possível encontrar o proojeto");
@@ -65,5 +71,25 @@ public class ControllerProjeto {
             return emAnalise;
         }else return emAndamento;
 
+    }
+    @GetMapping("/participantes/{id}")
+    public List<Aluno> getProjetoDetailsById(@PathVariable int id)throws Exception{
+        if(projetoRepository.existsById(id)) {
+            Projeto temp =projetoRepository.findById(id).get();
+            temp.setCoordenador(null);
+            List<ProjetoAluno> participantes=temp.getParticipantes();
+            List<Aluno> tempAluno = new ArrayList<>();
+            participantes.forEach(projetoAluno -> {
+                if (projetoAluno.getProjeto()==temp) {
+                    Aluno aluno = projetoAluno.getAluno();
+                    aluno.setTarefas(null);
+                    aluno.setProjetosAluno(null);
+                    tempAluno.add(aluno);
+
+                }
+            });
+            return tempAluno;
+        } else
+            throw new Exception("Não foi possível encontrar o proojeto");
     }
 }

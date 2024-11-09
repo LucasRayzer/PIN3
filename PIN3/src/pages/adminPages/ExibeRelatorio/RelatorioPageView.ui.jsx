@@ -16,14 +16,12 @@ import {
 export default function ViewRelatorioProjectAdmin() {
     const navigate = useNavigate();
 
-
     const tasks = [
         { name: "Tarefa 1", status: "concluido" },
         { name: "Tarefa 1", status: "parada" },
         { name: "Tarefa 1", status: "concluido" },
        
     ];
-
 
     const participants = [
         { name: "Participante 01", role: "Coordenador" },

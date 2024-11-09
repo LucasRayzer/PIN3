@@ -1,9 +1,10 @@
 package PIN3.src.controller;
 
 
-import PIN3.src.model.Documento;
-import PIN3.src.model.Projeto;
-import PIN3.src.model.Tarefa;
+import PIN3.src.model.*;
+import PIN3.src.repository.AlunoRepository;
+import PIN3.src.repository.CoordRepository;
+import PIN3.src.repository.ProjetoRepository;
 import PIN3.src.repository.TarefaRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,10 @@ public class ControllerTarefa {
 
     @Autowired
     private TarefaRepository tarefaRepository;
+    @Autowired
+    private AlunoRepository alunoRepository;
+    @Autowired
+    private ProjetoRepository projetoRepository;
 
     @PostMapping("/novaTarefa")
     public ResponseEntity<Tarefa> createTarefa(@Valid @RequestBody Tarefa tarefa){
@@ -51,6 +56,32 @@ public class ControllerTarefa {
             throw new Exception("Não foi possível encontrar a tarefa");
 
     }
+    @GetMapping("/todasTarefas")
+    public List<Tarefa> getAllTasks(){
+        return tarefaRepository.findAll();
+    }
+    @GetMapping("/tarefas/{id}")
+    public List<Tarefa> getAllTasksAluno(@PathVariable int id)throws Exception{
+        Aluno alunoTemp = alunoRepository.findById(id).get();
+        List<Tarefa> tarefasAluno = tarefaRepository.findByAluno(alunoTemp);
+        tarefasAluno.forEach(tarefa -> {
+            tarefa.setProjeto(null);
+            tarefa.setAluno(null);
+        });
+        return tarefasAluno;
+    }
+    //puxar na tela de details project do coord
+    @GetMapping("/allTarefasProjeto/{id}")
+    public List<Tarefa> getAllTasksProjeto(@PathVariable int id)throws Exception{
+        Projeto projeto = projetoRepository.findById(id).get();
+        List<Tarefa> tarefasAll = tarefaRepository.findByProjeto(projeto);
+        tarefasAll.forEach(tarefa -> {
+            tarefa.setProjeto(null);
+            tarefa.setAluno(null);
+        });
+        return tarefasAll;
+    }
+
     @GetMapping("/{id}/documentos")
     public ResponseEntity<List<Documento>> getDocumentosByTarefaId(@PathVariable int id) throws Exception {
         if (tarefaRepository.existsById(id)) {

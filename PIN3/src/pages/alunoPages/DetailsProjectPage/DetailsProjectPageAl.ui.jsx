@@ -1,5 +1,5 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import NavHeader from '../../../components/HeaderMenu/NavHeader.ui';
 import {
     DetailsBodyAluno, DetailsContainerAluno, ProgressBarAluno, TasksSectionAluno, ParticipantsSectionAluno,
@@ -13,44 +13,48 @@ import {
     TitleProjectAluno
 } from './DetailsProjectPageAl.styles';
 import DetailsIcon from '../../../assets/images/TarefaIcon.png';
+import axios from 'axios';
+
+const fetchTasks = async (alunoId) => {
+    try {
+        const response = await axios.get(`http://localhost:8080/tarefa/tarefas/3`);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar tarefas", error);
+        return [];
+    }
+};
+
+const fetchParticipants = async (projetoId) => {
+    try {
+        const response = await axios.get(`http://localhost:8080/projeto/participantes/1`);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar participantes", error);
+        return [];
+    }
+};
 
 export default function DetailsProjectAluno() {
     const navigate = useNavigate();
+    const { alunoId, projetoId } = useParams();
+    const [tasks, setTasks] = useState([]);
+    const [participants, setParticipants] = useState([]);
 
-    const tasks = [
-        { name: "Tarefa 1", status: "concluido" },
-        { name: "Tarefa 2", status: "concluido" },
-        { name: "Tarefa 3", status: "atrasado" },
-        { name: "Tarefa 4", status: "concluido" },
-        { name: "Tarefa 5", status: "concluido" },
-        { name: "Tarefa 1", status: "concluido" },
-        { name: "Tarefa 2", status: "pendente" },
-        { name: "Tarefa 3", status: "concluido" },
-        { name: "Tarefa 4", status: "concluido" },
-        { name: "Tarefa 5", status: "em andamento" },
-        { name: "Tarefa 1", status: "concluido" },
-        { name: "Tarefa 2", status: "pendente" },
-        { name: "Tarefa 3", status: "atrasado" },
-        { name: "Tarefa 4", status: "concluido" },
-        { name: "Tarefa 5", status: "em andamento" },
-        { name: "Tarefa 1", status: "concluido" },
-        { name: "Tarefa 2", status: "pendente" },
-        { name: "Tarefa 3", status: "atrasado" },
-        { name: "Tarefa 4", status: "concluido" },
-        { name: "Tarefa 5", status: "em andamento" },
-    ];
+    useEffect(() => {
+        const loadTasksAndParticipants = async () => {
+            const tasksData = await fetchTasks(alunoId);
+            setTasks(tasksData);
 
-    const participants = [
-        { name: "Participante 01", role: "Coordenador" },
-        { name: "Participante 02", role: "Aluno" },
-        { name: "Participante 03", role: "Aluno" },
-        { name: "Participante 04", role: "Aluno" },
-    ];
+            const participantsData = await fetchParticipants(projetoId);
+            setParticipants(participantsData);
+        };
+        loadTasksAndParticipants();
+    }, [alunoId, projetoId]);
 
     const totalTasks = tasks.length;
-    const completedTasks = tasks.filter(task => task.status === "concluido").length;
+    const completedTasks = tasks.filter(task => task.statusTarefa === 1).length;
     const completedPercentage = (completedTasks / totalTasks) * 100;
-
     return (
         <DetailsBodyAluno>
             <NavHeader />
@@ -68,13 +72,15 @@ export default function DetailsProjectAluno() {
                         
                     </BlockContentHeadAluno>
                     <ScrollContainerAlunoTarefa>
-                        {tasks.map((task, index) => (
-                            <TaskCardAluno key={index} status={task.status}
-                                onClick={() => navigate(`/detalhesTarefaAluno/${task.name}`)}
-                            >
-                                <DetailsImageAluno src={DetailsIcon} alt='Detail-Icon' />
-                                <DetailsNameAluno>{task.name}</DetailsNameAluno>
-                            </TaskCardAluno>
+                        {tasks.map((task) => (
+                           <TaskCardAluno
+                           key={task.tarefa_id}
+                           status={task.statusTarefa === 1 ? "concluido" : "pendente"}
+                           onClick={() => navigate(`/detalhesTarefaAluno/${task.tarefa_id}`)}
+                       >
+                           <DetailsImageAluno src={DetailsIcon} alt="Detail Icon" />
+                           <DetailsNameAluno>{task.nomeTarefa}</DetailsNameAluno>
+                       </TaskCardAluno>
                         ))}
                     </ScrollContainerAlunoTarefa>
                 </TasksSectionAluno>
@@ -82,11 +88,11 @@ export default function DetailsProjectAluno() {
                 <ParticipantsSectionAluno>
                     <TitleAluno>Participantes</TitleAluno>
                     <ScrollContainerAlunoPart>
-                        {participants.map((participant, index) => (
-                            <ParticipantCardAluno key={index}>
-                                <span>{participant.name}</span>
-                                <span>{participant.role}</span>
-                            </ParticipantCardAluno>
+                        {participants.map((participant) => (
+                            <ParticipantCardAluno key={participant.user_id}>
+                            <span>{participant.nome}</span>
+                            <span>{participant.tipoUsuario === 3 ? "Aluno" : "Coordenador"}</span>
+                        </ParticipantCardAluno>
                         ))}
                     </ScrollContainerAlunoPart>
                     
