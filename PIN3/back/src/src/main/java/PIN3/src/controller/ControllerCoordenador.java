@@ -52,5 +52,9 @@ public class ControllerCoordenador {
         }
         return List.of();
     }
+    @GetMapping("/nomeCoord/{id}")
+        public String getNomeCoord(@PathVariable int id)throws Exception{
+            return coordRepository.findById(id).get().getNome();
+    }
 
 }
