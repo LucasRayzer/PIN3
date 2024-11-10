@@ -2,6 +2,7 @@ package PIN3.src.controller;
 
 import PIN3.src.model.*;
 import PIN3.src.repository.CoordRepository;
+import PIN3.src.repository.ProjetoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,8 @@ public class ControllerCoordenador {
     private CoordRepository coordRepository;
     @Autowired
     private ControllerProjeto controllerProjeto;
+    @Autowired
+    private ProjetoRepository projetoRepository;
 
     @PostMapping("/novoCoordenador")
     public ResponseEntity<Coordenador> createCoordenador(@Valid @RequestBody Coordenador coordenador){
@@ -32,17 +35,21 @@ public class ControllerCoordenador {
 
     @GetMapping("/projeto/{id}")
     public List<Projeto> getProjetoCoordById(@PathVariable int id)throws Exception{
-        if(coordRepository.existsById(id)) {
-            Coordenador coord = coordRepository.findById(id).get();
-            List<Projeto> projetoDoCoord= coord.getProjetos();
-            projetoDoCoord.forEach(projeto -> {
-                if (projeto.getCoordenador()==coord){
-                        projeto.setCoordenador(null);
-                }
-            });
-            return projetoDoCoord;
-        } else
-            throw new Exception("Não foi possível encontrar o proojeto");
+        List<Projeto> projeto = projetoRepository.findAll();
+        List <Projeto> projTemp = new ArrayList<>();
+
+        projeto.forEach(projeto1 -> {
+            if (projeto1.getCoordenador()==coordRepository.findById(id).get()){
+                projeto1.setCoordenador(null);
+                projeto1.setParticipantes(null);
+                projeto1.setTarefas(null);
+                projTemp.add(projeto1);
+
+            }
+        });
+
+            return projTemp;
+
     }
     //fazer endpoint para criar o get de relatorios
     @GetMapping("/relatorios/{id}")

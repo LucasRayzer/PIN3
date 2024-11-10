@@ -6,8 +6,11 @@ import java.util.Objects;
 
 @Embeddable
 public class ProjetoAlunoId {
+
     private Integer projetoId;
+
     private Integer alunoId;
+
     public ProjetoAlunoId(){
 
     }

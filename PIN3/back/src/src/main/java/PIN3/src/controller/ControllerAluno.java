@@ -48,5 +48,13 @@ public class ControllerAluno {
         } else
             throw new Exception("Não foi possível encontrar o proojeto");
     }
-
+    @GetMapping("/todosAlunos")
+    public List<Aluno> getAllAlunos(){
+        List<Aluno> aluno = alunoRepository.findAll();
+        aluno.forEach(aluno1 -> {
+            aluno1.setTarefas(null);
+            aluno1.setProjetosAluno(null);
+        });
+        return aluno;
+    }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavHeader from '../../../components/HeaderMenu/NavHeader.ui';
 import {
     ContainerCoord,
@@ -25,6 +25,8 @@ import {
 import SaveIcon from '../../../assets/images/SaveIcon.png';
 import userFoto from '../../../assets/images/user_Default_Avatar.png';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 
 export default function NewProjectPage() {
     const navigate = useNavigate();
@@ -32,19 +34,55 @@ export default function NewProjectPage() {
     const [projectDescription, setProjectDescription] = useState('');
     const [selectedParticipants, setSelectedParticipants] = useState([]);
     const [participantNumber, setParticipantNumber] = useState(0);
-
-    const participants = [
-        { id: 1, name: "Participante 01", role: "Aluno" },
-        { id: 2, name: "Participante 02", role: "Aluno" },
-        { id: 3, name: "Participante 03", role: "Aluno" },
-        { id: 4, name: "Participante 04", role: "Aluno" }
-    ];
+    const [coordenadorId] = useState(2); // Substitua pelo ID real do coordenador logado
+    const [participants, setParticipants] = useState([]);
+    useEffect(() => {
+        const fetchParticipants = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/aluno/todosAlunos');
+                // Atualiza o estado com a lista de alunos recebida
+                setParticipants(response.data);
+            } catch (error) {
+                console.error('Erro ao carregar os alunos:', error);
+            }
+        };
+    
+        fetchParticipants();
+    }, []);
 
     const handleParticipantSelection = (id) => {
         if (selectedParticipants.includes(id)) {
             setSelectedParticipants(selectedParticipants.filter(p => p !== id));
         } else {
             setSelectedParticipants([...selectedParticipants, id]);
+        }
+    };
+
+    const handleSave = async () => {
+        const newProject = {
+            nomeProjeto: projectName,
+            descricaoProjeto: projectDescription,
+            coordenador: {
+                user_id: parseInt(2, 10)  // Certifica-se de que é um número inteiro
+            }
+        };
+    
+        try {
+            // Primeiro, cria o projeto
+            const response = await axios.post('http://localhost:8080/projeto/novoProjeto', newProject);
+    
+            if (response.status === 201) {
+                const idProjeto = response.data.id;// Supondo que o id do projeto criado seja retornado na resposta
+    
+                // Associa cada participante ao projeto
+                await Promise.all(selectedParticipants.map(async (idAluno) => {
+                    await axios.get(`http://localhost:8080/projeto/associar/${idProjeto}/${idAluno}`);
+                }));
+    
+                navigate('/homeCoord');
+            }
+        } catch (error) {
+            console.error("Erro ao criar projeto:", error);
         }
     };
 
@@ -100,17 +138,17 @@ export default function NewProjectPage() {
                         </SelectBoxCoord>
                     </ContainerParticipantesNovoProjeto>
                     <ContainerParticipantesNovoProjeto>
+                    
                         <TitleName>Selecione os Participantes*</TitleName>
                         <ParticipantListCoord>
-
                             {participants.map(participant => (
-                                <ParticipantItemCoord key={participant.id}>
+                                <ParticipantItemCoord key={participant.user_id}>
                                     <img src={userFoto} alt="Participante" />
-                                    <span>{participant.name} <small>{participant.role}</small></span>
+                                    <span>{participant.nome} <small>{participant.tipoUsuario === 3 ? 'Aluno' : 'Outro'}</small></span>
                                     <input
                                         type="checkbox"
-                                        checked={selectedParticipants.includes(participant.id)}
-                                        onChange={() => handleParticipantSelection(participant.id)}
+                                        checked={selectedParticipants.includes(participant.user_id)}
+                                        onChange={() => handleParticipantSelection(participant.user_id)}
                                     />
                                 </ParticipantItemCoord>
                             ))}
@@ -119,9 +157,8 @@ export default function NewProjectPage() {
                 </ContainerCoord>
             </MiddleBodyCoord>
             <SaveBlockCoord>
-                <SaveContainerCoord>
-                    <SaveImageCoord onClick={() => navigate('/homeCoord')}
-                        src={SaveIcon} alt='save-a' />
+            <SaveContainerCoord onClick={handleSave}>
+                    <SaveImageCoord src={SaveIcon} alt='save-a' />
                     <SaveTitleCoord>Salvar</SaveTitleCoord>
                 </SaveContainerCoord>
             </SaveBlockCoord>

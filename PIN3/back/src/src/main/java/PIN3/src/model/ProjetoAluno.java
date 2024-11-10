@@ -11,7 +11,6 @@ public class ProjetoAluno implements Serializable {
     @EmbeddedId
     private ProjetoAlunoId projetoAluno_id;
 
-
     @ManyToOne
     @MapsId("projetoId")
     @JoinColumn(name = "projeto_id")
