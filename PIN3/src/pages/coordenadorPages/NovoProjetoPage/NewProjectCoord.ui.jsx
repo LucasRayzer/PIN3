@@ -20,6 +20,8 @@ import {
     DivTitleCoord,
     TitleCoord,
     TitleName,
+    ContainerDataNewProject,
+    InputFieldProject,
 
 } from './NewProjectCoord.styles';
 import SaveIcon from '../../../assets/images/SaveIcon.png';
@@ -31,11 +33,16 @@ import axios from 'axios';
 export default function NewProjectPage() {
     const navigate = useNavigate();
     const [projectName, setProjectName] = useState('');
+    const [projetoInicioDate, setInicioDate] = useState('');
+    const [projetoFimDate, setFimDate] = useState('');
     const [projectDescription, setProjectDescription] = useState('');
     const [selectedParticipants, setSelectedParticipants] = useState([]);
     const [participantNumber, setParticipantNumber] = useState(0);
     const [coordenadorId] = useState(2); // Substitua pelo ID real do coordenador logado
     const [participants, setParticipants] = useState([]);
+
+   
+
     useEffect(() => {
         const fetchParticipants = async () => {
             try {
@@ -64,9 +71,11 @@ export default function NewProjectPage() {
             descricaoProjeto: projectDescription,
             coordenador: {
                 user_id: parseInt(2, 10)  // Certifica-se de que é um número inteiro
-            }
+            },
+            dataInicio: projetoInicioDate,
+            dataFim: projetoFimDate
         };
-    
+        console.log(projetoInicioDate);
         try {
             // Primeiro, cria o projeto
             const response = await axios.post('http://localhost:8080/projeto/novoProjeto', newProject);
@@ -123,6 +132,22 @@ export default function NewProjectPage() {
 
 
                     </InputContainerCoord>
+                    <ContainerDataNewProject>
+                            <TitleName>Data de Inicio</TitleName>
+                            <InputFieldProject
+                                type="datetime-local"
+                                value={projetoInicioDate}
+                                onChange={(e) => setInicioDate(e.target.value)}
+                            />
+                        </ContainerDataNewProject>
+                        <ContainerDataNewProject>
+                            <TitleName>Data de Fim</TitleName>
+                            <InputFieldProject
+                                type="datetime-local"
+                                value={projetoFimDate}
+                                onChange={(e) => setFimDate(e.target.value)}
+                            />
+                        </ContainerDataNewProject>
                 </ContainerCoord>
                 <ContainerCoord>
                     <ContainerParticipantesNovoProjeto>
@@ -138,7 +163,6 @@ export default function NewProjectPage() {
                         </SelectBoxCoord>
                     </ContainerParticipantesNovoProjeto>
                     <ContainerParticipantesNovoProjeto>
-                    
                         <TitleName>Selecione os Participantes*</TitleName>
                         <ParticipantListCoord>
                             {participants.map(participant => (

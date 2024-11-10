@@ -21,6 +21,26 @@ export const ContainerCoord = styled.div.attrs({
   width:100%;
   
 `;
+export const ContainerDataNewProject = styled.div.attrs({
+  className: 'data-project',
+})`
+  display: flex;
+  margin-bottom: 20px;
+  flex-direction: column;
+  width: 100%;
+`;
+export const InputFieldProject = styled.input.attrs({
+  className: "input-field-project",
+})`
+  width: 100%;
+  height: 20px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  border: 1px solid #132979;
+  margin-top: 5px;
+`;
 export const MiddleBodyCoord = styled.div.attrs({
   className: "novo-projeto-body-coord",
 })`
@@ -224,7 +244,7 @@ export const SaveContainerCoord = styled.div.attrs({
  align-items:center;
  justify-content:end;
  width:100px;
- margin-top:150px;
+ margin-top:15px;
  
 `;
 export const SaveTitleCoord = styled.h3.attrs({
