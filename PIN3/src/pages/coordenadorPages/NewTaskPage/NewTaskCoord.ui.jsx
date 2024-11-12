@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavHeader from '../../../components/HeaderMenu/NavHeader.ui';
 import {
     ContainerTask,
@@ -38,54 +38,66 @@ import {
 import SaveIcon from '../../../assets/images/SaveIcon.png';
 import userFoto from '../../../assets/images/user_Default_Avatar.png';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export default function NewTaskPage() {
     const navigate = useNavigate();
     const [taskName, setTaskName] = useState('');
     const [taskDescription, setTaskDescription] = useState('');
-    const [taskDate, setTaskDate] = useState('');
-    const [selectedParticipants, setSelectedParticipants] = useState([]);
-    const [participantNumber, setParticipantNumber] = useState(0);
-    const [responsible, setResponsible] = useState('');
-    const [uploadedFile, setUploadedFile] = useState(null);
-    const [participants, setParticipants] = useState([
-        { id: 1, name: "Aluno 1", role: "Estudante" },
-        { id: 2, name: "Aluno 2", role: "Estudante" },
-        { id: 3, name: "Aluno 3", role: "Estudante" },
-        { id: 4, name: "Aluno 2", role: "Estudante" },
-        { id: 5, name: "Aluno 3", role: "Estudante" },
-    ]);
+    const [taskInicioDate, setTaskInicioDate] = useState('');
+    const [taskFimDate, setTaskFimDate] = useState('');
+    const [participants, setParticipants] = useState([]);
     const [selectedParticipantId, setSelectedParticipantId] = useState(null);
-
-
+   
+    const [uploadedFile, setUploadedFile] = useState(null);
     const [taskFiles, setTaskFiles] = useState([
         { id: 1, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
         { id: 2, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
         { id: 3, name: "Arquivo2.docx", url: "/files/Arquivo2.docx" },
-        { id: 4, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
-        { id: 5, name: "Arquivo2.docx", url: "/files/Arquivo2.docx" },
-        { id: 6, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
-        { id: 7, name: "Arquivo2.docx", url: "/files/Arquivo2.docx" }
     ]);
+
+    useEffect(() => {
+        const fetchParticipants = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/aluno/todosAlunos');
+                setParticipants(response.data);
+            } catch (error) {
+                console.error('Erro ao carregar os alunos:', error);
+            }
+        };
+        fetchParticipants();
+    }, []);
+
+    const handleSave = async () => {
+        const newTask = {
+            nomeTarefa: taskName,
+            descricao: taskDescription,
+            dataInicio:taskInicioDate,
+            dataFim: taskFimDate,
+            statusTarefa: 3,  // Define o status padrão da tarefa
+            projeto: {
+                projetoId: 3  // ID do projeto fixo como no exemplo do Postman
+            },
+            aluno: {
+                user_id: selectedParticipantId  // ID do aluno responsável selecionado
+            }
+        };
+
+        try {
+            await axios.post('http://localhost:8080/tarefa/novaTarefa', newTask);
+            navigate('/homeCoord');
+        } catch (error) {
+            console.error("Erro ao criar tarefa:", error);
+        }
+    };
     const handleFileUpload = (e) => {
         setUploadedFile(e.target.files[0]);
     };
-
-    const handleFileReplace = () => {
-        setUploadedFile(null);
-    };
-    // Função para remover arquivos da lista
+   
     const handleRemoveFile = (fileId) => {
         setTaskFiles(taskFiles.filter(file => file.id !== fileId));
     };
 
-   // Função para alterar o responsável
-   const handleResponsibleChange = () => {
-    if (selectedParticipantId !== null) {
-        const newResponsible = participants.find(participant => participant.id === selectedParticipantId)?.name;
-        setResponsible(newResponsible);
-    }
-};
     return (
         <NewTaskBody>
             <NavHeader />
@@ -119,11 +131,19 @@ export default function NewTaskPage() {
                             <span>{taskDescription.length}/250</span>
                         </ContainerDescricaoNewTask>
                         <ContainerDataNewTask>
-                            <TitleName>Data de Entrega</TitleName>
+                            <TitleName>Data de Inicio</TitleName>
                             <InputFieldTask
-                                type="date"
-                                value={taskDate}
-                                onChange={(e) => setTaskDate(e.target.value)}
+                                type="datetime-local"
+                                value={taskInicioDate}
+                                onChange={(e) => setTaskInicioDate(e.target.value)}
+                            />
+                        </ContainerDataNewTask>
+                        <ContainerDataNewTask>
+                            <TitleName>Data de Fim</TitleName>
+                            <InputFieldTask
+                                type="datetime-local"
+                                value={taskFimDate}
+                                onChange={(e) => setTaskFimDate(e.target.value)}
                             />
                         </ContainerDataNewTask>
                         <UploadFieldCoord>
@@ -157,42 +177,40 @@ export default function NewTaskPage() {
 
                     
                     </InputContainerTask>
+                    
+                    
                 </ContainerTask>
 
                 <ContainerTask>
                     <ContainerParticipantesNewTask>
-                    <TitleName>Responsável pela Tarefa</TitleName>
-                    <ResponsibleContainer>
-                        <ResponsibleName>{responsible}</ResponsibleName>
-                    </ResponsibleContainer>
+                        <TitleName>Responsável pela Tarefa</TitleName>
+                
 
-                    <ParticipantListTask>
-                        {participants.map((participant) => (
-                            <ParticipantItemTask key={participant.id}>
-                                <img src={userFoto} alt="Participante" />
-                                <span>{participant.name} <small>{participant.role}</small></span>
-                                <input
-                                    type="radio"
-                                    checked={selectedParticipantId === participant.id}
-                                    onChange={() => setSelectedParticipantId(participant.id)}
-                                />
-                            </ParticipantItemTask>
-                        ))}
-                    </ParticipantListTask>
+                        <ParticipantListTask>
+                            {participants.map((participant) => (
+                                <ParticipantItemTask key={participant.user_id}>
+                                    <img src={userFoto} alt="Participante" />
+                                    <span>{participant.nome} 
+                                    <small>{participant.tipoUsuario}</small></span>
+                                    <input
+                                        type="radio"
+                                        checked={selectedParticipantId === participant.user_id}
+                                        onChange={() => setSelectedParticipantId(participant.user_id)}
+                                    />
+                                </ParticipantItemTask>
+                            ))}
+                        </ParticipantListTask>
 
-                    <ChangeResponsibleButton onClick={handleResponsibleChange}>
-                        Alterar Responsável
-                    </ChangeResponsibleButton>
+                    
                     </ContainerParticipantesNewTask>
                     <SaveBlockTaskCoord>
                         <SaveContainerTaskCoord>
-                            <SaveImageTaskCoord onClick={() => navigate('/homeCoord')} src={SaveIcon} alt='save-a' />
+                            <SaveImageTaskCoord onClick={handleSave} src={SaveIcon} alt='Salvar Tarefa' />
                             <SaveTitleTaskCoord>Salvar</SaveTitleTaskCoord>
                         </SaveContainerTaskCoord>
                     </SaveBlockTaskCoord>
                 </ContainerTask>
             </MiddleBodyTask>
-        
         </NewTaskBody>
     );
 }

@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -28,14 +30,20 @@ public class ControllerTarefa {
     private ProjetoRepository projetoRepository;
 
     @PostMapping("/novaTarefa")
-    public ResponseEntity<Tarefa> createTarefa(@Valid @RequestBody Tarefa tarefa){
+    public ResponseEntity<Map<String, Object>> createTarefa(@Valid @RequestBody Tarefa tarefa){
        Tarefa savedTarefa = tarefaRepository.save(tarefa);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(savedTarefa.getTarefa_id())
                 .toUri();
-        return ResponseEntity.created(location).build();
+        // Prepara o JSON de resposta com o ID do projeto criado
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("id", savedTarefa.getTarefa_id());
+
+        // Retorna o status 201 com o ID do projeto no corpo da resposta e a URI no cabeçalho
+        return ResponseEntity.created(location).body(responseBody);
     }
+
     @GetMapping("/{id}")
     public Tarefa getTarefaStatusById(@PathVariable int id)throws Exception{
         if(tarefaRepository.existsById(id)) {

@@ -37,7 +37,7 @@ const fetchParticipants = async (projetoId) => {
         return [];
     }
 };
-const fetchProjetoData = async (projetoid) => {
+const fetchProjetoData = async (projetoId) => {
     try {
       const response = await axios.get(`http://localhost:8080/projeto/1`);
       return response.data;
@@ -117,7 +117,7 @@ export default function DetailsProjectCoord() {
 
                     {/* Botão para adicionar nova tarefa */}
                     <NewTaskContainerCoord>
-                        <NewTaskButtonCoord onClick={() => navigate('/novaTarefa')}>
+                        <NewTaskButtonCoord onClick={() => navigate(`/novaTarefa/${projeto.projetoId}`)}>
                             + Atribuir Nova Tarefa
                         </NewTaskButtonCoord>
                     </NewTaskContainerCoord>
