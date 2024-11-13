@@ -37,7 +37,7 @@ import {
 } from './NewTaskCoord.styles';
 import SaveIcon from '../../../assets/images/SaveIcon.png';
 import userFoto from '../../../assets/images/user_Default_Avatar.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 export default function NewTaskPage() {
@@ -48,13 +48,9 @@ export default function NewTaskPage() {
     const [taskFimDate, setTaskFimDate] = useState('');
     const [participants, setParticipants] = useState([]);
     const [selectedParticipantId, setSelectedParticipantId] = useState(null);
-   
+    const { tarefaId } = useParams();
     const [uploadedFile, setUploadedFile] = useState(null);
-    const [taskFiles, setTaskFiles] = useState([
-        { id: 1, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
-        { id: 2, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
-        { id: 3, name: "Arquivo2.docx", url: "/files/Arquivo2.docx" },
-    ]);
+    const [taskFiles, setTaskFiles] = useState([]);
 
     useEffect(() => {
         const fetchParticipants = async () => {
@@ -68,32 +64,62 @@ export default function NewTaskPage() {
         fetchParticipants();
     }, []);
 
+    useEffect(() => {
+        if (tarefaId) {
+            const fetchTaskFiles = async () => {
+                try {
+                    const response = await axios.get(`http://localhost:8080/documento/tarefa/${tarefaId}`);
+                    const fileNames = response.data.map((fileName, index) => ({
+                        id: index + 1,
+                        name: fileName,
+                        url: `/files/${fileName}`, // Ajuste a URL conforme necessário
+                    }));
+                    setTaskFiles(fileNames);
+                } catch (error) {
+                    console.error('Erro ao carregar os arquivos da tarefa:', error);
+                }
+            };
+            fetchTaskFiles();
+        }
+    }, [tarefaId]);
+
     const handleSave = async () => {
         const newTask = {
             nomeTarefa: taskName,
             descricao: taskDescription,
-            dataInicio:taskInicioDate,
+            dataInicio: taskInicioDate,
             dataFim: taskFimDate,
-            statusTarefa: 3,  // Define o status padrão da tarefa
+            statusTarefa: 3,
             projeto: {
-                projetoId: 3  // ID do projeto fixo como no exemplo do Postman
+                projetoId: 3,
             },
             aluno: {
-                user_id: selectedParticipantId  // ID do aluno responsável selecionado
-            }
+                user_id: selectedParticipantId,
+            },
         };
 
         try {
-            await axios.post('http://localhost:8080/tarefa/novaTarefa', newTask);
+            const response = await axios.post('http://localhost:8080/tarefa/novaTarefa', newTask);
+            const newTarefaId = response.data.id;
+            if (uploadedFile) {
+                const formData = new FormData();
+                formData.append("arquivo", uploadedFile);
+                await axios.post(`http://localhost:8080/documento/upload/${newTarefaId}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+            }
             navigate('/homeCoord');
         } catch (error) {
             console.error("Erro ao criar tarefa:", error);
         }
     };
+
     const handleFileUpload = (e) => {
         setUploadedFile(e.target.files[0]);
     };
-   
+
     const handleRemoveFile = (fileId) => {
         setTaskFiles(taskFiles.filter(file => file.id !== fileId));
     };
@@ -153,7 +179,7 @@ export default function NewTaskPage() {
                             ) : (
                                 <UploadblockCoord>
                                     <SelectArquivo>Arquivo: {uploadedFile.name}</SelectArquivo>
-                                    <ReplaceFileButtonCoord onClick={handleFileReplace}>
+                                    <ReplaceFileButtonCoord onClick={() => setUploadedFile(null)}>
                                         Substituir arquivo
                                     </ReplaceFileButtonCoord>
                                 </UploadblockCoord>

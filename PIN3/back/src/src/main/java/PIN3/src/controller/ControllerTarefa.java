@@ -86,6 +86,7 @@ public class ControllerTarefa {
         tarefasAll.forEach(tarefa -> {
             tarefa.setProjeto(null);
             tarefa.setAluno(null);
+            tarefa.setDocumentos(null);
         });
         return tarefasAll;
     }

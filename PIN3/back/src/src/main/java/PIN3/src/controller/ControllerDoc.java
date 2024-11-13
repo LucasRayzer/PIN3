@@ -1,5 +1,6 @@
 package PIN3.src.controller;
 
+import PIN3.src.model.Aluno;
 import PIN3.src.model.Documento;
 
 import PIN3.src.model.Tarefa;
@@ -16,10 +17,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.print.Doc;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/documento")
@@ -74,5 +79,7 @@ public class ControllerDoc {
             throw new Exception("Não foi possível encontrar a tarefa");
         }
     }
+
+
 
 }
