@@ -41,9 +41,9 @@ export default function DetailsTaskCoord() {
     const navigate = useNavigate();
     const [taskDescription, setTaskDescription] = useState('');
     const [taskTitle, setTaskTitle] = useState('');
-    const [uploadedFile, setUploadedFile] = useState();
-    const [selectedStatus, setSelectedStatus] = useState();
-    const [dueDate, setDueDate] = useState(); 
+    const [uploadedFile, setUploadedFile] = useState('');
+    const [selectedStatus, setSelectedStatus] = useState('');
+    const [dueDate, setDueDate] = useState(''); 
     const [participants, setParticipants] = useState([]);
     const { taskId } = useParams();
     const [taskFiles, setTaskFiles] = useState([]);
@@ -53,12 +53,14 @@ export default function DetailsTaskCoord() {
     const handleSaveTask = async () => {
         try {
             const updatedTask = {
-                nomeTarefa: taskTitle|| null,
+                nomeTarefa: taskTitle ||null,
                 descricao: taskDescription||null,
-                dataFim: dueDate || null, // Evite enviar undefined; use null se data for opcional
+                dataFim: dueDate||null, 
                 statusTarefa: selectedStatus||null,
-                aluno: selectedParticipantId ? { id: selectedParticipantId } : null, // Verifique se o backend espera um objeto ou apenas um ID
-                documentos: taskFiles.map(file => ({ id: file.id, nomeArquivo: file.name }))||null, // Mapeie o array para garantir o formato
+                aluno: {
+                    user_id: selectedParticipantId,
+                }||null,
+                documentos: taskFiles.map(file => ({ id: file.id, nomeArquivo: file.name }))||null,
           };
     
             await axios.put(`http://localhost:8080/tarefa/${taskId}/update`, updatedTask);
@@ -70,6 +72,20 @@ export default function DetailsTaskCoord() {
         }
     };
     useEffect(() => {
+        const fetchTaskDetails = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/tarefa/detalhesTarefa/${taskId}`);
+                const taskData = response.data;
+                setTaskTitle(taskData.nomeTarefa);
+                setTaskDescription(taskData.descricao);
+                setDueDate(taskData.dataFim);
+                setSelectedStatus(taskData.statusTarefa);
+                setResponsible(taskData.aluno ? taskData.aluno.nome : "Sem responsável");
+                setSelectedParticipantId(taskData.aluno ? taskData.aluno.user_id : null);
+            } catch (error) {
+                console.error('Erro ao carregar os detalhes da tarefa:', error);
+            }
+        };
         const fetchTaskFiles = async () => {
             try {
                 const response = await axios.get(`http://localhost:8080/documento/tarefa/${taskId}`);
@@ -91,11 +107,12 @@ export default function DetailsTaskCoord() {
                 console.error('Erro ao carregar os alunos:', error);
             }
         };
+        fetchTaskDetails();
         fetchTaskFiles();
         fetchParticipants();
     }, [taskId]);
    
-    const [selectedParticipantId, setSelectedParticipantId] = useState(null);
+    const [selectedParticipantId, setSelectedParticipantId] = useState();
 
     const handleDownloadFile = async (fileId, fileName) => {
         try {

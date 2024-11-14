@@ -90,6 +90,15 @@ public class ControllerTarefa {
         });
         return tarefasAll;
     }
+    @GetMapping("/detalhesTarefa/{id}")
+    public Tarefa getDetalhesTarefaById(@PathVariable int id)throws Exception{
+        Tarefa tarefa = tarefaRepository.findById(id).get();
+        tarefa.setDocumentos(null);
+        tarefa.setProjeto(null);
+        tarefa.getAluno().setTarefas(null);
+        tarefa.getAluno().setProjetosAluno(null);
+        return tarefa;
+    }
 
     @GetMapping("/{id}/documentos")
     public ResponseEntity<List<Documento>> getDocumentosByTarefaId(@PathVariable int id) throws Exception {
@@ -108,14 +117,25 @@ public class ControllerTarefa {
             Tarefa tarefaExistente = tarefaExistenteOpt.get();
 
             // Atualizando os campos da tarefa existente com os valores da nova tarefa
-            tarefaExistente.setNomeTarefa(tarefaAtualizada.getNomeTarefa());
-            tarefaExistente.setDescricao(tarefaAtualizada.getDescricao());
-            tarefaExistente.setDataFim(tarefaAtualizada.getDataFim());
-            tarefaExistente.setStatusTarefa(tarefaAtualizada.getStatusTarefa());
-            tarefaExistente.setAluno(tarefaAtualizada.getAluno());
-            tarefaExistente.setDocumentos(tarefaAtualizada.getDocumentos());
+            if (tarefaAtualizada.getNomeTarefa() != null) {
+                tarefaExistente.setNomeTarefa(tarefaAtualizada.getNomeTarefa());
+            }
+            if (tarefaAtualizada.getDescricao() != null) {
+                tarefaExistente.setDescricao(tarefaAtualizada.getDescricao());
+            }
+            if (tarefaAtualizada.getDataFim() != null) {
+                tarefaExistente.setDataFim(tarefaAtualizada.getDataFim());
+            }
+            if (tarefaAtualizada.getStatusTarefa() != null) {
+                tarefaExistente.setStatusTarefa(tarefaAtualizada.getStatusTarefa());
+            }
+            if (tarefaAtualizada.getAluno() != null) {
+                tarefaExistente.setAluno(tarefaAtualizada.getAluno());
+            }
+            if (tarefaAtualizada.getDocumentos() != null && !tarefaAtualizada.getDocumentos().isEmpty()) {
+                tarefaExistente.setDocumentos(tarefaAtualizada.getDocumentos());
+            }
 
-            // Salvando a tarefa atualizada no banco de dados
             tarefaRepository.save(tarefaExistente);
 
             return ResponseEntity.ok(tarefaExistente);
