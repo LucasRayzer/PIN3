@@ -114,7 +114,7 @@ export const ScrollContainerAlunoPart = styled.div.attrs({
   flex-direction: column;
   gap: 10px;
   overflow-y: auto;
-  height: 650px;
+ height: 650px;
   padding-right: 10px;
 
   &::-webkit-scrollbar {
@@ -138,7 +138,7 @@ export const ScrollContainerAlunoTarefa = styled.div.attrs({
   flex-direction: row;
   gap: 10px;
   overflow-x: auto;
-  height: 800px;
+  max-height: 800px;
   padding-left: 0px;
   flex-wrap: wrap;
   &::-webkit-scrollbar {

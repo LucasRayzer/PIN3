@@ -5,13 +5,12 @@ import jakarta.persistence.*;
 import java.io.File;
 @Entity
 public class Documento {
-
-    @ManyToOne
-    @JoinColumn(name = "tarefa_id")
-    private Tarefa tarefa;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer documento_id;
+    @ManyToOne
+    @JoinColumn(name = "tarefa_id")
+    private Tarefa tarefa;
     private String nomeArquivo;
     private long tamanho;
 
@@ -34,18 +33,14 @@ public class Documento {
         this.tarefa = tarefa;
     }
 
-    public void setTamanho(long tamanho) {
-        this.tamanho = tamanho;
-    }
 
     public long getTamanho() {
         return tamanho;
     }
 
-    public void setTamanho(Integer tamanho) {
+    public void setTamanho(Long tamanho) {
         this.tamanho = tamanho;
     }
-
 
 
     public Integer getDocumento_id() {

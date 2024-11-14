@@ -110,7 +110,6 @@ public class ControllerTarefa {
             // Atualizando os campos da tarefa existente com os valores da nova tarefa
             tarefaExistente.setNomeTarefa(tarefaAtualizada.getNomeTarefa());
             tarefaExistente.setDescricao(tarefaAtualizada.getDescricao());
-            tarefaExistente.setDataEntrega(tarefaAtualizada.getStatusTarefa());
             tarefaExistente.setDataFim(tarefaAtualizada.getDataFim());
             tarefaExistente.setStatusTarefa(tarefaAtualizada.getStatusTarefa());
             tarefaExistente.setAluno(tarefaAtualizada.getAluno());

@@ -30,7 +30,7 @@ public class RelatorioService {
         int statusProjeto = projeto.getStatusProjeto();
 
         //prazo restante ou atraso
-        LocalDate dataFim = projeto.getDataFim().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate dataFim = projeto.getDataFim();
         long diasRestantes = ChronoUnit.DAYS.between(LocalDate.now(), dataFim);
 
         //progresso estimado do projeto
@@ -67,8 +67,8 @@ public class RelatorioService {
                 countTarefaConcluida++;
 
                 //tempo de conclusão da tarefa
-                LocalDate dataInicioTarefa = t.getDataInicio().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                LocalDate dataEntregaTarefa = t.getDataEntrega().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate dataInicioTarefa = t.getDataInicio();
+                LocalDate dataEntregaTarefa = t.getDataEntrega();
                 long diasConclusao = ChronoUnit.DAYS.between(dataInicioTarefa, dataEntregaTarefa);
                 tempoTotalConclusao += diasConclusao;
 

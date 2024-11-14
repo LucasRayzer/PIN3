@@ -65,13 +65,17 @@ public class ControllerDoc {
     }
     @GetMapping("/tarefa/{id}")
     @Transactional
-    public List<String> getDocumentByTarefaId(@PathVariable int id) throws Exception {
+    public List<Documento> getDocumentByTarefaId(@PathVariable int id) throws Exception {
         if (tarefaRepository.existsById(id)) {
             List<Documento> documentos = documentoRepository.findByTarefa(tarefaRepository.findById(id).get());
-            List<String> nomesArquivos = new ArrayList<>();
+            List<Documento> nomesArquivos = new ArrayList<>();
 
             documentos.forEach(documento -> {
-                nomesArquivos.add(documento.getNomeArquivo());
+                Documento temp = new Documento();
+                temp.setNomeArquivo(documento.getNomeArquivo());
+                temp.setDocumento_id(documento.getDocumento_id());
+                nomesArquivos.add(temp);
+
             });
 
             return nomesArquivos;

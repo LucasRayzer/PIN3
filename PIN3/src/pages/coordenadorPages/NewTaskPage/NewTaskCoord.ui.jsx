@@ -91,7 +91,7 @@ export default function NewTaskPage() {
             dataFim: taskFimDate,
             statusTarefa: 3,
             projeto: {
-                projetoId: 3,
+                projetoId: 1,
             },
             aluno: {
                 user_id: selectedParticipantId,

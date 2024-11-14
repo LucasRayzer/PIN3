@@ -20,7 +20,7 @@ import axios from 'axios';
 
 const fetchTasks = async (coordId) => {
     try {
-        const response = await axios.get(`http://localhost:8080/tarefa/allTarefasProjeto/3`);
+        const response = await axios.get(`http://localhost:8080/tarefa/allTarefasProjeto/1`);
         return response.data;
     } catch (error) {
         console.error("Erro ao buscar tarefas", error);

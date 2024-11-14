@@ -17,7 +17,7 @@ import axios from 'axios';
 
 const fetchTasks = async (alunoId) => {
     try {
-        const response = await axios.get(`http://localhost:8080/tarefa/tarefas/3`);
+        const response = await axios.get(`http://localhost:8080/tarefa/tarefas/1`);
         return response.data;
     } catch (error) {
         console.error("Erro ao buscar tarefas", error);

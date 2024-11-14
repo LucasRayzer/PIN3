@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavHeader from '../../../components/HeaderMenu/NavHeader.ui';
 import {
     ContainerCoord,
@@ -31,37 +31,91 @@ import {
     ChangeResponsibleButton,
     ResponsibleContainer,
     ResponsibleName,
+    TextTitleFieldCoord,
 } from './DetailsTaskCoord.styles';
 import SaveIcon from '../../../assets/images/SaveIcon.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 export default function DetailsTaskCoord() {
     const navigate = useNavigate();
     const [taskDescription, setTaskDescription] = useState('');
-    const [uploadedFile, setUploadedFile] = useState(null);
-    const [selectedStatus, setSelectedStatus] = useState('concluido');
-    const [dueDate, setDueDate] = useState('2024-10-10');  // Estado para a data de entrega
-
-    const [taskFiles, setTaskFiles] = useState([
-        { id: 1, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
-        { id: 2, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
-        { id: 3, name: "Arquivo2.docx", url: "/files/Arquivo2.docx" },
-        { id: 4, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
-        { id: 5, name: "Arquivo2.docx", url: "/files/Arquivo2.docx" },
-        { id: 6, name: "Arquivo1.pdf", url: "/files/Arquivo1.pdf" },
-        { id: 7, name: "Arquivo2.docx", url: "/files/Arquivo2.docx" }
-    ]);
+    const [taskTitle, setTaskTitle] = useState('');
+    const [uploadedFile, setUploadedFile] = useState();
+    const [selectedStatus, setSelectedStatus] = useState();
+    const [dueDate, setDueDate] = useState(); 
+    const [participants, setParticipants] = useState([]);
+    const { taskId } = useParams();
+    const [taskFiles, setTaskFiles] = useState([]);
+  
+    
     const [responsible, setResponsible] = useState("Nome do Responsável Atual");
-    const [participants, setParticipants] = useState([
-        { id: 1, name: "Aluno 1", role: "Estudante" },
-        { id: 2, name: "Aluno 2", role: "Estudante" },
-        { id: 3, name: "Aluno 3", role: "Estudante" },
-        { id: 4, name: "Aluno 2", role: "Estudante" },
-        { id: 5, name: "Aluno 3", role: "Estudante" },
-    ]);
+    const handleSaveTask = async () => {
+        try {
+            const updatedTask = {
+                nomeTarefa: taskTitle|| null,
+                descricao: taskDescription||null,
+                dataFim: dueDate || null, // Evite enviar undefined; use null se data for opcional
+                statusTarefa: selectedStatus||null,
+                aluno: selectedParticipantId ? { id: selectedParticipantId } : null, // Verifique se o backend espera um objeto ou apenas um ID
+                documentos: taskFiles.map(file => ({ id: file.id, nomeArquivo: file.name }))||null, // Mapeie o array para garantir o formato
+          };
+    
+            await axios.put(`http://localhost:8080/tarefa/${taskId}/update`, updatedTask);
+    
+            alert('Tarefa atualizada com sucesso!');
+            navigate('/homeCoord'); 
+        } catch (error) {
+            console.error('Erro ao atualizar a tarefa:', error);
+        }
+    };
+    useEffect(() => {
+        const fetchTaskFiles = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/documento/tarefa/${taskId}`);
+                const files = response.data.map(file => ({
+                    id: file.documento_id,
+                    name: file.nomeArquivo
+                }));
+                setTaskFiles(files);
+            } catch (error) {
+                console.error('Erro ao carregar os arquivos da tarefa:', error);
+            }
+        };
+        const fetchParticipants = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/aluno/todosAlunos');
+                
+                setParticipants(response.data);
+            } catch (error) {
+                console.error('Erro ao carregar os alunos:', error);
+            }
+        };
+        fetchTaskFiles();
+        fetchParticipants();
+    }, [taskId]);
+   
     const [selectedParticipantId, setSelectedParticipantId] = useState(null);
 
+    const handleDownloadFile = async (fileId, fileName) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/documento/download/${fileId}`, {
+                responseType: 'blob', 
+            });
 
+            
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', fileName); 
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link); 
+
+        } catch (error) {
+            console.error('Erro ao baixar o arquivo:', error);
+        }
+    };
     const handleFileUpload = (e) => {
         setUploadedFile(e.target.files[0]);
     };
@@ -70,14 +124,14 @@ export default function DetailsTaskCoord() {
         setUploadedFile(null);
     };
 
-    // Função para remover arquivos da lista
+    //função para remover arquivos da lista
     const handleRemoveFile = (fileId) => {
         setTaskFiles(taskFiles.filter(file => file.id !== fileId));
     };
-    // Função para alterar o responsável
+    //função para alterar o responsável
     const handleResponsibleChange = () => {
         if (selectedParticipantId !== null) {
-            const newResponsible = participants.find(participant => participant.id === selectedParticipantId)?.name;
+            const newResponsible = participants.find(participant => participant.user_id === selectedParticipantId)?.nome;
             setResponsible(newResponsible);
         }
     };
@@ -93,13 +147,21 @@ export default function DetailsTaskCoord() {
                     <InputContainerCoord>
                         <ContainerNomeNovoProjeto>
                             <TitleName>Nome da Tarefa Selecionada</TitleName>
+                            <TextTitleFieldCoord
+                                type="text"
+                                placeholder="Novo nome da Tarefa"
+                                maxLength={250}
+                                value={taskTitle}
+                                onChange={(e) => setTaskTitle(e.target.value)}
+                            />
+                            <span>{taskTitle.length}/50</span>
                         </ContainerNomeNovoProjeto>
 
                         <ContainerDescricaoNovoProjeto>
                             <TitleName>Descrição da Tarefa</TitleName>
                             <TextAreaFieldCoord
                                 type="text"
-                                placeholder="Descrições da tarefa..."
+                                placeholder="Editar descrição da tarefa..."
                                 maxLength={250}
                                 value={taskDescription}
                                 onChange={(e) => setTaskDescription(e.target.value)}
@@ -122,7 +184,7 @@ export default function DetailsTaskCoord() {
                         </UploadFieldCoord>
                     </InputContainerCoord>
                     {/* Seção de edição da data de entrega */}
-                    <TitleName>Data de Entrega</TitleName>
+                    <TitleName>Data de Fim</TitleName>
                     <DateFileCoord>
                         <DateInput
                             type="date"
@@ -134,23 +196,26 @@ export default function DetailsTaskCoord() {
                     {/* Seleção de status */}
                     <TitleName>Status da Tarefa</TitleName>
                     <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)}>
-                        <option value="concluido">Concluído</option>
-                        <option value="pendente">Pendente</option>
-                        <option value="em andamento">Em Andamento</option>
-                        <option value="atrasado">Atrasado</option>
+                        <option value="1">Concluído</option>
+                        <option value="2">Pendente</option>
+                        <option value="3">Em Andamento</option>
+                        <option value="4">Atrasado</option>
                     </select>
 
                     <TitleName>Arquivos Existentes</TitleName>
                     <FileListContainer>
                         {taskFiles.map((file) => (
                             <FileItem key={file.id}>
-                                <FileLink href={file.url} download>
-                                    {file.name}
-                                </FileLink>
-                                <RemoveButton onClick={() => handleRemoveFile(file.id)}>
-                                    Remover
-                                </RemoveButton>
-                            </FileItem>
+                            <span
+                                style={{ cursor: 'pointer', color: 'blue', textDecoration: 'underline' }}
+                                onClick={() => handleDownloadFile(file.id, file.name)}
+                            >
+                                {file.name}
+                            </span>
+                            <RemoveButton onClick={() => handleRemoveFile(file.id)}>
+                                Remover
+                            </RemoveButton>
+                        </FileItem>
                         ))}
                     </FileListContainer>
                 </ContainerCoord>
@@ -164,12 +229,12 @@ export default function DetailsTaskCoord() {
 
                     <ParticipantListCoord>
                         {participants.map((participant) => (
-                            <ParticipantItemCoord key={participant.id}>
-                                <span>{participant.name} <small>{participant.role}</small></span>
+                            <ParticipantItemCoord key={participant.user_id}>
+                                <span>{participant.nome} <small>{participant.role}</small></span>
                                 <input
                                     type="radio"
-                                    checked={selectedParticipantId === participant.id}
-                                    onChange={() => setSelectedParticipantId(participant.id)}
+                                    checked={selectedParticipantId === participant.user_id}
+                                    onChange={() => setSelectedParticipantId(participant.user_id)}
                                 />
                             </ParticipantItemCoord>
                         ))}
@@ -179,10 +244,10 @@ export default function DetailsTaskCoord() {
                         Alterar Responsável
                     </ChangeResponsibleButton>
                     <SaveBlockCoord>
-                        <SaveContainerCoord>
-                            <SaveImageCoord onClick={() => navigate('/homeCoord')} src={SaveIcon} alt='save-a' />
-                            <SaveTitleCoord>Salvar</SaveTitleCoord>
-                        </SaveContainerCoord>
+                    <SaveContainerCoord onClick={handleSaveTask}>
+                        <SaveImageCoord src={SaveIcon} alt="save" />
+                        <SaveTitleCoord>Salvar</SaveTitleCoord>
+                    </SaveContainerCoord>
                     </SaveBlockCoord>
                 </ContainerCoord>
             </MiddleBodyCoord>

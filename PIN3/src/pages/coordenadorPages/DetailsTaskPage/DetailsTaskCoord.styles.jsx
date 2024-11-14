@@ -110,7 +110,18 @@ export const TextAreaFieldCoord = styled.textarea.attrs({
   margin-top: 5px;
   resize: none;
 `;
-
+export const TextTitleFieldCoord = styled.textarea.attrs({
+  className: "textarea-field-coord",
+})`
+  width: 100%;
+  height:20px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #132979;
+  border-radius: 5px;
+  margin-top: 5px;
+  resize: none;
+`;
 export const UploadFieldCoord = styled.div.attrs({
   className: "upload-field-coord",
 })`
@@ -363,6 +374,7 @@ export const ResponsibleContainer = styled.div.attrs({
   border-radius: 8px;
   margin-bottom: 20px;
   width: 100%;
+  padding-left: 20px;
   
 `;
 

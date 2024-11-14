@@ -3,6 +3,7 @@ package PIN3.src.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -23,9 +24,9 @@ public class Tarefa {
 
     private String nomeTarefa;
     private String descricao;
-    private Date dataEntrega;
-    private Date dataInicio;
-    private Date dataFim;
+    private LocalDate dataEntrega;
+    private LocalDate dataInicio;
+    private LocalDate dataFim;
     private Integer statusTarefa;
 
     public List<Documento> getDocumentos() {
@@ -52,37 +53,34 @@ public class Tarefa {
         this.descricao = descricao;
     }
 
-    public Date getDataEntrega() {
+    public LocalDate getDataEntrega() {
         return dataEntrega;
     }
 
-    public Date getDataInicio() {
+    public LocalDate getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio( ) {
-        LocalDate dataAtual = LocalDate.now();
-
-        this.dataInicio = java.sql.Date.valueOf(dataAtual);
+    public void setDataInicio() {
+        this.dataInicio = LocalDate.now();
     }
 
-    public Date getDataFim() {
+    public LocalDate getDataFim() {
         return dataFim;
     }
 
-    public void setDataFim(Date dataFim) {
+    public void setDataFim(LocalDate dataFim) {
         this.dataFim = dataFim;
     }
 
     public void setDataEntrega(Integer statusTarefa) {
         this.statusTarefa = statusTarefa;
 
-        // Definindo a data de entrega automaticamente se o status for alterado para "concluído"
+        // Define a data de entrega automaticamente se o status for "concluído"
         if (statusTarefa != null && statusTarefa == 1) { // Supondo que 1 representa "concluído"
-            this.dataEntrega = new Date();
+            this.dataEntrega = LocalDate.now();
         }
     }
-
 
     public int getTarefa_id() {
         return tarefa_id;
@@ -117,11 +115,8 @@ public class Tarefa {
     }
 
     public Long getPrazoEmDias() {
-
         if (getDataFim() != null && getDataInicio() != null) {
-            long diferencaEmMilissegundos = getDataFim().getTime() - getDataInicio().getTime();
-
-            return TimeUnit.DAYS.convert(diferencaEmMilissegundos, TimeUnit.MILLISECONDS);
+            return ChronoUnit.DAYS.between(getDataInicio(), getDataFim());
         }
         return null;
     }

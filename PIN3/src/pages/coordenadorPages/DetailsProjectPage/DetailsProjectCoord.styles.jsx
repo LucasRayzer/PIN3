@@ -155,7 +155,7 @@ export const ScrollContainerCoordTarefa = styled.div.attrs({
   flex-direction: row;
   gap: 10px;
   overflow-x: auto;
-  height: 800px;
+  max-height: 800px;
   padding-left: 0px;
   flex-wrap:wrap;
   &::-webkit-scrollbar {
