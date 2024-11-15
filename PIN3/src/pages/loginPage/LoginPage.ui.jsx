@@ -1,39 +1,53 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { LoginBody, LoginButton, LoginContainer, LoginForm, LoginHeader, LoginInput, LoginTitle, LoginTitleHeader, LogoContainer, LogoImage} from './LoginPage.styles';
 import SearchLogo from '../../assets/images/SearchHubLogo.png'; 
-export default function RegisterPage() {
+import AuthContext from '../../AuthContext';
+export default function LoginPage() {
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState('');
   const [senha, setSenha] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [tipoUsuario, setTipoUsuario] = useState('Aluno'); // Opção padrão
+  const { authData, setAuthData } = useContext(AuthContext);
+  const [senhaConfirmed, setCon] = useState('');
+
+  async function getSenhaC(username) {
+    try {
+      const response = await axios.get(`http://localhost:8080/user/nome/${username}`);
+      setAuthData({
+        idU: response.data.user_id,
+        nomeUsuario: response.data.nome,
+        senha: response.data.senha,
+        tipoUsuario: response.data.tipoUsuario
+      });
+      setCon(response.data.senha);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/user/login', {
-        nomeUsuario: usuario,
-        senha: senha
-      });
-
-      if (response.status === 200) {
-        alert('Login realizado com sucesso!');
-
-        const tipoUsuario = response.data.tipoUsuario;
-
-        // Redireciona com base no tipo de usuário
-        if (tipoUsuario === 'Admin') {
+      const data = await getSenhaC(usuario);
+      if (senha === data.senha) {
+        console.log(data.tipoUsuario);
+        
+        if (data.tipoUsuario === 1) {
           navigate('/homeAdmin');
         } else 
-          if (tipoUsuario === 'Coord') {
+          if (data.tipoUsuario === 2) {
             navigate('/homeCoord');
           } else {
-            if (tipoUsuario === 'Aluno') {
+            if (data.tipoUsuario === 3) {
               navigate('/homeAluno');
             } 
           }
+      } else {
+        alert('Senha ou Usuário Inválida!')
       }
+      
     } catch (error) {
       console.error("Erro no login!", error);
       alert('Erro no login: Usuário ou senha incorretos');

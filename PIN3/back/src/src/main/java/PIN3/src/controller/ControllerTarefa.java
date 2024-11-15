@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/tarefa")
@@ -49,6 +46,7 @@ public class ControllerTarefa {
         if(tarefaRepository.existsById(id)) {
             Tarefa temp =tarefaRepository.findById(id).get();
             temp.getStatusTarefa();
+
             return temp;
         } else
             throw new Exception("Não foi possível encontrar a tarefa");
@@ -68,15 +66,24 @@ public class ControllerTarefa {
     public List<Tarefa> getAllTasks(){
         return tarefaRepository.findAll();
     }
-    @GetMapping("/tarefas/{id}")
-    public List<Tarefa> getAllTasksAluno(@PathVariable int id)throws Exception{
+    @GetMapping("/tarefas/{id}/{idProjeto}")
+    public List<String> getAllTasksAluno(@PathVariable int id,@PathVariable int idProjeto)throws Exception{
         Aluno alunoTemp = alunoRepository.findById(id).get();
         List<Tarefa> tarefasAluno = tarefaRepository.findByAluno(alunoTemp);
+        List<String> temp = new ArrayList<>();
+        Projeto ptemp =projetoRepository.findById(idProjeto).get();
+
         tarefasAluno.forEach(tarefa -> {
-            tarefa.setProjeto(null);
-            tarefa.setAluno(null);
+            ptemp.getTarefas().forEach(taP->{
+                if (taP==tarefa){
+                    String fd = "";
+                    fd += tarefa.getTarefa_id()+" "+tarefa.getNomeTarefa();
+                    temp.add(fd);
+                }
+            });
+
         });
-        return tarefasAluno;
+        return temp;
     }
     //puxar na tela de details project do coord
     @GetMapping("/allTarefasProjeto/{id}")

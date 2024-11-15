@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import NavHeader from '../../../components/HeaderMenu/NavHeader.ui';
 import {
@@ -10,11 +10,12 @@ import {
 import ProjectIcon from '../../../assets/images/ProjectIcon.png';
 import NewReportIcon from '../../../assets/images/NewReport.png';
 import axios from 'axios';
+import AuthContext from '../../../AuthContext';
 
 
 const fetchProjetoData = async (id) => {
   try {
-    const response = await axios.get(`http://localhost:8080/aluno/projeto/3`);
+    const response = await axios.get(`http://localhost:8080/aluno/projeto/${id}`);
     return response.data;
   } catch (error) {
     console.error('Erro ao buscar dados da API', error);
@@ -26,16 +27,17 @@ export default function HomePage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [projetoData, setProjetoData] = useState([]);
+  const {authData, setAuthData } = useContext(AuthContext);
 
   useEffect(() => {
     const loadProjetoData = async () => {
     
-      const data = await fetchProjetoData(id);
+      const data = await fetchProjetoData(authData.idU);
       setProjetoData(data);
     };
     loadProjetoData();
     console.log(projetoData.projetoId);
-  }, [id]);
+  }, [authData.idU]);
   return (
     <HomeBodyAluno>
       <NavHeader />

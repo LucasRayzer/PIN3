@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import NavHeader from '../../../components/HeaderMenu/NavHeader.ui';
 import {
@@ -14,11 +14,18 @@ import {
 } from './DetailsProjectPageAl.styles';
 import DetailsIcon from '../../../assets/images/TarefaIcon.png';
 import axios from 'axios';
+import AuthContext from '../../../AuthContext';
 
-const fetchTasks = async (alunoId) => {
+const fetchTasks = async (alunoId,projetoId) => {
     try {
-        const response = await axios.get(`http://localhost:8080/tarefa/tarefas/1`);
-        return response.data;
+        const response = await axios.get(`http://localhost:8080/tarefa/tarefas/${alunoId}/${projetoId}`);
+        return response.data.map(item => {
+            const [id, ...nomeArray] = item.split(' ');
+            return {
+                tarefa_id: id,
+                nomeTarefa: nomeArray.join(' ')
+            };
+        });
     } catch (error) {
         console.error("Erro ao buscar tarefas", error);
         return [];
@@ -27,7 +34,7 @@ const fetchTasks = async (alunoId) => {
 
 const fetchParticipants = async (projetoId) => {
     try {
-        const response = await axios.get(`http://localhost:8080/projeto/participantes/1`);
+        const response = await axios.get(`http://localhost:8080/projeto/participantes/${projetoId}`);
         return response.data;
     } catch (error) {
         console.error("Erro ao buscar participantes", error);
@@ -36,7 +43,7 @@ const fetchParticipants = async (projetoId) => {
 };
 const fetchProjetoData = async (projetoId) => {
     try {
-      const response = await axios.get(`http://localhost:8080/projeto/1`);
+      const response = await axios.get(`http://localhost:8080/projeto/${projetoId}`);
       return response.data;
     } catch (error) {
       console.error('Erro ao buscar dados da API', error);
@@ -46,14 +53,15 @@ const fetchProjetoData = async (projetoId) => {
 
 export default function DetailsProjectAluno() {
     const navigate = useNavigate();
-    const { alunoId, projetoId } = useParams();
+    const {projetoId } = useParams();
     const [tasks, setTasks] = useState([]);
     const [participants, setParticipants] = useState([]);
     const [projeto, setProjeto] = useState([]);
+    const {authData, setAuthData } = useContext(AuthContext);
 
     useEffect(() => {
         const loadTasksAndParticipants = async () => {
-            const tasksData = await fetchTasks(alunoId);
+            const tasksData = await fetchTasks(authData.idU,projetoId);
             setTasks(tasksData);
             
             const participantsData = await fetchParticipants(projetoId);
@@ -62,7 +70,7 @@ export default function DetailsProjectAluno() {
             setProjeto(projetoData);
         };
         loadTasksAndParticipants();
-    }, [alunoId, projetoId]);
+    }, [authData.idU,projetoId]);
 
     const totalTasks = tasks.length;
     const completedTasks = tasks.filter(task => task.statusTarefa === 1).length;
@@ -84,17 +92,17 @@ export default function DetailsProjectAluno() {
                         
                     </BlockContentHeadAluno>
                     <ScrollContainerAlunoTarefa>
-                        {tasks.map((task) => (
-                           <TaskCardAluno
-                           key={task.tarefa_id}
-                           status={task.statusTarefa === 1 ? "concluido" : "pendente"}
-                           onClick={() => navigate(`/detalhesTarefaAluno/${task.tarefa_id}`)}
-                       >
-                           <DetailsImageAluno src={DetailsIcon} alt="Detail Icon" />
-                           <DetailsNameAluno>{task.nomeTarefa}</DetailsNameAluno>
-                       </TaskCardAluno>
-                        ))}
-                    </ScrollContainerAlunoTarefa>
+                            {tasks.map((task) => (
+                                <TaskCardAluno
+                                    key={task.tarefa_id}
+                                    status={task.statusTarefa === 1 ? "concluido" : "pendente"}
+                                    onClick={() => navigate(`/detalhesTarefaAluno/${task.tarefa_id}`)}
+                                >
+                                    <DetailsImageAluno src={DetailsIcon} alt="Detail Icon" />
+                                    <DetailsNameAluno>{task.nomeTarefa}</DetailsNameAluno>
+                                </TaskCardAluno>
+                            ))}
+                        </ScrollContainerAlunoTarefa>
                 </TasksSectionAluno>
 
                 <ParticipantsSectionAluno>

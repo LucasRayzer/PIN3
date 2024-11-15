@@ -32,7 +32,7 @@ import {
 import SaveIcon from '../../../assets/images/SaveIcon.png';
 import { useNavigate } from 'react-router-dom';
 
-export default function DetailsTaskCoord() {
+export default function DetailsTaskAluno() {
     const navigate = useNavigate();
     const [taskDescription, setTaskDescription] = useState('');
     const [uploadedFile, setUploadedFile] = useState(null);

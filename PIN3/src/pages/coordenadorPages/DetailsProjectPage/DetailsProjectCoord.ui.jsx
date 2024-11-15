@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import NavHeader from '../../../components/HeaderMenu/NavHeader.ui';
 import {
@@ -15,12 +15,13 @@ import {
 } from './DetailsProjectCoord.styles';
 import DetailsIcon from '../../../assets/images/TarefaIcon.png';
 import axios from 'axios';
+import AuthContext from '../../../AuthContext';
 
 
 
-const fetchTasks = async (coordId) => {
+const fetchTasks = async (projetoId) => {
     try {
-        const response = await axios.get(`http://localhost:8080/tarefa/allTarefasProjeto/1`);
+        const response = await axios.get(`http://localhost:8080/tarefa/allTarefasProjeto/${projetoId}`);
         return response.data;
     } catch (error) {
         console.error("Erro ao buscar tarefas", error);
@@ -30,7 +31,7 @@ const fetchTasks = async (coordId) => {
 
 const fetchParticipants = async (projetoId) => {
     try {
-        const response = await axios.get(`http://localhost:8080/projeto/participantes/1`);
+        const response = await axios.get(`http://localhost:8080/projeto/participantes/${projetoId}`);
         return response.data;
     } catch (error) {
         console.error("Erro ao buscar participantes", error);
@@ -39,7 +40,7 @@ const fetchParticipants = async (projetoId) => {
 };
 const fetchProjetoData = async (projetoId) => {
     try {
-      const response = await axios.get(`http://localhost:8080/projeto/1`);
+      const response = await axios.get(`http://localhost:8080/projeto/${projetoId}`);
       return response.data;
     } catch (error) {
       console.error('Erro ao buscar dados da API', error);
@@ -48,14 +49,17 @@ const fetchProjetoData = async (projetoId) => {
   };
 export default function DetailsProjectCoord() {
     const navigate = useNavigate();
-    const { coordId, projetoId } = useParams();
+    const {projetoId } = useParams();
     const [tasks, setTasks] = useState([]);
     const [participants, setParticipants] = useState([]);
     const [projeto, setProjeto] = useState([]);
+    const {authData, setAuthData } = useContext(AuthContext);
 
     useEffect(() => {
         const loadTasksAndParticipants = async () => {
-            const tasksData = await fetchTasks(coordId);
+            //console.log(projetoId);
+            
+            const tasksData = await fetchTasks(projetoId);
             setTasks(tasksData);
             
             const participantsData = await fetchParticipants(projetoId);
@@ -65,7 +69,7 @@ export default function DetailsProjectCoord() {
             setProjeto(projetoData);
         };
         loadTasksAndParticipants();
-    }, [coordId, projetoId]);
+    }, [projetoId]);
     const totalTasks = tasks.length;
     const completedTasks = tasks.filter(task => task.status === "concluido").length;
     const completedPercentage = (completedTasks / totalTasks) * 100;

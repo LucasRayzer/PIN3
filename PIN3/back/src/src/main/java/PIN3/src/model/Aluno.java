@@ -11,6 +11,7 @@ public class Aluno extends Usuario {
 
 
     @OneToMany(mappedBy = "aluno")
+
     private List<Tarefa> tarefas;
     @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL)
     private List<ProjetoAluno> projetosAluno;

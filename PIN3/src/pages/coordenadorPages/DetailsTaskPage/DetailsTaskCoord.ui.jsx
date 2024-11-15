@@ -47,6 +47,7 @@ export default function DetailsTaskCoord() {
     const [participants, setParticipants] = useState([]);
     const { taskId } = useParams();
     const [taskFiles, setTaskFiles] = useState([]);
+    
   
     
     const [responsible, setResponsible] = useState("Nome do Responsável Atual");
@@ -62,9 +63,17 @@ export default function DetailsTaskCoord() {
                 }||null,
                 documentos: taskFiles.map(file => ({ id: file.id, nomeArquivo: file.name }))||null,
           };
-    
+          if (uploadedFile) {
+            const formData = new FormData();
+            formData.append("arquivo", uploadedFile);
+            await axios.post(`http://localhost:8080/documento/upload/${taskId}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+        }
             await axios.put(`http://localhost:8080/tarefa/${taskId}/update`, updatedTask);
-    
+          
             alert('Tarefa atualizada com sucesso!');
             navigate('/homeCoord'); 
         } catch (error) {
