@@ -55,13 +55,16 @@ export default function DetailsProjectCoord() {
     const [projeto, setProjeto] = useState([]);
     const {authData, setAuthData } = useContext(AuthContext);
    
+    
+   
     useEffect(() => {
         const loadTasksAndParticipants = async () => {
             //console.log(projetoId);
             
             const tasksData = await fetchTasks(projetoId);
             setTasks(tasksData);
-            
+            console.log({tasks});
+   
             const participantsData = await fetchParticipants(projetoId);
             setParticipants(participantsData);
 
@@ -99,7 +102,7 @@ export default function DetailsProjectCoord() {
                         {tasks.map((task) => (
                             <TaskCardCoord   
                             key={task.tarefa_id}
-                            status={task.statusTarefa === 1 ? "concluido" : "pendente"}
+                            status={task.statusTarefa}
                             onClick={() => navigate(`/detalhesTarefa/${task.tarefa_id}?projectId=${projetoId}`)}
                             >
                                 <DetailsImageCoord src={DetailsIcon} alt='Detail-Icon' />

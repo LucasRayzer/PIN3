@@ -95,7 +95,7 @@ export default function DetailsProjectAluno() {
                             {tasks.map((task) => (
                                 <TaskCardAluno
                                     key={task.tarefa_id}
-                                    status={task.statusTarefa === 1 ? "concluido" : "pendente"}
+                                    status={task.statusTarefa}
                                     onClick={() => navigate(`/detalhesTarefaAluno/${task.tarefa_id}`)}
                                 >
                                     <DetailsImageAluno src={DetailsIcon} alt="Detail Icon" />
@@ -111,7 +111,7 @@ export default function DetailsProjectAluno() {
                         {participants.map((participant) => (
                             <ParticipantCardAluno key={participant.user_id}>
                             <span>{participant.nome}</span>
-                            <span>{participant.tipoUsuario === 3 ? "Aluno" : "Coordenador"}</span>
+                            <span>{participant.tipoUsuario === 1 ? "Aluno" : "Coordenador"}</span>
                         </ParticipantCardAluno>
                         ))}
                     </ScrollContainerAlunoPart>

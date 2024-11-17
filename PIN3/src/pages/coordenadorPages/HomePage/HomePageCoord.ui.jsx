@@ -28,7 +28,7 @@ export default function HomePage() {
     const navigate = useNavigate();
     const [projetoData, setProjetoData] = useState([]);
     const {authData, setAuthData } = useContext(AuthContext);
-    // Função para buscar dados do projeto
+   
     const fetchProjetoData = async (id) => {
         try {
             const response = await axios.get(`http://localhost:8080/coordenador/projeto/${id}`);
@@ -39,7 +39,7 @@ export default function HomePage() {
         }
     };
 
-    // Chama fetchProjectData ao carregar o componente
+   
     useEffect(() => {
         const loadProjetoData = async () => {
         
@@ -95,7 +95,7 @@ export default function HomePage() {
                         </ScrollContainerCoord>
                         <NewProjectContainerCoord>
                             <NewProjectImageCoord
-                                onClick={() => navigate('/novoProjeto')}
+                                onClick={() => navigate(`/novoProjeto/${authData.idU}`)}
                                 src={NewReportIcon}
                                 alt='New-Project'
                             />

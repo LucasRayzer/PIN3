@@ -66,6 +66,12 @@ export default function HomePage() {
 
             <HomeContainerAdm>
                 <StatusSectionConfigAdm>
+                <NewReportContainerAdm>
+                <NewReportImageAdm onClick={() => navigate(`/registroAdm/${1}`)}
+                                        src={NewReportIcon} alt='New-Report' />
+                                        <NewReportTitleAdm>Novo Usuário</NewReportTitleAdm>
+                </NewReportContainerAdm>
+
                     <StatusSectionAdm>
                         <StatusItemAdm color="red">
                             <span>🔴 Projeto atrasado</span>

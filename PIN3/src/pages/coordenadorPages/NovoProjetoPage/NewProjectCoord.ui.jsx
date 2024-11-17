@@ -26,7 +26,7 @@ import {
 } from './NewProjectCoord.styles';
 import SaveIcon from '../../../assets/images/SaveIcon.png';
 import userFoto from '../../../assets/images/user_Default_Avatar.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -38,16 +38,15 @@ export default function NewProjectPage() {
     const [projectDescription, setProjectDescription] = useState('');
     const [selectedParticipants, setSelectedParticipants] = useState([]);
     const [participantNumber, setParticipantNumber] = useState(0);
-    const [coordenadorId] = useState(2); // Substitua pelo ID real do coordenador logado
     const [participants, setParticipants] = useState([]);
-
+    const { idU } = useParams();
    
 
     useEffect(() => {
         const fetchParticipants = async () => {
             try {
                 const response = await axios.get('http://localhost:8080/aluno/todosAlunos');
-                // Atualiza o estado com a lista de alunos recebida
+                
                 setParticipants(response.data);
             } catch (error) {
                 console.error('Erro ao carregar os alunos:', error);
@@ -70,14 +69,16 @@ export default function NewProjectPage() {
             nomeProjeto: projectName,
             descricaoProjeto: projectDescription,
             coordenador: {
-                user_id: parseInt(2, 10)  // Certifica-se de que é um número inteiro
+                user_id: parseInt(idU,10)
             },
             dataInicio: projetoInicioDate,
             dataFim: projetoFimDate
         };
-        console.log(projetoInicioDate);
+        console.log(newProject);
+        console.log({idU});
+        
         try {
-            // Primeiro, cria o projeto
+            
             const response = await axios.post('http://localhost:8080/projeto/novoProjeto', newProject);
     
             if (response.status === 201) {

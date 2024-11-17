@@ -29,13 +29,13 @@ export default function TarefasApp() {
     <BrowserRouter>
     <Routes>
     <Route path="/" element={<LoginPage />} />
-    <Route path="/registroAdm" element={<RegisterPage />} />
+    <Route path="/registroAdm/:id" element={<RegisterPage />} />
     <Route path="/login" element={<LoginPage />} />
     <Route path="/homeAdm" element={<HomePageAdm/>} />
     <Route path="/homeCoord" element={<HomePageCoord/>} />
     <Route path="/homeAluno" element={<HomePageAluno/>} />
     <Route path="/novoRelatorio" element={<RelatorioDatePage/>} />
-    <Route path="/novoProjeto" element={<NewProjectCoord/>} />
+    <Route path="/novoProjeto/:idU" element={<NewProjectCoord/>} />
     <Route path="/relatoriosAdmin" element={<RelatorioList/>} />
     <Route path="/adminViewRelatorio" element={<ViewAdminRel/>} />
     <Route path="/coordViewRelatorio" element={<ViewCoordRel/>} />

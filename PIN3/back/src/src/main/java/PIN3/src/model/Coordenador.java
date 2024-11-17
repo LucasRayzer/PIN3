@@ -11,8 +11,8 @@ public class Coordenador extends Usuario {
     private List<Projeto> projetos;
 
     @ManyToOne
-    @JoinColumn(name = "userAdmin_id")
-    private Admin adm;
+    @JoinColumn(name = "user_admin_id")
+    private Admin userAdminId;
 
 
     public List<Projeto> getProjetos() {
@@ -25,10 +25,10 @@ public class Coordenador extends Usuario {
     }
 
     public Admin getAdm() {
-        return adm;
+        return userAdminId;
     }
 
     public void setAdm(Admin adm) {
-        this.adm = adm;
+        this.userAdminId = adm;
     }
 }

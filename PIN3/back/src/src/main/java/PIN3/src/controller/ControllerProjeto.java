@@ -1,10 +1,8 @@
 package PIN3.src.controller;
 
-import PIN3.src.model.Aluno;
-import PIN3.src.model.Projeto;
-import PIN3.src.model.ProjetoAluno;
-import PIN3.src.model.ProjetoAlunoId;
+import PIN3.src.model.*;
 import PIN3.src.repository.AlunoRepository;
+import PIN3.src.repository.CoordRepository;
 import PIN3.src.repository.ProjetoAlunoRepository;
 import PIN3.src.repository.ProjetoRepository;
 import jakarta.validation.Valid;
@@ -29,6 +27,8 @@ public class ControllerProjeto {
     private AlunoRepository alunoRepository;
     @Autowired
     private ProjetoAlunoRepository projetoAlunoRepository;
+    @Autowired
+    private CoordRepository coordRepository;
     @PostMapping("/novoProjeto")
     public ResponseEntity<Map<String, Object>> createProjeto(@Valid @RequestBody Projeto projeto){
         Projeto savedProjeto = projetoRepository.save(projeto);
@@ -138,5 +138,10 @@ public class ControllerProjeto {
             return tempAluno;
         } else
             throw new Exception("Não foi possível encontrar o proojeto");
+    }
+    @GetMapping("/todosProjetos")
+    public List<Projeto> getTodosProjetos(){
+        List<Projeto> todos = projetoRepository.findAll();
+    return todos;
     }
 }

@@ -84,5 +84,16 @@ public class ControllerUsuario {
                 .toUri();
         return ResponseEntity.created(location).build();
     }
+    @GetMapping("/nomeUser/{id}")
+    public String getNomeUser(@PathVariable int id)throws Exception{
+        return userRepository.findById(id).get().getNome();
+    }
+    @GetMapping("/usuario/{id}/senha/{senha}")
+    public Usuario setSenhaByNome(@PathVariable int id, @PathVariable String senha){
+        Usuario usuario = userRepository.findById(id).get();
+        usuario.setSenha(senha);
+        userRepository.save(usuario);
+        return usuario;
+    }
 
 }
