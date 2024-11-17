@@ -58,7 +58,7 @@ export default function DetailsProjectAluno() {
     const [participants, setParticipants] = useState([]);
     const [projeto, setProjeto] = useState([]);
     const {authData, setAuthData } = useContext(AuthContext);
-
+   
     useEffect(() => {
         const loadTasksAndParticipants = async () => {
             const tasksData = await fetchTasks(authData.idU,projetoId);

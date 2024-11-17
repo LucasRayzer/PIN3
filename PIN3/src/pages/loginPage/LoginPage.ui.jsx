@@ -35,7 +35,7 @@ export default function LoginPage() {
         console.log(data.tipoUsuario);
         
         if (data.tipoUsuario === 1) {
-          navigate('/homeAdmin');
+          navigate('/homeAdm');
         } else 
           if (data.tipoUsuario === 2) {
             navigate('/homeCoord');

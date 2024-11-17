@@ -54,7 +54,7 @@ export default function DetailsProjectCoord() {
     const [participants, setParticipants] = useState([]);
     const [projeto, setProjeto] = useState([]);
     const {authData, setAuthData } = useContext(AuthContext);
-
+   
     useEffect(() => {
         const loadTasksAndParticipants = async () => {
             //console.log(projetoId);
@@ -98,7 +98,7 @@ export default function DetailsProjectCoord() {
                             <TaskCardCoord   
                             key={task.tarefa_id}
                             status={task.statusTarefa === 1 ? "concluido" : "pendente"}
-                            onClick={() => navigate(`/detalhesTarefa/${task.tarefa_id}`)}
+                            onClick={() => navigate(`/detalhesTarefa/${task.tarefa_id}?projectId=${projetoId}`)}
                             >
                                 <DetailsImageCoord src={DetailsIcon} alt='Detail-Icon' />
                                 <DetailsNameCoord>{task.nomeTarefa}</DetailsNameCoord>

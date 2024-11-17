@@ -118,4 +118,24 @@ public class ControllerProjeto {
         } else
             throw new Exception("Não foi possível encontrar o proojeto");
     }
+    @GetMapping("/participantesTask")
+    public List<Aluno> getTaskDetailsById(@RequestParam int projectId)throws Exception{
+        if(projetoRepository.existsById(projectId)) {
+            Projeto temp =projetoRepository.findById(projectId).get();
+            temp.setCoordenador(null);
+            List<ProjetoAluno> participantes=temp.getParticipantes();
+            List<Aluno> tempAluno = new ArrayList<>();
+            participantes.forEach(projetoAluno -> {
+                if (projetoAluno.getProjeto()==temp) {
+                    Aluno aluno = projetoAluno.getAluno();
+                    aluno.setTarefas(null);
+                    aluno.setProjetosAluno(null);
+                    tempAluno.add(aluno);
+
+                }
+            });
+            return tempAluno;
+        } else
+            throw new Exception("Não foi possível encontrar o proojeto");
+    }
 }

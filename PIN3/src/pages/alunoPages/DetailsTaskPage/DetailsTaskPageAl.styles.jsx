@@ -97,7 +97,18 @@ export const InputFieldAluno = styled.input.attrs({
   border-radius: 5px;
   margin-top: 5px;
 `;
-
+export const TextTitleFieldAluno = styled.textarea.attrs({
+  className: "textarea-field-aluno",
+})`
+  width: 100%;
+  height:20px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #132979;
+  border-radius: 5px;
+  margin-top: 5px;
+  resize: none;
+`;
 export const TextAreaFieldAluno = styled.textarea.attrs({
   className: "textarea-field-Aluno",
 })`

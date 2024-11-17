@@ -34,7 +34,7 @@ import {
     TextTitleFieldCoord,
 } from './DetailsTaskCoord.styles';
 import SaveIcon from '../../../assets/images/SaveIcon.png';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 export default function DetailsTaskCoord() {
@@ -47,9 +47,23 @@ export default function DetailsTaskCoord() {
     const [participants, setParticipants] = useState([]);
     const { taskId } = useParams();
     const [taskFiles, setTaskFiles] = useState([]);
+    const useQuery = () => {
+        return new URLSearchParams(useLocation().search);
+      };
+      const query = useQuery();
+    const projectId = query.get("projectId");
+
+    console.log({projectId});
     
-  
-    
+    const fetchParticipants = async (projectId) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/projeto/participantesTask?projectId=${projectId}`);
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao buscar participantes", error);
+            return [];
+        }
+    };
     const [responsible, setResponsible] = useState("Nome do Responsável Atual");
     const handleSaveTask = async () => {
         try {
@@ -107,19 +121,17 @@ export default function DetailsTaskCoord() {
                 console.error('Erro ao carregar os arquivos da tarefa:', error);
             }
         };
-        const fetchParticipants = async () => {
-            try {
-                const response = await axios.get('http://localhost:8080/aluno/todosAlunos');
-                
-                setParticipants(response.data);
-            } catch (error) {
-                console.error('Erro ao carregar os alunos:', error);
-            }
-        };
+       
         fetchTaskDetails();
         fetchTaskFiles();
-        fetchParticipants();
-    }, [taskId]);
+        const loadTasksAndParticipants = async () => {
+          
+            const participantsData = await fetchParticipants(projectId);
+            setParticipants(participantsData);
+           
+        };
+        loadTasksAndParticipants();
+    }, [taskId,projectId]);
    
     const [selectedParticipantId, setSelectedParticipantId] = useState();
 
@@ -172,7 +184,7 @@ export default function DetailsTaskCoord() {
                 <ContainerCoord>
                     <InputContainerCoord>
                         <ContainerNomeNovoProjeto>
-                            <TitleName>Nome da Tarefa Selecionada</TitleName>
+                            <TitleName>Nome da Tarefa</TitleName>
                             <TextTitleFieldCoord
                                 type="text"
                                 placeholder="Novo nome da Tarefa"

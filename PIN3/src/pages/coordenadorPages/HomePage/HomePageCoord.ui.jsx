@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavHeader from '../../../components/HeaderMenu/NavHeader.ui';
 import {
@@ -20,28 +20,35 @@ import ProjectIcon from '../../../assets/images/ProjectIcon.png';
 import ReportIcon from '../../../assets/images/RelatorioIcon.png';
 import NewReportIcon from '../../../assets/images/NewReport.png';
 import axios from 'axios';
+import AuthContext from '../../../AuthContext';
 
 
 
 export default function HomePage() {
     const navigate = useNavigate();
-    const [projects, setProjects] = useState([]);
-
+    const [projetoData, setProjetoData] = useState([]);
+    const {authData, setAuthData } = useContext(AuthContext);
     // Função para buscar dados do projeto
-    const fetchProjectData = async () => {
+    const fetchProjetoData = async (id) => {
         try {
-            const response = await axios.get('http://localhost:8080/coordenador/projeto/2');
-            setProjects(response.data); // Atualiza o estado com a lista de projetos
+            const response = await axios.get(`http://localhost:8080/coordenador/projeto/${id}`);
+            return response.data;
         } catch (error) {
-            console.error('Erro ao buscar dados do projeto:', error);
+            console.error('Erro ao buscar dados da API', error);
+            return [];
         }
     };
 
     // Chama fetchProjectData ao carregar o componente
     useEffect(() => {
-        fetchProjectData();
-    }, []);
-
+        const loadProjetoData = async () => {
+        
+          const data = await fetchProjetoData(authData.idU);
+          setProjetoData(data);
+        };
+        loadProjetoData();
+        console.log(projetoData.projetoId);
+      }, [authData.idU]);
     const reports = [
         { name: "Relatório 1" },
         { name: "Relatório 2" },
@@ -75,7 +82,7 @@ export default function HomePage() {
 
                     <ProjectsSectionCoord>
                     <ScrollContainerCoord>
-                            {projects.map((project, index) => (
+                            {projetoData.map((project, index) => (
                                 <ProjectCardCoord
                                     key={index}
                                     status={project.statusProjeto}

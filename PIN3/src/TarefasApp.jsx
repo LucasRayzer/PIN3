@@ -42,7 +42,7 @@ export default function TarefasApp() {
     <Route path="/settings" element={<SettingsPage/>} />
     <Route path="/detalhesProjeto/:projetoId" element={<DetailsPage/>} />
     <Route path="/detalhesTarefa/:taskId" element={<DetailsTaskPage/>} />
-    <Route path="/detalhesTarefaAluno" element={<DetailsTaskPageAluno/>} />
+    <Route path="/detalhesTarefaAluno/:taskId" element={<DetailsTaskPageAluno/>} />
     <Route path="/detalhesProjetoAluno/:projetoId" element={<DetailsPageAluno/>} />
     <Route path="/novaTarefa/:id" element={<NewTaskPage/>} />
 
