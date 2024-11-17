@@ -67,6 +67,8 @@ export default function DetailsProjectCoord() {
 
             const projetoData = await fetchProjetoData(projetoId);
             setProjeto(projetoData);
+            console.log({projeto});
+            
         };
         loadTasksAndParticipants();
     }, [projetoId]);
@@ -121,7 +123,7 @@ export default function DetailsProjectCoord() {
 
                     {/* Botão para adicionar nova tarefa */}
                     <NewTaskContainerCoord>
-                        <NewTaskButtonCoord onClick={() => navigate(`/novaTarefa/${projeto.projetoId}`)}>
+                        <NewTaskButtonCoord onClick={() => navigate(`/novaTarefa/${projeto.projetoId}?projectId=${projetoId}`)}>
                             + Atribuir Nova Tarefa
                         </NewTaskButtonCoord>
                     </NewTaskContainerCoord>

@@ -64,6 +64,7 @@ public class ControllerProjeto {
             temp.getStatusProjeto();
             temp.setCoordenador(null);
             temp.setParticipantes(null);
+            temp.setTarefas(null);
             return temp;
         } else
             throw new Exception("Não foi possível encontrar o proojeto");

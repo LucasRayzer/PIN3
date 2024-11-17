@@ -17,11 +17,28 @@ export default function RegisterPage() {
     }
 
     try {
-      const response = await axios.post('http://localhost:8080/user/create', {
-        nomeUsuario: usuario,
-        senha: senha,
-        tipoUsuario: tipoUsuario
-      });
+      if (tipoUsuario==1) {
+        const response = await axios.post('http://localhost:8080/user/createAluno', {
+          nomeUsuario: usuario,
+          senha: senha,
+          tipoUsuario: tipoUsuario
+        });
+      }
+      if (tipoUsuario==2) {
+        const response = await axios.post('http://localhost:8080/user/createCoordenador', {
+          nomeUsuario: usuario,
+          senha: senha,
+          tipoUsuario: tipoUsuario
+        });
+      }
+      if (tipoUsuario==3) {
+        const response = await axios.post('http://localhost:8080/user/createAdmin', {
+          nomeUsuario: usuario,
+          senha: senha,
+          tipoUsuario: tipoUsuario
+        });
+      }
+      
       if (response.status === 201) {
         alert('Usuário Criado com Sucesso!')
 
@@ -56,9 +73,9 @@ export default function RegisterPage() {
 
           {/*Dropdown para selecionar tipo de usuário*/}
           <RegisterSelect value={tipoUsuario} onChange={(e) => setTipoUsuario(e.target.value)}>
-            <option value="Aluno">Aluno</option>
-            <option value="Coordenador">Coordenador</option>
-            <option value="Admin">Administrador</option>
+            <option value="1">Aluno</option>
+            <option value="2">Coordenador</option>
+            <option value="3">Administrador</option>
           </RegisterSelect>
 
           <RegisterButton onClick={handleRegister}>Cadastrar</RegisterButton>

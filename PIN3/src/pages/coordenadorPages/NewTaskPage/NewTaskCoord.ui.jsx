@@ -37,7 +37,7 @@ import {
 } from './NewTaskCoord.styles';
 import SaveIcon from '../../../assets/images/SaveIcon.png';
 import userFoto from '../../../assets/images/user_Default_Avatar.png';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 export default function NewTaskPage() {
@@ -51,17 +51,21 @@ export default function NewTaskPage() {
     const { tarefaId } = useParams();
     const [uploadedFile, setUploadedFile] = useState(null);
     const [taskFiles, setTaskFiles] = useState([]);
-
+    const useQuery = () => {
+        return new URLSearchParams(useLocation().search);
+      };
+      const query = useQuery();
+    const projectId = query.get("projectId");
     useEffect(() => {
-        const fetchParticipants = async () => {
+        const fetchParticipants = async (projectId) => {
             try {
-                const response = await axios.get('http://localhost:8080/aluno/todosAlunos');
+                const response = await axios.get(`http://localhost:8080/projeto/participantesTask?projectId=${projectId}`);
                 setParticipants(response.data);
             } catch (error) {
                 console.error('Erro ao carregar os alunos:', error);
             }
         };
-        fetchParticipants();
+        fetchParticipants(projectId);
     }, []);
 
     useEffect(() => {
@@ -91,7 +95,7 @@ export default function NewTaskPage() {
             dataFim: taskFimDate,
             statusTarefa: 3,
             projeto: {
-                projetoId: 1,
+                projetoId: projectId,
             },
             aluno: {
                 user_id: selectedParticipantId,
