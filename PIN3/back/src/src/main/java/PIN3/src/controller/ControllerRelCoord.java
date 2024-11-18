@@ -41,7 +41,7 @@ public class ControllerRelCoord {
 
     }
     @GetMapping("/relatorios/{id}")
-    public ResponseEntity<?> gerarRelatoriosPorPeriodo(@PathVariable int id) {
+    public ResponseEntity<?> gerarRelatorios(@PathVariable int id) {
             Projeto projeto = projetoRepository.findById(id).get();
 
             relatorioService.gerarRelatorioProjeto(projeto);

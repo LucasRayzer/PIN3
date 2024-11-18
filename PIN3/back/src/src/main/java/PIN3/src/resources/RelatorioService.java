@@ -1,8 +1,8 @@
 package PIN3.src.resources;
 
-import PIN3.src.model.Projeto;
-import PIN3.src.model.ProjetoAluno;
-import PIN3.src.model.Tarefa;
+import PIN3.src.model.*;
+import PIN3.src.repository.RelAdmRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 @Service
 public class RelatorioService {
+    @Autowired
+    private RelAdmRepository relAdmRepository;
+
+
     public void gerarRelatorioProjeto(Projeto projeto) {
         int countTarefaConcluida = 0;
         int totalTarefas = projeto.getTarefas().size();
@@ -87,6 +91,20 @@ public class RelatorioService {
         //Percentual de tarefas concluídas dentro do prazo
         double percentualDentroPrazo = totalTarefas > 0 ? (tarefasDentroPrazo / (double) totalTarefas) * 100 : 0;
 
+        RelatorioAdmin relatorioAdmin = new RelatorioAdmin();
+        relatorioAdmin.setCountTarefaConcluida(countTarefaConcluida);
+        relatorioAdmin.setNomeProjeto(projeto.getNomeProjeto());
+        relatorioAdmin.setDiasRestantes(diasRestantes);
+        relatorioAdmin.setParticipantes(nomesParticipantes);
+        relatorioAdmin.setProgressoProjeto(progressoProjeto);
+        relatorioAdmin.setStatusProjeto(statusProjeto);
+        relatorioAdmin.setTaxaConclusao(taxaConclusao);
+        relatorioAdmin.setTempoMedioConclusao(tempoMedioConclusao);
+        relatorioAdmin.setTotalTarefas(totalTarefas);
+        relatorioAdmin.setNomeCoordenador(nomeCoordenador);
+        relatorioAdmin.setProjeto(projeto);
+
+        relAdmRepository.save(relatorioAdmin);
 
         System.out.println("Desempenho da Equipe:");
         System.out.println("Tempo Médio de Conclusão das Tarefas: " + tempoMedioConclusao + " dias");

@@ -8,6 +8,7 @@ import PIN3.src.repository.RelAdmRepository;
 import PIN3.src.resources.RelatorioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,15 +42,15 @@ public class ControllerRelAdm {
     }
     @GetMapping("/projetos")
     public List<Projeto> getProjetosPorPeriodo(
-            @RequestParam("dataInicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dataInicio,
-            @RequestParam("dataFim") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dataFim) {
+            @RequestParam("dataInicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
+            @RequestParam("dataFim") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim) {
 
         return projetoRepository.findByDataInicioBetween(dataInicio, dataFim);
     }
     @GetMapping("/relatorios")
     public ResponseEntity<?> gerarRelatoriosPorPeriodo(
-            @RequestParam("dataInicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dataInicio,
-            @RequestParam("dataFim") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dataFim) {
+            @RequestParam("dataInicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
+            @RequestParam("dataFim") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim) {
 
         List<Projeto> projetos = projetoRepository.findByDataInicioBetween(dataInicio, dataFim);
         projetos.forEach(projeto -> {
