@@ -82,9 +82,9 @@ export default function NewProjectPage() {
             const response = await axios.post('http://localhost:8080/projeto/novoProjeto', newProject);
     
             if (response.status === 201) {
-                const idProjeto = response.data.id;// Supondo que o id do projeto criado seja retornado na resposta
+                const idProjeto = response.data.id;
     
-                // Associa cada participante ao projeto
+               
                 await Promise.all(selectedParticipants.map(async (idAluno) => {
                     await axios.get(`http://localhost:8080/projeto/associar/${idProjeto}/${idAluno}`);
                 }));

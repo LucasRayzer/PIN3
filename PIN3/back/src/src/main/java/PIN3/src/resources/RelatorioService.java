@@ -16,7 +16,7 @@ public class RelatorioService {
     private RelAdmRepository relAdmRepository;
 
 
-    public void gerarRelatorioProjeto(Projeto projeto) {
+    public void gerarRelatorioProjeto(Projeto projeto, LocalDate CriaInicio, LocalDate CriaFim) {
         int countTarefaConcluida = 0;
         int totalTarefas = projeto.getTarefas().size();
 
@@ -35,6 +35,7 @@ public class RelatorioService {
 
         //prazo restante ou atraso
         LocalDate dataFim = projeto.getDataFim();
+        LocalDate dataIncio = projeto.getDataInicio();
         long diasRestantes = ChronoUnit.DAYS.between(LocalDate.now(), dataFim);
 
         //progresso estimado do projeto
@@ -103,6 +104,10 @@ public class RelatorioService {
         relatorioAdmin.setTotalTarefas(totalTarefas);
         relatorioAdmin.setNomeCoordenador(nomeCoordenador);
         relatorioAdmin.setProjeto(projeto);
+        relatorioAdmin.setDataFim(dataFim);
+        relatorioAdmin.setDataInicio(dataIncio);
+        relatorioAdmin.setCriaInicio(CriaInicio);
+        relatorioAdmin.setCriaFim(CriaFim);
 
         relAdmRepository.save(relatorioAdmin);
 

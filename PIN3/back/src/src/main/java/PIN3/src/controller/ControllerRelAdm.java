@@ -8,17 +8,14 @@ import PIN3.src.repository.RelAdmRepository;
 import PIN3.src.resources.RelatorioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.text.DateFormat;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/relatorioAdm")
@@ -30,6 +27,7 @@ public class ControllerRelAdm {
     private ProjetoRepository projetoRepository;
     @Autowired
     private RelatorioService relatorioService;
+
 
     @PostMapping("/novoRelAdmin")
     public ResponseEntity<RelatorioAdmin> createRelAdmin(@Valid @RequestBody RelatorioAdmin relatorioAdmin){
@@ -47,6 +45,24 @@ public class ControllerRelAdm {
 
         return projetoRepository.findByDataInicioBetween(dataInicio, dataFim);
     }
+    @GetMapping("/todosRel")
+    public List<RelatorioAdmin> getTodosRelAdm(){
+        List<RelatorioAdmin> relatorioAdmins = relAdmRepository.findAll();
+        relatorioAdmins.forEach(relatorioAdmin -> {
+            relatorioAdmin.setNomeCoordenador(null);
+            relatorioAdmin.setProjeto(null);
+        });
+        return relatorioAdmins;
+    }
+    @GetMapping("/pegaRelPeriodo")
+    public List<RelatorioAdmin> getRelatorioAdmPorPeriodo(
+            @RequestParam("dataInicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
+            @RequestParam("dataFim") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim) {
+
+        return relAdmRepository.findByDataInicioBetween(dataInicio, dataFim);
+    }
+
+
     @GetMapping("/relatorios")
     public ResponseEntity<?> gerarRelatoriosPorPeriodo(
             @RequestParam("dataInicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
@@ -55,7 +71,7 @@ public class ControllerRelAdm {
         List<Projeto> projetos = projetoRepository.findByDataInicioBetween(dataInicio, dataFim);
         projetos.forEach(projeto -> {
 
-            relatorioService.gerarRelatorioProjeto(projeto);
+            relatorioService.gerarRelatorioProjeto(projeto, dataInicio, dataFim);
         });
 
         return ResponseEntity.ok("Relatórios gerados com sucesso!");

@@ -22,6 +22,8 @@ public class RelatorioAdmin implements Relatorio{
     private double percentualDentroPrazo;
     private String nomeProjeto;
     private int countTarefaConcluida;
+    private LocalDate CriaInicio;
+    private LocalDate CriaFim;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -155,5 +157,21 @@ public class RelatorioAdmin implements Relatorio{
 
     public void setCountTarefaConcluida(int countTarefaConcluida) {
         this.countTarefaConcluida = countTarefaConcluida;
+    }
+
+    public LocalDate getCriaInicio() {
+        return CriaInicio;
+    }
+
+    public void setCriaInicio(LocalDate criaInicio) {
+        CriaInicio = criaInicio;
+    }
+
+    public LocalDate getCriaFim() {
+        return CriaFim;
+    }
+
+    public void setCriaFim(LocalDate criaFim) {
+        CriaFim = criaFim;
     }
 }

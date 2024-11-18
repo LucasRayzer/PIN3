@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavHeader from '../../../components/HeaderMenu/NavHeader.ui';
 import {
@@ -19,11 +19,13 @@ import {
 import ProjectIcon from '../../../assets/images/ProjectIcon.png'; 
 import ReportIcon from '../../../assets/images/RelatorioIcon.png'; 
 import NewReportIcon from '../../../assets/images/NewReport.png'; 
+import AuthContext from '../../../AuthContext';
 
 
 
 export default function HomePage() {
     const navigate = useNavigate();
+    const {authData, setAuthData } = useContext(AuthContext);
 
     const projects= [
         { name: "Projeto 1", status: "concluido" },
@@ -67,7 +69,7 @@ export default function HomePage() {
             <HomeContainerAdm>
                 <StatusSectionConfigAdm>
                 <NewReportContainerAdm>
-                <NewReportImageAdm onClick={() => navigate(`/registroAdm/${1}`)}
+                <NewReportImageAdm onClick={() => navigate(`/registroAdm/${authData.idU}`)}
                                         src={NewReportIcon} alt='New-Report' />
                                         <NewReportTitleAdm>Novo Usuário</NewReportTitleAdm>
                 </NewReportContainerAdm>
@@ -111,7 +113,8 @@ export default function HomePage() {
                     
                     <ScrollContainerAdm>
                         {reports.map((report, index) => (
-                            <ReportCardAdm key={index}>
+                            <ReportCardAdm key={index} 
+                            onClick={() => navigate(`/admViewRelatorio/${1}`)}>
                                 <ReportImageAdm src={ReportIcon} alt='Project-Icon'/>
                                  <ReportNameAdm>{report.name}</ReportNameAdm>
                                 
