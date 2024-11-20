@@ -54,6 +54,17 @@ public class ControllerRelAdm {
         });
         return relatorioAdmins;
     }
+    @GetMapping("/relPorId/{id}")
+    public RelatorioAdmin getRelatorio(@PathVariable int id){
+
+        RelatorioAdmin relTemp = relAdmRepository.findById(id).get();
+        relTemp.setProjeto(null);
+        return  relTemp;
+    }
+    @DeleteMapping("/deleteRelAdm/{id}")
+    public void deleteRelatorio(@PathVariable int id){
+        relAdmRepository.deleteById(id);
+    }
     @GetMapping("/pegaRelPeriodo")
     public List<RelatorioAdmin> getRelatorioAdmPorPeriodo(
             @RequestParam("dataInicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,

@@ -56,6 +56,11 @@ public class ControllerProjeto {
 
         return projetoAluno;
     }
+    @DeleteMapping("/deleteProjetoAluno/{projetoId}/{alunoId}")
+    public void deleteProjetoAluno(@PathVariable int projetoId, @PathVariable int alunoId) {
+        ProjetoAlunoId id = new ProjetoAlunoId(alunoId, projetoId);
+        projetoAlunoRepository.deleteById(id);
+    }
 
     @GetMapping("/{id}")
     public Projeto getProjetoStatusById(@PathVariable int id)throws Exception{
@@ -65,39 +70,42 @@ public class ControllerProjeto {
             temp.setCoordenador(null);
             temp.setParticipantes(null);
             temp.setTarefas(null);
+            temp.setRelatoriosCoord(null);
+            temp.setRelatoriosAdmin(null);
             return temp;
         } else
             throw new Exception("Não foi possível encontrar o proojeto");
     }
     @GetMapping("/update/{id}")
-    public AtomicInteger updateProjetoStatusById(@PathVariable int id)throws Exception{
-        AtomicInteger concluida= new AtomicInteger();
-        AtomicInteger parada= new AtomicInteger();
-        AtomicInteger emAnalise= new AtomicInteger();
-        AtomicInteger emAndamento= new AtomicInteger();
-        projetoRepository.findTarefaByProjetoId(id).forEach(tarefa -> {
-           if (tarefa.getStatusTarefa()==1){
-               concluida.getAndIncrement();
-           }
-           if (tarefa.getStatusTarefa()==2){
-               parada.getAndIncrement();
-           }
-            if (tarefa.getStatusTarefa()==3){
-                emAnalise.getAndIncrement();
-            }
-            if (tarefa.getStatusTarefa()==4){
-                emAndamento.getAndIncrement();
-            }
+    public void updateProjetoStatusById(@PathVariable int id) {
+        Projeto projTemp = projetoRepository.findById(id).get();
 
-       });
-        if(concluida.get()>=parada.get()&& concluida.get()>=emAnalise.get()&&concluida.get()>=emAndamento.get()){
-            return concluida;
-        }else if (parada.get()>=concluida.get()&&parada.get()>=emAnalise.get()&&parada.get()>=emAndamento.get()){
-            return parada;
-        }else if (emAnalise.get()>=concluida.get()&&emAnalise.get()>=parada.get()&&emAnalise.get()>=emAndamento.get()){
-            return emAnalise;
-        }else return emAndamento;
+        AtomicInteger concluida = new AtomicInteger();
+        AtomicInteger parada = new AtomicInteger();
+        AtomicInteger emAnalise = new AtomicInteger();
+        AtomicInteger emAndamento = new AtomicInteger();
 
+        List<Tarefa> tarefas = projetoRepository.findTarefaByProjetoId(id);
+        tarefas.forEach(tarefa -> {
+            switch (tarefa.getStatusTarefa()) {
+                case 1 -> concluida.getAndIncrement();
+                case 4 -> parada.getAndIncrement();
+                case 2 -> emAnalise.getAndIncrement();
+                case 3 -> emAndamento.getAndIncrement();
+            }
+        });
+
+        if (concluida.get() >= parada.get() && concluida.get() >= emAnalise.get() && concluida.get() >= emAndamento.get()) {
+            projTemp.setStatusProjeto(1);
+        } else if (parada.get() >= concluida.get() && parada.get() >= emAnalise.get() && parada.get() >= emAndamento.get()) {
+            projTemp.setStatusProjeto(4);
+        } else if (emAnalise.get() >= concluida.get() && emAnalise.get() >= parada.get() && emAnalise.get() >= emAndamento.get()) {
+            projTemp.setStatusProjeto(2);
+        } else {
+            projTemp.setStatusProjeto(3);
+        }
+
+        projetoRepository.save(projTemp);
     }
     @GetMapping("/participantes/{id}")
     public List<Aluno> getProjetoDetailsById(@PathVariable int id)throws Exception{

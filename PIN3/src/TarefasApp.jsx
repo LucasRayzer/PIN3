@@ -19,7 +19,7 @@ import DetailsTaskPageAluno from './pages/alunoPages/DetailsTaskPage/DetailsTask
 import NewTaskPage from './pages/coordenadorPages/NewTaskPage/NewTaskCoord.ui'
 import ViewAdminRel from './pages/adminPages/ExibeRelatorio/RelatorioPageView.ui'
 import ViewCoordRel from './pages/coordenadorPages/ExibeRelatorio/RelatorioPageView.ui'
-
+import AlterarParticipante from './pages/coordenadorPages/AlterarParticipantes/AlterarParticipantes.ui'
 
 export default function TarefasApp() {
   const [count, setCount] = useState(0)
@@ -37,7 +37,7 @@ export default function TarefasApp() {
     <Route path="/novoRelatorio" element={<RelatorioDatePage/>} />
     <Route path="/novoProjeto/:idU" element={<NewProjectCoord/>} />
     <Route path="/relatoriosAdmin" element={<RelatorioList/>} />
-    <Route path="/adminViewRelatorio" element={<ViewAdminRel/>} />
+    <Route path="/adminViewRelatorio/:id" element={<ViewAdminRel/>} />
     <Route path="/coordViewRelatorio" element={<ViewCoordRel/>} />
     <Route path="/settings" element={<SettingsPage/>} />
     <Route path="/detalhesProjeto/:projetoId" element={<DetailsPage/>} />
@@ -45,6 +45,8 @@ export default function TarefasApp() {
     <Route path="/detalhesTarefaAluno/:taskId" element={<DetailsTaskPageAluno/>} />
     <Route path="/detalhesProjetoAluno/:projetoId" element={<DetailsPageAluno/>} />
     <Route path="/novaTarefa/:id" element={<NewTaskPage/>} />
+
+    <Route path="/alterarParticipantes/:projetoId" element={<AlterarParticipante/>} />
 
     </Routes>
     </BrowserRouter>

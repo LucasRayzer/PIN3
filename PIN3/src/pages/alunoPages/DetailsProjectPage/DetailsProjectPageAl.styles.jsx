@@ -183,11 +183,21 @@ export const TaskCardAluno = styled.div.attrs({
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: ${({ status }) =>
-      status === 'concluido' ? 'green' :
-      status === 'atrasado' ? 'red' :
-      status === 'em andamento' ? 'yellow' :
-      'orange'};
+    background-color: ${( props ) => {
+        console.log(props.status);
+        
+        switch (props.status) {
+             case 1:
+            return 'green'
+             case 2:
+            return 'orange'
+             case 3:
+            return 'yellow' 
+             case 4:
+            return 'red'
+        }
+      }
+         };
     width: 12px;
     height: 12px;
     border-radius: 50%;

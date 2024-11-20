@@ -71,6 +71,22 @@ export const EndProjectButtonCoord = styled.button.attrs({
     background-color: #0e2159;
   }
 `;
+export const AltProjectButtonCoord = styled.button.attrs({
+  className: "alt-project-button-coord",
+})`
+  background-color: #132979;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  align-self: flex-end;
+  margin-right:10px;
+
+  &:hover {
+    background-color: #0e2159;
+  }
+`;
 
 export const TasksSectionCoord = styled.div.attrs({
   className: "tasks-section-coord",
@@ -132,7 +148,7 @@ export const ScrollContainerCoordPart = styled.div.attrs({
   flex-direction: column;
   gap: 10px;
   overflow-y: auto;
-  height: 650px;
+  height: max-content;
   padding-right: 10px;
 
   &::-webkit-scrollbar {

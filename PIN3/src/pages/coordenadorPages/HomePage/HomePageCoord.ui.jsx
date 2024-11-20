@@ -22,37 +22,50 @@ import NewReportIcon from '../../../assets/images/NewReport.png';
 import axios from 'axios';
 import AuthContext from '../../../AuthContext';
 
-
-
 export default function HomePage() {
     const navigate = useNavigate();
     const [projetoData, setProjetoData] = useState([]);
-    const {authData, setAuthData } = useContext(AuthContext);
-   
+    const { authData } = useContext(AuthContext);
+
+    // Função para buscar os dados dos projetos
     const fetchProjetoData = async (id) => {
         try {
             const response = await axios.get(`http://localhost:8080/coordenador/projeto/${id}`);
             return response.data;
         } catch (error) {
-            console.error('Erro ao buscar dados da API', error);
+            console.error('Erro ao buscar dados dos projetos:', error);
             return [];
         }
     };
 
-   
+    // Função para atualizar o status do projeto
+    const updateProjetoStatus = async (projetoId) => {
+        try {
+            await axios.get(`http://localhost:8080/projeto/update/${projetoId}`);
+            console.log(`Status do projeto ${projetoId} atualizado com sucesso!`);
+        } catch (error) {
+            console.error(`Erro ao atualizar o status do projeto ${projetoId}:`, error);
+        }
+    };
+
     useEffect(() => {
         const loadProjetoData = async () => {
-        
-          const data = await fetchProjetoData(authData.idU);
-          setProjetoData(data);
+            // Buscar dados dos projetos associados ao coordenador
+            const data = await fetchProjetoData(authData.idU);
+            setProjetoData(data);
+
+            // Atualizar o status de cada projeto
+            data.forEach((projeto) => {
+                updateProjetoStatus(projeto.projetoId);
+            });
         };
+
         loadProjetoData();
-        console.log(projetoData.projetoId);
-      }, [authData.idU]);
+    }, [authData.idU]);
+
     const reports = [
         { name: "Relatório 1" },
         { name: "Relatório 2" },
-
     ];
 
     return (
@@ -62,18 +75,10 @@ export default function HomePage() {
             <HomeContainerCoord>
                 <StatusSectionConfigCoord>
                     <StatusSectionCoord>
-                        <StatusItemCoord>
-                            <span>🔴 Projeto atrasado</span>
-                        </StatusItemCoord>
-                        <StatusItemCoord>
-                            <span>🟡 Projeto em andamento</span>
-                        </StatusItemCoord>
-                        <StatusItemCoord>
-                            <span>🟢 Projeto concluído</span>
-                        </StatusItemCoord>
-                        <StatusItemCoord>
-                            <span>🟠 Projeto em análise</span>
-                        </StatusItemCoord>
+                        <StatusItemCoord><span>🔴 Projeto atrasado</span></StatusItemCoord>
+                        <StatusItemCoord><span>🟡 Projeto em andamento</span></StatusItemCoord>
+                        <StatusItemCoord><span>🟢 Projeto concluído</span></StatusItemCoord>
+                        <StatusItemCoord><span>🟠 Projeto em análise</span></StatusItemCoord>
                     </StatusSectionCoord>
                 </StatusSectionConfigCoord>
 
@@ -81,14 +86,14 @@ export default function HomePage() {
                     <TitleCoord>Meus Projetos</TitleCoord>
 
                     <ProjectsSectionCoord>
-                    <ScrollContainerCoord>
+                        <ScrollContainerCoord>
                             {projetoData.map((project, index) => (
                                 <ProjectCardCoord
                                     key={index}
                                     status={project.statusProjeto}
                                     onClick={() => navigate(`/detalhesProjeto/${project.projetoId}`)}
                                 >
-                                    <ProjectImageCoord src={ProjectIcon} alt='Project-Icon' />
+                                    <ProjectImageCoord src={ProjectIcon} alt="Project-Icon" />
                                     <ProjectNameCoord>{project.nomeProjeto}</ProjectNameCoord>
                                 </ProjectCardCoord>
                             ))}
@@ -97,7 +102,7 @@ export default function HomePage() {
                             <NewProjectImageCoord
                                 onClick={() => navigate(`/novoProjeto/${authData.idU}`)}
                                 src={NewReportIcon}
-                                alt='New-Project'
+                                alt="New-Project"
                             />
                             <NewProjectTitleCoord>Novo Projeto</NewProjectTitleCoord>
                         </NewProjectContainerCoord>
@@ -111,7 +116,7 @@ export default function HomePage() {
                         <ScrollContainerCoord>
                             {reports.map((report, index) => (
                                 <ReportCardCoord key={index}>
-                                    <ReportImageCoord src={ReportIcon} alt='Report-Icon' />
+                                    <ReportImageCoord src={ReportIcon} alt="Report-Icon" />
                                     <ReportNameCoord>{report.name}</ReportNameCoord>
                                 </ReportCardCoord>
                             ))}

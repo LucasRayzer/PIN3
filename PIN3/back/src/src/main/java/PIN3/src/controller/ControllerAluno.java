@@ -42,6 +42,8 @@ public class ControllerAluno {
                     projeto.setParticipantes(null);
                     projeto.setCoordenador(null);
                     projeto.setTarefas(null);
+                    projeto.setRelatoriosAdmin(null);
+                    projeto.setRelatoriosCoord(null);
                     temp.add(projeto);
                 }
             });

@@ -11,7 +11,8 @@ import {
     DetailsImageCoord,
     BlockContentHeadCoord,
     TitleBarSectionCoord,
-    TitleProjectCoord
+    TitleProjectCoord,
+    AltProjectButtonCoord
 } from './DetailsProjectCoord.styles';
 import DetailsIcon from '../../../assets/images/TarefaIcon.png';
 import axios from 'axios';
@@ -123,9 +124,12 @@ export default function DetailsProjectCoord() {
                             </ParticipantCardCoord>
                         ))}
                     </ScrollContainerCoordPart>
-
+                    
                     {/* Botão para adicionar nova tarefa */}
                     <NewTaskContainerCoord>
+                    <AltProjectButtonCoord onClick={() => navigate(`/alterarParticipantes/${projetoId}`)}>
+                            Alterar Particpantes
+                        </AltProjectButtonCoord>
                         <NewTaskButtonCoord onClick={() => navigate(`/novaTarefa/${projeto.projetoId}?projectId=${projetoId}`)}>
                             + Atribuir Nova Tarefa
                         </NewTaskButtonCoord>

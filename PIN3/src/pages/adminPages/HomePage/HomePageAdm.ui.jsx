@@ -47,19 +47,8 @@ export default function HomePage() {
     ];
 
     const reports=[
-        { name: "Relatório 1" },
-        { name: "Relatório 1" },
-        { name: "Relatório 1" },
-        { name: "Relatório 1" },
-        { name: "Relatório 1" },
-        { name: "Relatório 1" },
-        { name: "Relatório 1" },
-        { name: "Relatório 1" },
-        { name: "Relatório 1" },
-        { name: "Relatório 1" },
-        { name: "Relatório 1" },
-        { name: "Relatório 1" },
-
+        { },
+       
     ];
 
     return (
@@ -69,9 +58,7 @@ export default function HomePage() {
             <HomeContainerAdm>
                 <StatusSectionConfigAdm>
                 <NewReportContainerAdm>
-                <NewReportImageAdm onClick={() => navigate(`/registroAdm/${authData.idU}`)}
-                                        src={NewReportIcon} alt='New-Report' />
-                                        <NewReportTitleAdm>Novo Usuário</NewReportTitleAdm>
+                
                 </NewReportContainerAdm>
 
                     <StatusSectionAdm>
@@ -111,21 +98,26 @@ export default function HomePage() {
                     
                 <ReportsSectionAdm>
                     
-                    <ScrollContainerAdm>
-                        {reports.map((report, index) => (
-                            <ReportCardAdm key={index} 
-                            onClick={() => navigate(`/admViewRelatorio/${1}`)}>
+                   
+                            <ReportCardAdm 
+                            onClick={() => navigate(`/relatoriosAdmin`)}>
                                 <ReportImageAdm src={ReportIcon} alt='Project-Icon'/>
-                                 <ReportNameAdm>{report.name}</ReportNameAdm>
-                                
+                                 <ReportNameAdm></ReportNameAdm>
+                        
                             </ReportCardAdm>
-                        ))}
-                    </ScrollContainerAdm>
+                     
+                    
                     <NewReportContainerAdm>
                                 <NewReportImageAdm onClick={() => navigate('/novoRelatorio')}
                                         src={NewReportIcon} alt='New-Report' />
                                         <NewReportTitleAdm>Novo Relatório</NewReportTitleAdm>
+                                        
                         </NewReportContainerAdm>
+                        <NewReportContainerAdm>
+                        <NewReportImageAdm onClick={() => navigate(`/registroAdm/${authData.idU}`)}
+                                        src={NewReportIcon} alt='New-Report' />
+                                        <NewReportTitleAdm>Novo Usuário</NewReportTitleAdm>
+                                        </NewReportContainerAdm>
                 </ReportsSectionAdm>
                 </ReportContainerAdm>
                 

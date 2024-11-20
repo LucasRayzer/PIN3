@@ -40,13 +40,16 @@ public class ControllerRelCoord {
         return ResponseEntity.created(location).build();
 
     }
-//    @GetMapping("/relatorios/{id}")
-//    public ResponseEntity<?> gerarRelatorios(@PathVariable int id) {
-//            Projeto projeto = projetoRepository.findById(id).get();
-//
-//            relatorioService.gerarRelatorioProjeto(projeto);
-//
-//            return ResponseEntity.ok("Relatórios gerados com sucesso!");
-//    }
+    @GetMapping("/relatorios/{id}")
+    public ResponseEntity<?> gerarRelatorios(@PathVariable int id) {
+            Projeto projeto = projetoRepository.findById(id).get();
 
+            relatorioService.geraRelCoord(projeto);
+
+            return ResponseEntity.ok("Relatório gerado com sucesso!");
+    }
+    @DeleteMapping("/deleteRelAdm/{id}")
+    public void deleteRelatorio(@PathVariable int id){
+        relCoordRepository.deleteById(id);
+    }
 }

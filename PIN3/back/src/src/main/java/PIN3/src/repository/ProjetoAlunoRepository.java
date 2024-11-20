@@ -5,4 +5,5 @@ import PIN3.src.model.ProjetoAlunoId;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProjetoAlunoRepository extends JpaRepository<ProjetoAluno, ProjetoAlunoId> {
+
 }

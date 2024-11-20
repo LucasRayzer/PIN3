@@ -72,7 +72,8 @@ export default function NewProjectPage() {
                 user_id: parseInt(idU,10)
             },
             dataInicio: projetoInicioDate,
-            dataFim: projetoFimDate
+            dataFim: projetoFimDate,
+            statusProjeto:3
         };
         console.log(newProject);
         console.log({idU});

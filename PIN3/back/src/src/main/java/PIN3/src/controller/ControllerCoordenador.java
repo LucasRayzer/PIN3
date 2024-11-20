@@ -43,6 +43,8 @@ public class ControllerCoordenador {
                 projeto1.setCoordenador(null);
                 projeto1.setParticipantes(null);
                 projeto1.setTarefas(null);
+                projeto1.setRelatoriosAdmin(null);
+                projeto1.setRelatoriosCoord(null);
                 projTemp.add(projeto1);
 
             }

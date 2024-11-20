@@ -24,6 +24,14 @@ export const RelatorioContainer = styled.div.attrs({
   background-color: #f0f2f5;
 `;
 
+export const ButtonContainer = styled.div.attrs({
+  className: 'relatorio-container',
+})`
+  display: flex;
+  
+  flex-direction: row;
+ 
+`;
 export const RelatorioTitle = styled.h1.attrs({
   className: 'relatorio-title',
 })`
@@ -102,3 +110,20 @@ export const AbrirButton = styled.button.attrs({
     background-color: #0b1e5b;
   }
 `;
+export const DeleteButton = styled.button.attrs({
+  className: 'abrir-button',
+})`
+  padding: 8px 20px;
+  font-size: 14px;
+  background-color: #640f0f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-left:10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #a51717;
+  }
+`;
+

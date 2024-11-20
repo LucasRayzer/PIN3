@@ -31,8 +31,12 @@ export default function LoginPage() {
   const handleLogin = async () => {
     try {
       const data = await getSenhaC(usuario);
+      console.log(senha);
+      console.log(data.senha);
+      
+      
       if (senha === data.senha) {
-        console.log(data.tipoUsuario);
+                console.log(data.tipoUsuario);
         
         if (data.tipoUsuario === 1) {
           navigate('/homeAdm');
