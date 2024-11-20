@@ -52,4 +52,20 @@ public class ControllerRelCoord {
     public void deleteRelatorio(@PathVariable int id){
         relCoordRepository.deleteById(id);
     }
+    @GetMapping("/todosRel")
+    public List<RelatorioCoordenador> getTodosRelAdm(){
+        List<RelatorioCoordenador> relatorioCoordenador = relCoordRepository.findAll();
+        relatorioCoordenador.forEach(relatorioCoord -> {
+            relatorioCoord.setNomeCoordenador(null);
+            relatorioCoord.setProjeto(null);
+        });
+        return relatorioCoordenador;
+    }
+    @GetMapping("/relPorId/{id}")
+    public RelatorioCoordenador getRelatorio(@PathVariable int id){
+
+        RelatorioCoordenador relTemp = relCoordRepository.findById(id).get();
+        relTemp.setProjeto(null);
+        return  relTemp;
+    }
 }

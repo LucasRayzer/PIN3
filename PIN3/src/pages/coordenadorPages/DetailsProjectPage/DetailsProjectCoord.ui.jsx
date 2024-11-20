@@ -18,8 +18,6 @@ import DetailsIcon from '../../../assets/images/TarefaIcon.png';
 import axios from 'axios';
 import AuthContext from '../../../AuthContext';
 
-
-
 const fetchTasks = async (projetoId) => {
     try {
         const response = await axios.get(`http://localhost:8080/tarefa/allTarefasProjeto/${projetoId}`);
@@ -39,46 +37,63 @@ const fetchParticipants = async (projetoId) => {
         return [];
     }
 };
+
 const fetchProjetoData = async (projetoId) => {
     try {
-      const response = await axios.get(`http://localhost:8080/projeto/${projetoId}`);
-      return response.data;
+        const response = await axios.get(`http://localhost:8080/projeto/${projetoId}`);
+        return response.data;
     } catch (error) {
-      console.error('Erro ao buscar dados da API', error);
-      return [];
+        console.error('Erro ao buscar dados da API', error);
+        return [];
     }
-  };
+};
+
 export default function DetailsProjectCoord() {
     const navigate = useNavigate();
-    const {projetoId } = useParams();
+    const { projetoId } = useParams();
     const [tasks, setTasks] = useState([]);
     const [participants, setParticipants] = useState([]);
     const [projeto, setProjeto] = useState([]);
-    const {authData, setAuthData } = useContext(AuthContext);
-   
-    
-   
+    const { authData, setAuthData } = useContext(AuthContext);
+    const [isProcessing, setIsProcessing] = useState(false);
+
+    const handleEndProject = async (projeto) => {
+        if (isProcessing) return; 
+        setIsProcessing(true);
+
+        try {
+            if (projeto.statusProjeto !== 1) {
+                alert("O projeto ainda não está concluído!");
+                setIsProcessing(false); 
+                return;
+            }
+            const response = await axios.get(`http://localhost:8080/relatorioCoord/relatorios/${projeto.projetoId}`);
+            alert(response.data);
+           
+        } catch (error) {
+            console.error("Erro ao encerrar o projeto ou gerar relatório", error);
+            alert(error.response?.data || "Erro ao gerar o relatório!");
+        } finally {
+            setIsProcessing(false);
+        }
+    };
+
     useEffect(() => {
         const loadTasksAndParticipants = async () => {
-            //console.log(projetoId);
-            
             const tasksData = await fetchTasks(projetoId);
             setTasks(tasksData);
-            console.log({tasks});
-   
             const participantsData = await fetchParticipants(projetoId);
             setParticipants(participantsData);
-
             const projetoData = await fetchProjetoData(projetoId);
             setProjeto(projetoData);
-            console.log({projeto});
-            
         };
         loadTasksAndParticipants();
     }, [projetoId]);
+
     const totalTasks = tasks.length;
     const completedTasks = tasks.filter(task => task.status === "concluido").length;
     const completedPercentage = (completedTasks / totalTasks) * 100;
+
     return (
         <DetailsBodyCoord>
             <NavHeader />
@@ -90,11 +105,10 @@ export default function DetailsProjectCoord() {
                 </ProgressBarCoord>
             </TitleBarSectionCoord>
             <DetailsContainerCoord>
-
                 <TasksSectionCoord>
                     <BlockContentHeadCoord>
                         <TitleCoord>Cronograma</TitleCoord>
-                        <EndProjectButtonCoord onClick={() => navigate('/encerrarProjeto')}>
+                        <EndProjectButtonCoord onClick={() => handleEndProject(projeto)}>
                             Encerrar Projeto
                         </EndProjectButtonCoord>
                     </BlockContentHeadCoord>
@@ -113,7 +127,6 @@ export default function DetailsProjectCoord() {
                     </ScrollContainerCoordTarefa>
                 </TasksSectionCoord>
 
-                {/* Container dos Participantes */}
                 <ParticipantsSectionCoord>
                     <TitleCoord>Participantes</TitleCoord>
                     <ScrollContainerCoordPart>
@@ -124,11 +137,10 @@ export default function DetailsProjectCoord() {
                             </ParticipantCardCoord>
                         ))}
                     </ScrollContainerCoordPart>
-                    
-                    {/* Botão para adicionar nova tarefa */}
+
                     <NewTaskContainerCoord>
-                    <AltProjectButtonCoord onClick={() => navigate(`/alterarParticipantes/${projetoId}`)}>
-                            Alterar Particpantes
+                        <AltProjectButtonCoord onClick={() => navigate(`/alterarParticipantes/${projetoId}`)}>
+                            Alterar Participantes
                         </AltProjectButtonCoord>
                         <NewTaskButtonCoord onClick={() => navigate(`/novaTarefa/${projeto.projetoId}?projectId=${projetoId}`)}>
                             + Atribuir Nova Tarefa

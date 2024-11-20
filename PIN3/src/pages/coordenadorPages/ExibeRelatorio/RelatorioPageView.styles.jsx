@@ -10,6 +10,30 @@ export const ViewRelatorioBodyCoord = styled.div.attrs({
   background-size: cover;
   background-color: #f0f2f5;
 `;
+export const DateFileAluno = styled.div.attrs({
+  className: "date-field-Aluno",
+})`
+  display: flex;
+  flex-direction: column;
+  height: 30px;
+`;
+export const Title = styled.h1.attrs({
+  className: "title",
+})`
+  color: #132979;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  width: max-content;
+`;
+export const DateInput = styled.input.attrs({
+  className: "date-input",
+  type: "date",
+})`
+  font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+`;
 
 export const ViewRelatorioContainerCoord = styled.div.attrs({
   className: "view-relatorio-container-Coord",
@@ -142,7 +166,7 @@ export const ScrollContainerCoordPart = styled.div.attrs({
   flex-direction: column;
   gap: 10px;
   overflow-y: auto;
-  height: 450px;
+  height: 250px;
 
 
   &::-webkit-scrollbar {

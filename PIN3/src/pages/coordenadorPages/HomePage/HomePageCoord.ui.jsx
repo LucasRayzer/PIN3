@@ -25,9 +25,9 @@ import AuthContext from '../../../AuthContext';
 export default function HomePage() {
     const navigate = useNavigate();
     const [projetoData, setProjetoData] = useState([]);
+    const [reportData, setReportData] = useState([]);
     const { authData } = useContext(AuthContext);
 
-    // Função para buscar os dados dos projetos
     const fetchProjetoData = async (id) => {
         try {
             const response = await axios.get(`http://localhost:8080/coordenador/projeto/${id}`);
@@ -38,7 +38,16 @@ export default function HomePage() {
         }
     };
 
-    // Função para atualizar o status do projeto
+    const fetchReportData = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/relatorioCoord/todosRel');
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao buscar dados dos relatórios:', error);
+            return [];
+        }
+    };
+
     const updateProjetoStatus = async (projetoId) => {
         try {
             await axios.get(`http://localhost:8080/projeto/update/${projetoId}`);
@@ -50,23 +59,25 @@ export default function HomePage() {
 
     useEffect(() => {
         const loadProjetoData = async () => {
-            // Buscar dados dos projetos associados ao coordenador
+            
             const data = await fetchProjetoData(authData.idU);
             setProjetoData(data);
 
-            // Atualizar o status de cada projeto
+           
             data.forEach((projeto) => {
                 updateProjetoStatus(projeto.projetoId);
             });
         };
 
-        loadProjetoData();
-    }, [authData.idU]);
+        const loadReportData = async () => {
+            
+            const data = await fetchReportData();
+            setReportData(data);
+        };
 
-    const reports = [
-        { name: "Relatório 1" },
-        { name: "Relatório 2" },
-    ];
+        loadProjetoData();
+        loadReportData();
+    }, [authData.idU]);
 
     return (
         <HomeBodyCoord>
@@ -114,10 +125,11 @@ export default function HomePage() {
 
                     <ReportsSectionCoord>
                         <ScrollContainerCoord>
-                            {reports.map((report, index) => (
-                                <ReportCardCoord key={index}>
+                            {reportData.map((report, index) => (
+                                <ReportCardCoord key={index}
+                                onClick={() => navigate(`/coordViewRelatorio/${report.relatorioId}`)}>
                                     <ReportImageCoord src={ReportIcon} alt="Report-Icon" />
-                                    <ReportNameCoord>{report.name}</ReportNameCoord>
+                                    <ReportNameCoord>{report.nomeProjeto}</ReportNameCoord>
                                 </ReportCardCoord>
                             ))}
                         </ScrollContainerCoord>

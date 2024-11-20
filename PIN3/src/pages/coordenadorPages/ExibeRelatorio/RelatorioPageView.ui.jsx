@@ -1,5 +1,5 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import NavHeader from '../../../components/HeaderMenu/NavHeader.ui';
 import {
     ViewRelatorioBodyCoord,ViewRelatorioContainerCoord, ProgressBarCoord, TasksSectionCoord, ParticipantsSectionCoord,
@@ -8,85 +8,114 @@ import {
     TitleBarSectionCoord,
     TitleProjectCoord,
     BlockCoord,
-    ValueCoord
+    ValueCoord,
+    DateFileAluno,
+    DateInput,
+    Title
    
 } from './RelatorioPageView.styles';
 
 
 export default function ViewRelatorioProjectCoord() {
     const navigate = useNavigate();
-
-
-    const tasks = [
-        { name: "Tarefa 1", status: "concluido" },
-        { name: "Tarefa 1", status: "parada" },
-        { name: "Tarefa 1", status: "concluido" },
-       
-    ];
-
-
-    const participants = [
-        { name: "Participante 01", role: "Coordenador" },
-        { name: "Participante 01", role: "Coordenador" },
-        { name: "Participante 01", role: "Coordenador" },
-        { name: "Participante 01", role: "Coordenador" },
-        { name: "Participante 01", role: "Coordenador" },
-        { name: "Participante 01", role: "Coordenador" },
-        { name: "Participante 01", role: "Coordenador" },
-        { name: "Participante 01", role: "Coordenador" },
+    const { id } = useParams(); // Captura o ID do relatório da URL
+    const [relatorio, setRelatorio] = useState(null); // Inicializa o estado como null
+    const [error, setError] = useState(null); // Estado para tratar erros
+    const [isLoading, setIsLoading] = useState(true); // Estado para controlar o carregamento
+    console.log(id);
+    
+    useEffect(() => {
+        const fetchRelatorio = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/relatorioCoord/relPorId/${id}`);
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar o relatório.');
+                }
+                const data = await response.json();
+                setRelatorio(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setIsLoading(false);
+            }
+        };
         
-    ];
+        fetchRelatorio();
+    }, [id]);
 
-    const totalTasks = tasks.length;
-    const completedTasks = tasks.filter(task => task.status === "concluido").length;
-    const completedPercentage = (completedTasks / totalTasks) * 100;
+    if (isLoading) {
+        return <p>Carregando...</p>;
+    }
+
+    if (error) {
+        return <p>Erro: {error}</p>;
+    }
+
+    if (!relatorio) {
+        return <p>Nenhum dado encontrado.</p>;
+    }
+
+    
     return (
         <ViewRelatorioBodyCoord>
             <NavHeader />
             <TitleBarSectionCoord>
-                <TitleProjectCoord>Projeto:Nome do projeto aberto Extenso </TitleProjectCoord>
+                <TitleProjectCoord>Projeto: {relatorio.nomeProjeto || 'Nome não disponível'}</TitleProjectCoord>
             </TitleBarSectionCoord>
             <ViewRelatorioContainerCoord>
 
                 <TasksSectionCoord>
                     <BlockCoord>
                     <TitleCoord>Tarefas Concluídas</TitleCoord>
-                    <ProgressBarCoord>
-                    <div className="completed" style={{ width: `${completedPercentage}%` }} />
-                    <span>{`${Math.round(completedPercentage)}%`}</span>
-                    </ProgressBarCoord>
+                    <ValueCoord>{relatorio.totalTarefas || 0}</ValueCoord>
                     </BlockCoord>
                     <BlockCoord>
                     <TitleCoord>Número de tarefas Atribuidas</TitleCoord>
-                        <ValueCoord>valor aqui</ValueCoord>
+                        <ValueCoord>{relatorio.tarefasAtribuidas || 0}</ValueCoord>
                     </BlockCoord>
                     <BlockCoord>
-                    <TitleCoord>Número de atividades retornadas</TitleCoord>
-                        <ValueCoord>valor aqui</ValueCoord>
+                    <TitleCoord>Dias Restantes</TitleCoord>
+                        <ValueCoord>{relatorio.diasRestantes || 'N/A'}</ValueCoord>
                     </BlockCoord>
                     <BlockCoord>
-                    <TitleCoord>Situação do Projeto</TitleCoord>
-                        <ValueCoord>valor aqui</ValueCoord>
+                    <TitleCoord>Status do Projeto</TitleCoord>
+                        <ValueCoord>{relatorio.statusProjeto || 'Indefinido'}</ValueCoord>
+                    </BlockCoord>
+                    <BlockCoord>
+                    <TitleCoord>Data de Início</TitleCoord>
+                        <DateFileAluno>
+                            <DateInput
+                                type="date"
+                                value={relatorio.dataInicio || ''}
+                                readOnly
+                            />
+                        </DateFileAluno>
+                        <TitleCoord>Data de Fim</TitleCoord>
+                        <DateFileAluno>
+                            <DateInput
+                                type="date"
+                                value={relatorio.dataFim || ''}
+                                readOnly
+                            />
+                        </DateFileAluno>
                     </BlockCoord>
                 </TasksSectionCoord>
 
                 <ParticipantsSectionCoord>
                     <TitleCoord>Participantes</TitleCoord>
                     <ScrollContainerCoordPart>
-                        {participants.map((participant, index) => (
+                        {relatorio.participantes.map((participant, index) => (
                             <ParticipantCardCoord key={index}>
-                                <span>{participant.name}</span>
-                                <span>{participant.role}</span>
+                                <span>{participant}</span>
                             </ParticipantCardCoord>
                         ))}
                     </ScrollContainerCoordPart>
 
-                
-                    <TitleCoord>Desempenho da Equipe </TitleCoord>
-                    <ProgressBarCoord>
-                    <div className="completed" style={{ width: `${completedPercentage}%` }} />
-                    <span>{`${Math.round(completedPercentage)}%`}</span>
-                    </ProgressBarCoord>
+                    <BlockCoord>
+                        <TitleCoord>Desempenho da Equipe </TitleCoord>
+                        <Title>Tempo Médio de conclusão de Tarefas:{relatorio.tempoMedioConclusao}</Title>
+                        <Title>% de Tarefas entregues no prazo:{relatorio.percentualDentroPrazo}</Title>
+                    </BlockCoord>
                     
                 </ParticipantsSectionCoord>
             </ViewRelatorioContainerCoord>
