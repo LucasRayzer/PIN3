@@ -8,11 +8,13 @@ import PIN3.src.repository.ProjetoRepository;
 import PIN3.src.repository.TarefaRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.auditing.CurrentDateTimeProvider;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.*;
 
 @RestController
@@ -77,7 +79,7 @@ public class ControllerTarefa {
             ptemp.getTarefas().forEach(taP->{
                 if (taP==tarefa){
                     String fd = "";
-                    fd += tarefa.getTarefa_id()+" "+tarefa.getNomeTarefa();
+                    fd += tarefa.getTarefa_id()+" "+tarefa.getNomeTarefa()+" "+ tarefa.getStatusTarefa();
                     temp.add(fd);
                 }
             });
@@ -119,7 +121,7 @@ public class ControllerTarefa {
     @PutMapping("/{id}/update")
     public ResponseEntity<Tarefa> updateTarefa(@PathVariable int id, @Valid @RequestBody Tarefa tarefaAtualizada) {
         Optional<Tarefa> tarefaExistenteOpt = tarefaRepository.findById(id);
-
+        LocalDate CurrentDateTimeProvider= LocalDate.now();
         if (tarefaExistenteOpt.isPresent()) {
             Tarefa tarefaExistente = tarefaExistenteOpt.get();
 
@@ -142,6 +144,9 @@ public class ControllerTarefa {
             if (tarefaAtualizada.getDocumentos() != null && !tarefaAtualizada.getDocumentos().isEmpty()) {
                 tarefaExistente.setDocumentos(tarefaAtualizada.getDocumentos());
             }
+
+            tarefaExistente.setDataEntrega(tarefaAtualizada.getStatusTarefa());
+
 
             tarefaRepository.save(tarefaExistente);
 

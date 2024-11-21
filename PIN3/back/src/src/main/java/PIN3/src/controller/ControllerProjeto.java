@@ -95,7 +95,7 @@ public class ControllerProjeto {
             }
         });
 
-        if (concluida.get() >= parada.get() && concluida.get() >= emAnalise.get() && concluida.get() >= emAndamento.get()) {
+        if ( parada.get()==0 &&emAnalise.get()==0 && emAndamento.get()==0 && concluida.get()>=1) {
             projTemp.setStatusProjeto(1);
         } else if (parada.get() >= concluida.get() && parada.get() >= emAnalise.get() && parada.get() >= emAndamento.get()) {
             projTemp.setStatusProjeto(4);

@@ -62,7 +62,7 @@ export default function DetailsProjectCoord() {
         setIsProcessing(true);
 
         try {
-            if (projeto.statusProjeto !== 1) {
+            if (completedPercentage !== 100 ) {
                 alert("O projeto ainda não está concluído!");
                 setIsProcessing(false); 
                 return;
@@ -91,8 +91,10 @@ export default function DetailsProjectCoord() {
     }, [projetoId]);
 
     const totalTasks = tasks.length;
-    const completedTasks = tasks.filter(task => task.status === "concluido").length;
+    const completedTasks = tasks.filter(task => task.statusTarefa === 1).length;
     const completedPercentage = (completedTasks / totalTasks) * 100;
+    console.log(completedPercentage);
+    
 
     return (
         <DetailsBodyCoord>

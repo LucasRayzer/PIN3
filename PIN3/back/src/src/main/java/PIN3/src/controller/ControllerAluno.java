@@ -49,7 +49,7 @@ public class ControllerAluno {
             });
             return temp;
         } else
-            throw new Exception("Não foi possível encontrar o proojeto");
+            throw new Exception("Não foi possível encontrar o projeto");
     }
     @GetMapping("/todosAlunos")
     public List<Aluno> getAllAlunos(){

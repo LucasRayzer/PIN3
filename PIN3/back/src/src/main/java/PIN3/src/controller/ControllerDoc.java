@@ -83,7 +83,10 @@ public class ControllerDoc {
             throw new Exception("Não foi possível encontrar a tarefa");
         }
     }
-
+    @DeleteMapping("/deletarDoc/{id}")
+    public void deleteDoc(@PathVariable int id){
+        documentoRepository.deleteById(id);
+    }
 
 
 }

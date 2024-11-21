@@ -20,10 +20,12 @@ const fetchTasks = async (alunoId,projetoId) => {
     try {
         const response = await axios.get(`http://localhost:8080/tarefa/tarefas/${alunoId}/${projetoId}`);
         return response.data.map(item => {
-            const [id, ...nomeArray] = item.split(' ');
+            const [id, nomeArray, ...statusT] = item.split(' ');
             return {
                 tarefa_id: id,
-                nomeTarefa: nomeArray.join(' ')
+                nomeTarefa: nomeArray,
+                statusTarefa: Number(statusT.join(' '))
+                
             };
         });
     } catch (error) {
@@ -73,7 +75,11 @@ export default function DetailsProjectAluno() {
     }, [authData.idU,projetoId]);
 
     const totalTasks = tasks.length;
+    console.log({tasks});
+    
     const completedTasks = tasks.filter(task => task.statusTarefa === 1).length;
+    console.log(tasks.statusTarefa);
+    
     const completedPercentage = (completedTasks / totalTasks) * 100;
     return (
         <DetailsBodyAluno>
@@ -111,7 +117,7 @@ export default function DetailsProjectAluno() {
                         {participants.map((participant) => (
                             <ParticipantCardAluno key={participant.user_id}>
                             <span>{participant.nome}</span>
-                            <span>{participant.tipoUsuario === 1 ? "Aluno" : "Coordenador"}</span>
+                            <span>{participant.tipoUsuario === 3 ? "Aluno" : "Coordenador"}</span>
                         </ParticipantCardAluno>
                         ))}
                     </ScrollContainerAlunoPart>
