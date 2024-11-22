@@ -25,7 +25,7 @@ export default function RegisterPage() {
       tipoUsuario: parseInt(tipoUsuario,10),
     };
 
-      if (parseInt(tipoUsuario) === 1) {
+      if (parseInt(tipoUsuario) === 3) {
 
         const response = await axios.post('http://localhost:8080/user/createAluno', newAluno);
       }
@@ -40,7 +40,7 @@ export default function RegisterPage() {
         });
       }
       
-      if (parseInt(tipoUsuario) === 3) {
+      if (parseInt(tipoUsuario) === 1) {
         const response = await axios.post('http://localhost:8080/user/createAdmin', {
           nome: usuario,
           senha: senha,

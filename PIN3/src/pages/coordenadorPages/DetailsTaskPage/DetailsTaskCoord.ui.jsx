@@ -155,18 +155,30 @@ export default function DetailsTaskCoord() {
         }
     };
     const handleFileUpload = (e) => {
-        setUploadedFile(e.target.files[0]);
+        const file = e.target.files[0];
+        if (file && file.type === 'application/pdf') {
+            setUploadedFile(file);
+        } else {
+            alert('Somente arquivos .pdf são permitidos.');
+            e.target.value = null; 
+        }
     };
 
     const handleFileReplace = () => {
         setUploadedFile(null);
     };
 
-    //função para remover arquivos da lista
-    const handleRemoveFile = (fileId) => {
-        setTaskFiles(taskFiles.filter(file => file.id !== fileId));
+    const handleDeleteFile = async (fileId) => {
+        try {
+            await axios.delete(`http://localhost:8080/documento/deletarDoc/${fileId}`);
+            setTaskFiles(taskFiles.filter(file => file.id !== fileId));
+            alert('Arquivo removido com sucesso!');
+        } catch (error) {
+            console.error('Erro ao remover o arquivo:', error);
+            alert('Ocorreu um erro ao remover o arquivo.');
+        }
     };
-    //função para alterar o responsável
+    
     const handleResponsibleChange = () => {
         if (selectedParticipantId !== null) {
             const newResponsible = participants.find(participant => participant.user_id === selectedParticipantId)?.nome;
@@ -250,7 +262,7 @@ export default function DetailsTaskCoord() {
                             >
                                 {file.name}
                             </span>
-                            <RemoveButton onClick={() => handleRemoveFile(file.id)}>
+                            <RemoveButton onClick={() => handleDeleteFile(file.id)}>
                                 Remover
                             </RemoveButton>
                         </FileItem>

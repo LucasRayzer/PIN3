@@ -205,7 +205,7 @@ export const ReportContainerAdm = styled.div.attrs({
 })`
  display:flex;
  flex-direction:column;
- 
+ padding-top :50px;
 `;
 export const TitleAdm = styled.h1.attrs({
   className: "title",
