@@ -56,3 +56,21 @@ export const ConfigImage = styled.img.attrs({
    display:flex;
    align-items: center;  
   `;
+
+
+  export const LogoutButton = styled.button`
+      background-color: #d61316;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 8px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-left: 10px;
+      margin-right: 30px;
+  
+      &:hover {
+          background-color: #d9363e;
+      }
+  `;
+  

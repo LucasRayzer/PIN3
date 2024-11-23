@@ -152,18 +152,7 @@ export default function NewProjectPage() {
                         </ContainerDataNewProject>
                 </ContainerCoord>
                 <ContainerCoord>
-                    <ContainerParticipantesNovoProjeto>
-                        <TitleName>Número de Participantes*</TitleName>
-                        <SelectBoxCoord
-                            value={participantNumber}
-                            onChange={(e) => setParticipantNumber(e.target.value)}
-                        >
-                            <option value={0}>Caixa de Seleção de número</option>
-                            {[1, 2, 3, 4].map(num => (
-                                <option key={num} value={num}>{num}</option>
-                            ))}
-                        </SelectBoxCoord>
-                    </ContainerParticipantesNovoProjeto>
+                    
                     <ContainerParticipantesNovoProjeto>
                         <TitleName>Selecione os Participantes*</TitleName>
                         <ParticipantListCoord>

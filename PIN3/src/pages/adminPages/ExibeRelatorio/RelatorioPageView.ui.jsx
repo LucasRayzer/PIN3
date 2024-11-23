@@ -61,12 +61,12 @@ export default function ViewRelatorioProjectAdmin() {
             <ViewRelatorioContainerAdmin>
                 <TasksSectionAdmin>
                     <BlockAdmin>
-                        <TitleAdmin>Tarefas Concluídas</TitleAdmin>
-                        <ValueAdmin>{relatorio.totalTarefas || 0}</ValueAdmin>
+                        <TitleAdmin>Entregas Feitas</TitleAdmin>
+                        <ValueAdmin>{relatorio.countTarefaConcluida || 0}</ValueAdmin>
                     </BlockAdmin>
                     <BlockAdmin>
                         <TitleAdmin>Número de tarefas Atribuídas</TitleAdmin>
-                        <ValueAdmin>{relatorio.tarefasAtribuidas || 0}</ValueAdmin>
+                        <ValueAdmin>{relatorio.totalTarefas || 0}</ValueAdmin>
                     </BlockAdmin>
                     <BlockAdmin>
                         <TitleAdmin>Dias Restantes</TitleAdmin>
@@ -74,7 +74,13 @@ export default function ViewRelatorioProjectAdmin() {
                     </BlockAdmin>
                     <BlockAdmin>
                         <TitleAdmin>Status do Projeto</TitleAdmin>
-                        <ValueAdmin>{relatorio.statusProjeto || 'Indefinido'}</ValueAdmin>
+                        <ValueAdmin>
+                            {relatorio.statusProjeto === 1 && 'Concluído'}
+                            {relatorio.statusProjeto === 2 && 'Pendente'}
+                            {relatorio.statusProjeto === 3 && 'Em andamento'}
+                            {relatorio.statusProjeto === 4 && 'Atrasado'}
+                            {![1, 2, 3, 4].includes(relatorio.statusProjeto) && 'Indefinido'}
+                        </ValueAdmin>
                     </BlockAdmin>
                     <BlockAdmin>
                         <TitleAdmin>Data de Início</TitleAdmin>
@@ -107,8 +113,8 @@ export default function ViewRelatorioProjectAdmin() {
                     </ScrollContainerAdminPart>
                     <BlockAdmin>
                         <TitleAdmin>Desempenho da Equipe</TitleAdmin>
-                        <Title>Tempo Médio de conclusão de Tarefas:{relatorio.tempoMedioConclusao}</Title>
-                        <Title>% de Tarefas entregues no prazo:{relatorio.percentualDentroPrazo}</Title>
+                        <Title>Tempo Médio de conclusão de Tarefas: {relatorio.tempoMedioConclusao} dias.</Title>
+                        <Title>% de Tarefas entregues no prazo: {relatorio.percentualDentroPrazo}</Title>
                     </BlockAdmin>
                     <BlockAdmin>
                         <TitleAdmin>Relatório de</TitleAdmin>

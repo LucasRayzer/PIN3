@@ -66,12 +66,12 @@ export default function ViewRelatorioProjectCoord() {
 
                 <TasksSectionCoord>
                     <BlockCoord>
-                    <TitleCoord>Tarefas Concluídas</TitleCoord>
-                    <ValueCoord>{relatorio.totalTarefas || 0}</ValueCoord>
+                    <TitleCoord>Entregas Feitas</TitleCoord>
+                    <ValueCoord>{relatorio.countTarefaConcluida|| 0}</ValueCoord>
                     </BlockCoord>
                     <BlockCoord>
                     <TitleCoord>Número de tarefas Atribuidas</TitleCoord>
-                        <ValueCoord>{relatorio.tarefasAtribuidas || 0}</ValueCoord>
+                        <ValueCoord>{relatorio.totalTarefas || 0}</ValueCoord>
                     </BlockCoord>
                     <BlockCoord>
                     <TitleCoord>Dias Restantes</TitleCoord>
@@ -79,7 +79,13 @@ export default function ViewRelatorioProjectCoord() {
                     </BlockCoord>
                     <BlockCoord>
                     <TitleCoord>Status do Projeto</TitleCoord>
-                        <ValueCoord>{relatorio.statusProjeto || 'Indefinido'}</ValueCoord>
+                        <ValueCoord> 
+                            {relatorio.statusProjeto === 1 && 'Concluído'}
+                            {relatorio.statusProjeto === 2 && 'Pendente'}
+                            {relatorio.statusProjeto === 3 && 'Em andamento'}
+                            {relatorio.statusProjeto === 4 && 'Atrasado'}
+                            {![1, 2, 3, 4].includes(relatorio.statusProjeto) && 'Indefinido'}
+                            </ValueCoord>
                     </BlockCoord>
                     <BlockCoord>
                     <TitleCoord>Data de Início</TitleCoord>
@@ -113,8 +119,8 @@ export default function ViewRelatorioProjectCoord() {
 
                     <BlockCoord>
                         <TitleCoord>Desempenho da Equipe </TitleCoord>
-                        <Title>Tempo Médio de conclusão de Tarefas:{relatorio.tempoMedioConclusao}</Title>
-                        <Title>% de Tarefas entregues no prazo:{relatorio.percentualDentroPrazo}</Title>
+                        <Title>Tempo Médio de conclusão de Tarefas: {relatorio.tempoMedioConclusao} dias.</Title>
+                        <Title>% de Tarefas entregues no prazo: {relatorio.percentualDentroPrazo}</Title>
                     </BlockCoord>
                     
                 </ParticipantsSectionCoord>

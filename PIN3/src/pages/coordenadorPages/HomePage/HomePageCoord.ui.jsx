@@ -86,10 +86,10 @@ export default function HomePage() {
             <HomeContainerCoord>
                 <StatusSectionConfigCoord>
                     <StatusSectionCoord>
-                        <StatusItemCoord><span>🔴 Projeto atrasado</span></StatusItemCoord>
-                        <StatusItemCoord><span>🟡 Projeto em andamento</span></StatusItemCoord>
                         <StatusItemCoord><span>🟢 Projeto concluído</span></StatusItemCoord>
+                        <StatusItemCoord><span>🟡 Projeto em andamento</span></StatusItemCoord>                
                         <StatusItemCoord><span>🟠 Projeto em análise</span></StatusItemCoord>
+                        <StatusItemCoord><span>🔴 Projeto atrasado</span></StatusItemCoord>
                     </StatusSectionCoord>
                 </StatusSectionConfigCoord>
 
