@@ -21,6 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/relatorioCoord")
+@CrossOrigin
 public class ControllerRelCoord {
     @Autowired
     private RelCoordRepository relCoordRepository;

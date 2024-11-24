@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/aluno")
+@CrossOrigin
 public class ControllerAluno {
     @Autowired
     private AlunoRepository alunoRepository;

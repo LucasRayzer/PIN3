@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/documento")
+@CrossOrigin
 public class ControllerDoc {
 
     @Autowired

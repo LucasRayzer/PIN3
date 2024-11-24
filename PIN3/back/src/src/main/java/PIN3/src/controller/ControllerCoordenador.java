@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/coordenador")
+@CrossOrigin
 public class ControllerCoordenador {
     @Autowired
     private CoordRepository coordRepository;

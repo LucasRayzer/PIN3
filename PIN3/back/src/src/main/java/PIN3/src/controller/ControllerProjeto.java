@@ -20,6 +20,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
 @RequestMapping("/projeto")
+@CrossOrigin
 public class ControllerProjeto {
     @Autowired
     private ProjetoRepository projetoRepository;

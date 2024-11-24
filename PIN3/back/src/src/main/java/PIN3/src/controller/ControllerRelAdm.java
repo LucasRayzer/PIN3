@@ -19,6 +19,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/relatorioAdm")
+@CrossOrigin
 public class ControllerRelAdm {
 
     @Autowired

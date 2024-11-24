@@ -51,7 +51,7 @@ export default function RegisterPage() {
       
 
         
-        if (parseInt(tipoUsuario) ===3) {
+        if (parseInt(tipoUsuario) ===1) {
           navigate('/home'); 
         } else {
           navigate('/login'); 

@@ -19,6 +19,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/tarefa")
+@CrossOrigin
 public class ControllerTarefa {
 
     @Autowired

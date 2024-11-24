@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { LoginBody, LoginButton, LoginContainer, LoginForm, LoginHeader, LoginInput, LoginTitle, LoginTitleHeader, LogoContainer, LogoImage} from './LoginPage.styles';
 import SearchLogo from '../../assets/images/SearchHubLogo.png'; 
+import Back from '../../assets/images/backGround.png'
 import AuthContext from '../../AuthContext';
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -64,7 +65,8 @@ export default function LoginPage() {
         <LoginTitleHeader>Search Hub</LoginTitleHeader>
       </LoginHeader>
 
-      <LoginContainer>
+      <LoginContainer style={{background: `url('${Back}') no-repeat center center`, backgroundSize: 'cover',
+    backgroundColor: '#1A1A1A'}}>
         <LogoContainer>
           <LogoImage src={SearchLogo} alt='Logo' />
         </LogoContainer>

@@ -18,6 +18,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin
 public class ControllerUsuario {
 
     @Autowired
@@ -28,7 +29,8 @@ public class ControllerUsuario {
     private AdmRepository admRepository;
     @Autowired
     private UserRepository userRepository;
-
+    
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/nome/{username}")
     public Usuario getUserByName(@PathVariable String username) throws Exception{
         Usuario usuario = userRepository.findByNome(username);
