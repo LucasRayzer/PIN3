@@ -93,7 +93,7 @@ export default function DetailsProjectCoord() {
     const totalTasks = tasks.length;
     const completedTasks = tasks.filter(task => task.statusTarefa === 1).length;
     const completedPercentage = (completedTasks / totalTasks) * 100;
-    console.log(completedPercentage);
+    
     
 
     return (

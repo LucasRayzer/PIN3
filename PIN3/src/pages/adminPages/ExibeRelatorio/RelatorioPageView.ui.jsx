@@ -19,7 +19,7 @@ export default function ViewRelatorioProjectAdmin() {
     const [relatorio, setRelatorio] = useState(null); // Inicializa o estado como null
     const [error, setError] = useState(null); // Estado para tratar erros
     const [isLoading, setIsLoading] = useState(true); // Estado para controlar o carregamento
-    console.log(id);
+  
     
     useEffect(() => {
         const fetchRelatorio = async () => {

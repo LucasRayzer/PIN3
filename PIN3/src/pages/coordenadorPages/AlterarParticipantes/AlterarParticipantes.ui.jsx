@@ -56,7 +56,7 @@ export default function DetailsTaskCoord() {
     
     useEffect(() => {
         const loadParticipants = async () => {
-            //console.log(projetoId);
+        
 
             const participantsData = await fetchParticipants(projetoId);
             setParticipants(participantsData);

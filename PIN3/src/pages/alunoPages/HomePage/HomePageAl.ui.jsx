@@ -36,7 +36,7 @@ export default function HomePage() {
       setProjetoData(data);
     };
     loadProjetoData();
-    console.log(projetoData.projetoId);
+    
   }, [authData.idU]);
   return (
     <HomeBodyAluno>

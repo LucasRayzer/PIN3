@@ -53,8 +53,7 @@ export default function DetailsTaskCoord() {
       const query = useQuery();
     const projectId = query.get("projectId");
 
-    console.log({projectId});
-    
+   
     const fetchParticipants = async (projectId) => {
         try {
             const response = await axios.get(`http://localhost:8080/projeto/participantesTask?projectId=${projectId}`);

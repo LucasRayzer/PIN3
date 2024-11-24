@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { LoginBody, LoginButton, LoginContainer, LoginForm, LoginHeader, LoginInput, LoginTitle, LoginTitleHeader, LogoContainer, LogoImage} from './LoginPage.styles';
 import SearchLogo from '../../assets/images/SearchHubLogo.png'; 
-import Back from '../../assets/images/backGround.png'
+import Back from '../../assets/images/backGround.png';
 import AuthContext from '../../AuthContext';
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -32,12 +32,11 @@ export default function LoginPage() {
   const handleLogin = async () => {
     try {
       const data = await getSenhaC(usuario);
-      console.log(senha);
-      console.log(data.senha);
+    
       
       
       if (senha === data.senha) {
-                console.log(data.tipoUsuario);
+             
         
         if (data.tipoUsuario === 1) {
           navigate('/homeAdm');

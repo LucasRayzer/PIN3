@@ -4,13 +4,15 @@ import axios from "axios";
 import { LogoContainer, LogoImage, RegisterBody, RegisterButton, RegisterContainer, RegisterForm, RegisterHeader, RegisterInput, RegisterSelect, RegisterTitle, RegisterTitleHeader } from './RegisterPage.styles';
 import SearchLogo from '../../../assets/images/SearchHubLogo.png'; 
 import AuthContext from '../../../AuthContext';
+import Back from '../../../assets/images/backGround.png';
 export default function RegisterPage() {
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [tipoUsuario, setTipoUsuario] = useState('1'); 
- console.log({usuario,senha,confirmPassword,tipoUsuario});
+ 
+
  const {authData, setAuthData } = useContext(AuthContext);
   const handleRegister = async () => {
     if (senha !== confirmPassword) {
@@ -28,6 +30,8 @@ export default function RegisterPage() {
       if (parseInt(tipoUsuario) === 3) {
 
         const response = await axios.post('http://localhost:8080/user/createAluno', newAluno);
+        alert("Aluno criado com Sucesso!");
+        navigate('/homeAdm'); 
       }
       if (parseInt(tipoUsuario) === 2) {
         const response = await axios.post('http://localhost:8080/user/createCoordenador', {
@@ -38,6 +42,8 @@ export default function RegisterPage() {
             user_id: parseInt(authData.idU,10)
         }
         });
+        alert("Coordenador criado com Sucesso!");
+        navigate('/homeAdm'); 
       }
       
       if (parseInt(tipoUsuario) === 1) {
@@ -46,16 +52,13 @@ export default function RegisterPage() {
           senha: senha,
           tipoUsuario: parseInt(tipoUsuario)
         });
+        alert("Admin criado com Sucesso!");
+        navigate('/homeAdm'); 
       }
       console.log(newAluno);
-      
+    
 
         
-        if (parseInt(tipoUsuario) ===1) {
-          navigate('/home'); 
-        } else {
-          navigate('/login'); 
-        }
       
     } catch (error) {
       console.error("Erro na criação de Usuário!", error);
@@ -77,7 +80,8 @@ export default function RegisterPage() {
         <RegisterTitleHeader>Search Hub</RegisterTitleHeader>
       </RegisterHeader>
 
-      <RegisterContainer>
+      <RegisterContainer style={{background: `url('${Back}') no-repeat center center`, backgroundSize: 'cover',
+    backgroundColor: '#1A1A1A'}}>
         <LogoContainer>
           <LogoImage src={SearchLogo} alt='Logo' />
         </LogoContainer>

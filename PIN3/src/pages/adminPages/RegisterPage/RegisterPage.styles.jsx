@@ -20,9 +20,6 @@ export const RegisterBody = styled.div.attrs({
     justify-content: center;
     height: 100vh;
     width: 100%;
-    background: url('src/assets/images/backGround.png') no-repeat center center;
-    background-size: cover;
-    background-color: #1A1A1A;
   `;
   
   export const RegisterHeader = styled.div.attrs({

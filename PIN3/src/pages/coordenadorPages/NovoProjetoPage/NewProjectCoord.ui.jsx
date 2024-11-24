@@ -75,8 +75,7 @@ export default function NewProjectPage() {
             dataFim: projetoFimDate,
             statusProjeto:3
         };
-        console.log(newProject);
-        console.log({idU});
+     
         
         try {
             

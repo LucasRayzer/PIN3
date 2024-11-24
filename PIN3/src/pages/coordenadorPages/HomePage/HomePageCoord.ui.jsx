@@ -51,7 +51,7 @@ export default function HomePage() {
     const updateProjetoStatus = async (projetoId) => {
         try {
             await axios.get(`http://localhost:8080/projeto/update/${projetoId}`);
-            console.log(`Status do projeto ${projetoId} atualizado com sucesso!`);
+           
         } catch (error) {
             console.error(`Erro ao atualizar o status do projeto ${projetoId}:`, error);
         }

@@ -75,10 +75,9 @@ export default function DetailsProjectAluno() {
     }, [authData.idU,projetoId]);
 
     const totalTasks = tasks.length;
-    console.log({tasks});
-    
+   
     const completedTasks = tasks.filter(task => task.statusTarefa === 1).length;
-    console.log(tasks.statusTarefa);
+    
     
     const completedPercentage = (completedTasks / totalTasks) * 100;
     return (

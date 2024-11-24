@@ -41,7 +41,7 @@ const RelatorioScreen = () => {
 
   const deleteRelatorio = async (id) => {
     try {
-      console.log(id);
+     
       
       const response = await fetch(`http://localhost:8080/relatorioAdm/deleteRelAdm/${id}`, {
         method: 'DELETE',
@@ -49,7 +49,7 @@ const RelatorioScreen = () => {
       if (!response.ok) {
         throw new Error('Erro ao deletar o relatório');
       }
-      // Atualizar a lista de relatórios após a exclusão
+      
       setRelatorios((prevRelatorios) =>
         prevRelatorios.filter((relatorio) => relatorio.relatorioId !== id)
       );
